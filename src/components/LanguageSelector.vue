@@ -1,11 +1,15 @@
 <template>
-  <div class="language-selector">
+  <div class="flex gap-2">
     <button
       v-for="locale in locales"
       :key="locale"
-      :class="{ active: i18n.locale.value === locale }"
       @click="changeLocale(locale)"
-      class="px-3 py-1 rounded border transition-colors"
+      :class="[
+        'px-3 py-1 rounded transition-colors font-semibold',
+        i18n.locale.value === locale
+          ? 'bg-cream text-primary'
+          : 'bg-transparent text-cream border border-cream hover:bg-cream hover:text-primary'
+      ]"
     >
       {{ locale.toUpperCase() }}
     </button>
@@ -24,21 +28,3 @@ const changeLocale = (locale: string) => {
 }
 </script>
 
-<style scoped>
-.language-selector {
-  display: flex;
-  gap: 0.5rem;
-}
-
-.language-selector button {
-  cursor: pointer;
-  border-color: #ccc;
-  background: white;
-}
-
-.language-selector button.active {
-  background: #333;
-  color: white;
-  border-color: #333;
-}
-</style>
