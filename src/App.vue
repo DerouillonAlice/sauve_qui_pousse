@@ -3,9 +3,8 @@
 
 <template>
   <div id="app-root">
-
     <main>
-      <h1>Sauve qui pousse</h1>
+      <RouterView />
     </main>
   </div>
 </template>
