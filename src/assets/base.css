@@ -1,6 +1,6 @@
 @font-face {
-  font-family: 'SwirlVelvet';
-  src: url('./fonts/ASwirlVelvet.ttf') format('truetype');
+  font-family: 'MagicalNeverland';
+  src: url('./fonts/MagicalneverlandRegular-V4GP6.otf') format('opentype');
   font-weight: normal;
   font-style: normal;
   font-display: block;
@@ -61,7 +61,7 @@ body {
 }
 
 h1, h2, h3, h4 {
-  font-family: 'SwirlVelvet', serif;
+  font-family: 'MagicalNeverland', serif;
   color: var(--color-heading);
   line-height: 1.2;
 }
