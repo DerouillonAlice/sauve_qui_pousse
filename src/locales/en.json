@@ -1,0 +1,25 @@
+{
+  "nav": {
+    "home": "Home",
+    "play": "Play",
+    "cards": "Cards",
+    "rules": "Rules"
+  },
+  "home": {
+    "title": "Home",
+    "description": "A fun interactive game"
+  },
+  "play": {
+    "title": "Play",
+    "start": "Start",
+    "restart": "Restart"
+  },
+  "cards": {
+    "title": "Cards",
+    "back": "Back"
+  },
+  "rules": {
+    "title": "Rules",
+    "description": "How to play"
+  }
+}

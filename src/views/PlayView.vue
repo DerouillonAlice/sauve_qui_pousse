@@ -1,3 +1,9 @@
 <template>
-  <h1>Jouer</h1>
+  <h1>{{ $t('play.title') }}</h1>
 </template>
+
+<script setup lang="ts">
+import { useI18n } from 'vue-i18n'
+
+useI18n()
+</script>

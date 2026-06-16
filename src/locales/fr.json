@@ -1,0 +1,25 @@
+{
+  "nav": {
+    "home": "Accueil",
+    "play": "Jouer",
+    "cards": "Cartes",
+    "rules": "Règles"
+  },
+  "home": {
+    "title": "Accueil",
+    "description": "Un jeu interactif amusant"
+  },
+  "play": {
+    "title": "Jouer",
+    "start": "Commencer",
+    "restart": "Recommencer"
+  },
+  "cards": {
+    "title": "Cartes",
+    "back": "Retour"
+  },
+  "rules": {
+    "title": "Règles",
+    "description": "Comment jouer"
+  }
+}

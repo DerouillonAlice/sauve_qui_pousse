@@ -1,3 +1,9 @@
 <template>
-  <h1>Cartes</h1>
+  <h1>{{ $t('cards.title') }}</h1>
 </template>
+
+<script setup lang="ts">
+import { useI18n } from 'vue-i18n'
+
+useI18n()
+</script>
