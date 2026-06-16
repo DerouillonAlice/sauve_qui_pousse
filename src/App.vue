@@ -1,12 +1,12 @@
 <script setup lang="ts">
+import AppHeader from '@/components/AppHeader.vue'
 </script>
 
 <template>
-  <div id="app-root">
-    <main>
-      <RouterView />
-    </main>
-  </div>
+  <AppHeader />
+  <main>
+    <RouterView />
+  </main>
 </template>
 
 <style scoped>
