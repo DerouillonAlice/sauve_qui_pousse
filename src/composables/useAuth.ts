@@ -137,10 +137,16 @@ export function useAuth() {
       return await login(email, password)
     } catch (err) {
       const apiErr = err as ApiError
+      console.error('[useAuth] register failed:', apiErr.status, apiErr.message)
       if (apiErr.status === 409) {
         state.error = 'auth.error.already_exists'
       } else if (apiErr.status === 400) {
         state.error = 'auth.error.missing_fields'
+      } else if (apiErr.status === 401) {
+        // Le backend protège /api/register derrière le firewall JWT
+        // → il faut ajouter /api/register dans les routes publiques de security.yaml
+        state.error = 'auth.error.server'
+        console.warn('[useAuth] 401 on /api/register — backend security.yaml needs to allow public access to this route')
       } else {
         state.error = 'auth.error.server'
       }
