@@ -1,7 +1,9 @@
 <script setup lang="ts">
+import { ref, computed } from 'vue'
 import { useI18n } from 'vue-i18n'
-import { ref } from 'vue'
 const { t, tm } = useI18n()
+
+const featureItems = computed(() => tm('play.features.items') as string[])
 
 type Mode = 'login' | 'register'
 const mode = ref<Mode>('login')
@@ -71,7 +73,7 @@ const mode = ref<Mode>('login')
         <div class="bg-primary/10 rounded-3xl p-8">
           <p class="font-semibold text-brown mb-4">{{ t('play.features.title') }}</p>
           <ul class="space-y-3">
-            <li v-for="(item, i) in (tm('play.features.items') as string[])" :key="i"
+            <li v-for="(item, i) in featureItems" :key="i"
               class="flex items-start gap-3 text-brown/70 text-sm leading-relaxed">
               <span class="text-primary mt-0.5">✓</span>
               {{ item }}

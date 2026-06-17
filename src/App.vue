@@ -4,7 +4,7 @@ import AppHeader from '@/components/AppHeader.vue'
 
 <template>
   <AppHeader />
-  <main>
+  <main class="w-full">
     <RouterView />
   </main>
 </template>

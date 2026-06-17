@@ -44,34 +44,61 @@
   },
   "rules": {
     "hero": {
-      "title": "The rules. In two minutes.",
-      "subtitle": "No 12-page manual needed. Here's everything you need to know to tend your garden and challenge other players."
+      "title": "Sauve qui pousse!",
+      "subtitle": "The game that does good for the garden.",
+      "intro": "Each player manages a garden of 6 cards. The more insects in your garden, the better off you are. Clear your hand of pesticide cards, sabotage your opponents, and be the first to finish!"
     },
-    "material": {
-      "title": "What's in the box",
-      "items": [
-        "A deck of insect and pesticide cards",
-        "A deck of bonus cards",
-        "A deck of malus cards",
-        "A tablet at the center of the table, with the wheel"
-      ]
+    "principle": {
+      "title": "Principle",
+      "desc": "Each turn, draw a new card and swap it with one in your hand to build a clean garden."
     },
-    "setup": {
-      "title": "Setup",
-      "desc": "Each player starts with 6 cards drawn from the main deck. You always keep 6 cards in hand throughout the game."
+    "wheel": {
+      "title": "The digital wheel",
+      "desc": "The wheel is only used to draw. It offers infinite spaces:",
+      "neutral": { "label": "Neutral spaces", "desc": "You draw and play normally." },
+      "bonus": { "label": "Bonus spaces", "desc": "Positive actions: protection, getting rid of bad cards..." },
+      "trap": { "label": "Trap spaces", "desc": "Negative actions: your hand gets sabotaged." }
     },
-    "turn": {
-      "title": "Your turn",
-      "desc": "Spin the wheel on the tablet. Three possible outcomes:",
-      "draw": { "label": "Draw", "desc": "Discard a card, then draw from the main deck." },
-      "bonus": { "label": "Bonus", "desc": "Draw a bonus card and apply its effect. Ex: You built a hive, your bees are protected for two turns." },
-      "malus": { "label": "Malus", "desc": "Draw a malus card and apply its effect. Ex: The lawnmower passed, give your best card to your left neighbor." }
+    "cards": {
+      "title": "The cards",
+      "positive": {
+        "title": "Positive cards",
+        "items": [
+          { "name": "Pollinators — Bees", "points": "+3 pts" },
+          { "name": "Natural predators — Ladybugs", "points": "+2 pts" },
+          { "name": "Decomposers — Earthworms", "points": "+1 pt" }
+        ]
+      },
+      "neutral": {
+        "title": "Neutral cards",
+        "items": [
+          { "name": "Farmers", "points": "0 pt" }
+        ]
+      },
+      "negative": {
+        "title": "Negative cards",
+        "items": [
+          { "name": "Contact insecticides", "points": "-3 pts" },
+          { "name": "Systemic pesticides & herbicides", "points": "-2 pts" },
+          { "name": "Disasters & destruction", "points": "-1 pt" }
+        ]
+      }
+    },
+    "bonusmalus": {
+      "title": "Bonus & Malus",
+      "bonus": { "label": "Bonus cards", "desc": "Human actions to help biodiversity." },
+      "malus": { "label": "Malus cards", "desc": "Harmful actions, bad weather, invasive insects..." }
     },
     "win": {
       "title": "How to win",
-      "desc": "When you think you have the best garden, shout 'Sauve qui pousse!' You need at least one bee, one ladybug and one earthworm in hand. Everyone finishes their turn, then all hands are revealed.",
-      "tip_label": "Gardener's tip",
-      "tip": "Keep an eye on the cards you discard: a savvy neighbor might pick them up to rebuild their own ecosystem."
+      "steps": [
+        "A player shouts \"Sauve qui pousse!\" when their hand total is positive.",
+        "The current round ends: all players finish their turn.",
+        "All hands are revealed and each player's points are added up.",
+        "The player with the highest score wins the round."
+      ],
+      "tiebreak_label": "Tie",
+      "tiebreak": "The player with the most insect cards wins."
     },
     "cta_home": "Back to home",
     "cta_cards": "Discover the cards",

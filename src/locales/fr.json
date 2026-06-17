@@ -44,34 +44,61 @@
   },
   "rules": {
     "hero": {
-      "title": "Les règles. En deux minutes.",
-      "subtitle": "Pas besoin de notice de 12 pages. Voici tout ce qu'il faut savoir pour cultiver ton jardin et défier les autres joueurs."
+      "title": "Sauve qui pousse !",
+      "subtitle": "Le jeu qui fait du bien au jardin.",
+      "intro": "Chaque joueur gère un jardin de 6 cartes. Plus ton jardin est rempli d'insectes, mieux tu te portes. Nettoie ta main des cartes pesticides, sabote tes adversaires, et sois le premier à finir !"
     },
-    "material": {
-      "title": "Le matériel",
-      "items": [
-        "Un deck de cartes insectes et pesticides",
-        "Un deck de cartes bonus",
-        "Un deck de cartes malus",
-        "Une tablette au centre de la table, avec la roue"
-      ]
+    "principle": {
+      "title": "Principe",
+      "desc": "À chaque tour, pioche une nouvelle carte et échange-la avec une de ton jeu pour avoir un jardin propre."
     },
-    "setup": {
-      "title": "Mise en place",
-      "desc": "Chaque joueur commence avec 6 cartes piochées dans le deck principal. Tu restes toujours à 6 cartes en main, tout au long de la partie."
+    "wheel": {
+      "title": "La roue numérique",
+      "desc": "La roue sert uniquement à piocher. Elle offre des cases infinies :",
+      "neutral": { "label": "Cases neutres", "desc": "Tu pioches et joues normalement." },
+      "bonus": { "label": "Cases bonus", "desc": "Actions positives : protection, débarras de mauvaises cartes..." },
+      "trap": { "label": "Cases piégées", "desc": "Actions négatives : ton jeu est saboté." }
     },
-    "turn": {
-      "title": "À ton tour",
-      "desc": "Tu fais tourner la roue sur la tablette. Trois résultats possibles :",
-      "draw": { "label": "Pioche", "desc": "Défausse une carte, puis pioche dans le deck principal." },
-      "bonus": { "label": "Bonus", "desc": "Pioche une carte bonus et applique son effet. Ex : Vous avez construit une ruche, vos abeilles sont protégées deux tours." },
-      "malus": { "label": "Malus", "desc": "Pioche une carte malus et applique son effet. Ex : La tondeuse est passée, cédez votre meilleure carte à votre voisin de gauche." }
+    "cards": {
+      "title": "Les cartes",
+      "positive": {
+        "title": "Cartes positives",
+        "items": [
+          { "name": "Pollinisateurs — Abeilles", "points": "+3 pts" },
+          { "name": "Prédateurs naturels — Coccinelles", "points": "+2 pts" },
+          { "name": "Décomposeurs — Vers de terre", "points": "+1 pt" }
+        ]
+      },
+      "neutral": {
+        "title": "Cartes neutres",
+        "items": [
+          { "name": "Agriculteurs", "points": "0 pt" }
+        ]
+      },
+      "negative": {
+        "title": "Cartes négatives",
+        "items": [
+          { "name": "Insecticides de contact", "points": "-3 pts" },
+          { "name": "Systémiques et herbicides", "points": "-2 pts" },
+          { "name": "Catastrophes et destructions", "points": "-1 pt" }
+        ]
+      }
+    },
+    "bonusmalus": {
+      "title": "Bonus & Malus",
+      "bonus": { "label": "Cartes bonus", "desc": "Actions des humains pour aider la biodiversité." },
+      "malus": { "label": "Cartes malus", "desc": "Actions néfastes, météo défavorable, insectes invasifs..." }
     },
     "win": {
       "title": "Comment gagner",
-      "desc": "Quand tu penses avoir le meilleur jardin, crie 'Sauve qui pousse !' Condition : avoir au moins une abeille, une coccinelle et un ver de terre en main. Tout le monde finit son tour, puis on révèle les mains.",
-      "tip_label": "Astuce de jardinier",
-      "tip": "Garde un œil sur les cartes que tu défausses : un voisin malin peut très bien les récupérer pour reconstituer son propre écosystème."
+      "steps": [
+        "Un joueur crie « Sauve qui pousse ! » quand le total de sa main est positif.",
+        "Le tour en cours se termine : tous les joueurs finissent leur tour.",
+        "On révèle toutes les mains et on additionne les points de chaque joueur.",
+        "Le joueur avec le score le plus élevé remporte la manche."
+      ],
+      "tiebreak_label": "Égalité",
+      "tiebreak": "Celui avec le plus de cartes insectes gagne."
     },
     "cta_home": "Retour à l'accueil",
     "cta_cards": "Découvrir les cartes",

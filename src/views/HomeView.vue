@@ -1,6 +1,9 @@
 <script setup lang="ts">
+import { computed } from 'vue'
 import { useI18n } from 'vue-i18n'
 const { t, tm } = useI18n()
+
+const pedagogyFacts = computed(() => tm('home.pedagogy.facts') as string[])
 </script>
 
 <template>
@@ -56,7 +59,7 @@ const { t, tm } = useI18n()
       <h2 class="text-brown mb-4">{{ t('home.pedagogy.title') }}</h2>
       <p class="text-brown/70 mb-8 italic">{{ t('home.pedagogy.intro') }}</p>
       <ul class="space-y-4 mb-10">
-        <li v-for="(fact, i) in (tm('home.pedagogy.facts') as string[])" :key="i"
+        <li v-for="(fact, i) in pedagogyFacts" :key="i"
           class="flex gap-3 items-start bg-cream rounded-xl px-5 py-4 shadow-sm">
           <span class="text-primary text-xl mt-0.5">🌿</span>
           <span class="text-brown/80 leading-relaxed">{{ fact }}</span>
