@@ -3,7 +3,10 @@
     "home": "Home",
     "play": "Play",
     "cards": "Cards",
-    "rules": "Rules"
+    "rules": "Rules",
+    "login": "Login",
+    "logout": "Logout",
+    "account": "My account"
   },
   "home": {
     "hero": {
@@ -115,7 +118,20 @@
       "bonus": { "label": "Bonus cards", "desc": "Allies for your garden" },
       "malus": { "label": "Malus cards", "desc": "The hazards of nature" }
     },
-    "wip": "Bonus and malus cards coming soon!"
+    "wip": "Bonus and malus cards coming soon!",
+    "filter": {
+      "all": "All",
+      "insects": "Insects",
+      "events": "Events",
+      "actions": "Actions",
+      "count": "cards total"
+    },
+    "detail": {
+      "prev": "← Previous",
+      "next": "Next →",
+      "flip_hint": "Click the illustration to flip the card",
+      "close": "Close"
+    }
   },
   "play": {
     "hero": {
@@ -132,11 +148,21 @@
     "register": {
       "title": "First garden?",
       "subtitle": "Create your account in seconds to start playing.",
-      "firstname": "First name",
+      "pseudo": "Username",
       "email": "Email",
       "password": "Password",
+      "confirm_password": "Confirm password",
       "submit": "Create my account",
-      "legal": "By creating an account, you agree to our terms of use and privacy policy."
+      "legal": "By creating an account, you agree to our terms of use and privacy policy.",
+      "success": "Account created! Logging in…"
+    },
+    "logged": {
+      "welcome": "Welcome,",
+      "subtitle": "Your garden is ready. Create or join a game!",
+      "create_game": "Create a game",
+      "join_game": "Join a game",
+      "join_code_placeholder": "Game code",
+      "logout": "Log out"
     },
     "features": {
       "title": "Once logged in:",
@@ -150,6 +176,15 @@
       "title": "Just want to try?",
       "desc": "Discover a demo game without creating an account. Perfect for getting a feel before diving in for real.",
       "cta": "Launch demo"
+    }
+  },
+  "auth": {
+    "error": {
+      "invalid_credentials": "Invalid email or password.",
+      "already_exists": "An account with this email already exists.",
+      "missing_fields": "All fields are required.",
+      "server": "Something went wrong. Please try again later.",
+      "passwords_mismatch": "Passwords do not match."
     }
   }
 }
