@@ -1,11 +1,13 @@
 /**
  * Service API — wrapper fetch pour le backend Sauve qui Pousse.
  *
- * Toutes les requêtes passent par le proxy Vite `/api` → http://127.0.0.1:8081/api
- * afin d'éviter les problèmes CORS en développement.
+ * En dev  : le proxy Vite redirige `/api` → http://127.0.0.1:8081/api
+ * En prod : appel direct vers https://api.sauvequipousse.fr/api
  */
 
-const API_BASE = '/api'
+const API_BASE = import.meta.env.PROD
+  ? 'https://api.sauvequipousse.fr/api'
+  : '/api'
 
 function getToken(): string | null {
   return localStorage.getItem('sqp_token')
