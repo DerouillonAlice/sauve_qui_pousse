@@ -109,7 +109,7 @@ const emptySlots = computed(() => Math.max(0, MAX_PLAYERS - participants.value.l
     >
       <div v-if="game.error" class="flex items-center gap-3 px-4 py-3 bg-red/10 text-red rounded-xl text-sm">
         <AlertCircle :stroke-width="1.5" class="w-5 h-5 shrink-0" />
-        <span>{{ game.error }}</span>
+        <span>{{ t(game.error) }}</span>
       </div>
     </Transition>
 
@@ -184,18 +184,18 @@ const emptySlots = computed(() => Math.max(0, MAX_PLAYERS - participants.value.l
 
     <!-- ── LANCER (owner) ── -->
     <div v-if="isOwner" class="pt-2 text-center">
+      <p v-if="participants.length < 2" class="text-brown/50 text-sm mb-3 bg-cream-dark rounded-xl px-4 py-2">
+        {{ t('game.lobby.need_players') }}
+      </p>
       <button
         @click="handleStart"
         :disabled="!canStart || isStarting"
-        class="inline-flex items-center justify-center gap-3 px-12 py-4 bg-primary text-cream rounded-full font-bold text-lg cursor-pointer shadow-lg shadow-primary/30 hover:scale-[1.03] hover:shadow-xl hover:shadow-primary/40 active:scale-[0.97] transition-all disabled:opacity-40 disabled:cursor-not-allowed"
+        class="inline-flex items-center justify-center gap-3 px-12 py-4 bg-primary text-cream rounded-full font-bold text-lg cursor-pointer shadow-lg shadow-primary/30 hover:scale-[1.03] hover:shadow-xl hover:shadow-primary/40 active:scale-[0.97] transition-all disabled:opacity-40 disabled:cursor-not-allowed disabled:shadow-none disabled:scale-100"
       >
         <Loader2 v-if="isStarting" :stroke-width="2" class="w-6 h-6 animate-spin" />
         <Play v-else :stroke-width="2" class="w-6 h-6 fill-cream" />
         {{ t('game.lobby.start') }}
       </button>
-      <p v-if="participants.length < 2" class="text-brown/40 text-xs mt-3">
-        {{ t('game.lobby.need_players') }}
-      </p>
     </div>
 
     <!-- ── ATTENTE (non-owner) ── -->

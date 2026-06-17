@@ -8,6 +8,16 @@
 import { reactive, computed, readonly, ref } from 'vue'
 import { apiFetch, type ApiError } from '@/services/api'
 
+const ERROR_MAP: Record<string, string> = {
+  'This pseudo is already taken in this game session.': 'game.error.pseudo_taken',
+  'Invalid or expired join code.': 'game.error.invalid_code',
+  'Cannot join a game session that is already started or finished.': 'game.error.session_started',
+}
+
+function mapError(msg: string): string {
+  return ERROR_MAP[msg] ?? msg
+}
+
 /* ───────── Types ───────── */
 
 export interface GameParticipant {
@@ -109,7 +119,7 @@ export function useGame() {
       return true
     } catch (err) {
       const apiErr = err as ApiError
-      state.error = apiErr.message
+      state.error = mapError(apiErr.message)
       return false
     } finally {
       state.isLoading = false
@@ -129,7 +139,7 @@ export function useGame() {
       return true
     } catch (err) {
       const apiErr = err as ApiError
-      state.error = apiErr.message
+      state.error = mapError(apiErr.message)
       return false
     } finally {
       state.isLoading = false
@@ -156,7 +166,7 @@ export function useGame() {
       return true
     } catch (err) {
       const apiErr = err as ApiError
-      state.error = apiErr.message
+      state.error = mapError(apiErr.message)
       return false
     } finally {
       state.isLoading = false
@@ -176,7 +186,7 @@ export function useGame() {
       return true
     } catch (err) {
       const apiErr = err as ApiError
-      state.error = apiErr.message
+      state.error = mapError(apiErr.message)
       return false
     } finally {
       state.isLoading = false
@@ -198,7 +208,7 @@ export function useGame() {
       return result
     } catch (err) {
       const apiErr = err as ApiError
-      state.error = apiErr.message
+      state.error = mapError(apiErr.message)
       return null
     } finally {
       state.isLoading = false
@@ -219,7 +229,7 @@ export function useGame() {
       return true
     } catch (err) {
       const apiErr = err as ApiError
-      state.error = apiErr.message
+      state.error = mapError(apiErr.message)
       return false
     } finally {
       state.isLoading = false
@@ -242,7 +252,7 @@ export function useGame() {
       return true
     } catch (err) {
       const apiErr = err as ApiError
-      state.error = apiErr.message
+      state.error = mapError(apiErr.message)
       return false
     } finally {
       state.isLoading = false

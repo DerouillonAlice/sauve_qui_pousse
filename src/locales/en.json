@@ -207,6 +207,11 @@
     }
   },
   "game": {
+    "active": {
+      "title": "Game in progress!",
+      "desc": "The game has started. The game view is coming soon.",
+      "leave": "Leave game"
+    },
     "lobby": {
       "title": "Waiting Room",
       "code_label": "Code",
@@ -223,6 +228,11 @@
       "start": "Start Game",
       "need_players": "You need at least 2 players to start.",
       "waiting_host": "Waiting for the host to start…"
+    },
+    "error": {
+      "pseudo_taken": "This name is already taken in this game.",
+      "invalid_code": "Invalid or expired code.",
+      "session_started": "This game has already started or finished."
     },
     "join": {
       "title": "Join a game",
