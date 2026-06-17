@@ -3,7 +3,10 @@
     "home": "Accueil",
     "play": "Jouer",
     "cards": "Cartes",
-    "rules": "Règles"
+    "rules": "Règles",
+    "login": "Connexion",
+    "logout": "Déconnexion",
+    "account": "Mon compte"
   },
   "home": {
     "hero": {
@@ -128,7 +131,20 @@
       "bonus": { "label": "Cartes bonus", "desc": "Des alliés pour ton jardin" },
       "malus": { "label": "Cartes malus", "desc": "Les aléas de la nature" }
     },
-    "wip": "Les cartes bonus et malus arrivent bientôt !"
+    "wip": "Les cartes bonus et malus arrivent bientôt !",
+    "filter": {
+      "all": "Toutes",
+      "insects": "Insectes",
+      "events": "Événements",
+      "actions": "Actions",
+      "count": "cartes au total"
+    },
+    "detail": {
+      "prev": "← Précédente",
+      "next": "Suivante →",
+      "flip_hint": "Clic sur l'illustration pour retourner la carte",
+      "close": "Fermer"
+    }
   },
   "play": {
     "hero": {
@@ -145,11 +161,21 @@
     "register": {
       "title": "Premier jardin ?",
       "subtitle": "Crée ton compte en quelques secondes pour commencer à jouer.",
-      "firstname": "Prénom",
+      "pseudo": "Pseudo",
       "email": "Email",
       "password": "Mot de passe",
+      "confirm_password": "Confirmer le mot de passe",
       "submit": "Créer mon compte",
-      "legal": "En créant un compte, tu acceptes nos conditions d'utilisation et notre politique de confidentialité."
+      "legal": "En créant un compte, tu acceptes nos conditions d'utilisation et notre politique de confidentialité.",
+      "success": "Compte créé avec succès ! Connexion en cours…"
+    },
+    "logged": {
+      "welcome": "Bienvenue,",
+      "subtitle": "Ton jardin est prêt. Crée ou rejoins une partie !",
+      "create_game": "Créer une partie",
+      "join_game": "Rejoindre une partie",
+      "join_code_placeholder": "Code de la partie",
+      "logout": "Se déconnecter"
     },
     "features": {
       "title": "Une fois connecté :",
@@ -163,6 +189,15 @@
       "title": "Juste envie de tester ?",
       "desc": "Découvre une partie de démonstration sans créer de compte. Idéal pour se faire une idée avant de te lancer pour de vrai.",
       "cta": "Lancer la démo"
+    }
+  },
+  "auth": {
+    "error": {
+      "invalid_credentials": "Email ou mot de passe incorrect.",
+      "already_exists": "Un compte existe déjà avec cet email.",
+      "missing_fields": "Tous les champs sont obligatoires.",
+      "server": "Une erreur est survenue. Réessaie dans quelques instants.",
+      "passwords_mismatch": "Les mots de passe ne correspondent pas."
     }
   }
 }
