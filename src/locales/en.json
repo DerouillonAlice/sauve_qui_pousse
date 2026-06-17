@@ -209,8 +209,24 @@
   "game": {
     "active": {
       "title": "Game in progress!",
-      "desc": "The game has started. The game view is coming soon.",
-      "leave": "Leave game"
+      "desc": "The game has started.",
+      "leave": "Leave game",
+      "round": "Round {n}",
+      "sauve": "Sauve qui pousse!",
+      "turn": "It's the turn of",
+      "spin": "Spin",
+      "extra_spin_title": "Bonus Spin!",
+      "extra_spin_desc": "You get to spin the wheel one more time.",
+      "spin_again": "Spin Again",
+      "skip_title": "Turn Skipped",
+      "skip_desc": "No card this time. Pass it on.",
+      "end_turn": "End Turn",
+      "scores": "Scores",
+      "winner_prompt": "Who won the round?",
+      "cancel": "Cancel",
+      "confirm_win": "Confirm",
+      "game_over": "Game Over!",
+      "finish": "End Game"
     },
     "lobby": {
       "title": "Waiting Room",

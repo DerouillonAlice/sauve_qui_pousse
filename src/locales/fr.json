@@ -209,8 +209,24 @@
   "game": {
     "active": {
       "title": "Partie en cours !",
-      "desc": "La partie a été lancée. La vue de jeu arrive bientôt.",
-      "leave": "Quitter la partie"
+      "desc": "La partie a été lancée.",
+      "leave": "Quitter la partie",
+      "round": "Manche {n}",
+      "sauve": "Sauve qui pousse !",
+      "turn": "C'est le tour de",
+      "spin": "Tourner",
+      "extra_spin_title": "Coup bonus !",
+      "extra_spin_desc": "Tu peux retourner la roue une fois de plus.",
+      "spin_again": "Retourner",
+      "skip_title": "Tour passé",
+      "skip_desc": "Aucune carte cette fois. Passe la main.",
+      "end_turn": "Fin du tour",
+      "scores": "Scores",
+      "winner_prompt": "Qui a remporté la manche ?",
+      "cancel": "Annuler",
+      "confirm_win": "Confirmer",
+      "game_over": "Partie terminée !",
+      "finish": "Terminer la partie"
     },
     "lobby": {
       "title": "Salle d'attente",

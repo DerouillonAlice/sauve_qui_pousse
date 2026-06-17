@@ -4,6 +4,7 @@ import { useI18n } from 'vue-i18n'
 import { useAuth } from '@/composables/useAuth'
 import { useGame } from '@/composables/useGame'
 import GameLobby from '@/components/GameLobby.vue'
+import GameActive from '@/components/GameActive.vue'
 import { LogOut, Gamepad2, Users, Loader2, AlertCircle, CheckCircle2 } from 'lucide-vue-next'
 
 const { t, tm } = useI18n()
@@ -90,7 +91,10 @@ onUnmounted(() => stopPolling())
 </script>
 
 <template>
-  <div class="bg-cream min-h-screen">
+  <!-- Full-screen game view — bypasses hero+grid entirely -->
+  <GameActive v-if="isAuthenticated && isInGame && isActive" />
+
+  <div v-else class="bg-cream min-h-screen">
 
     <!-- HERO -->
     <section class="py-16 px-6 text-center bg-cream-dark">
@@ -102,23 +106,8 @@ onUnmounted(() => stopPolling())
 
     <div class="max-w-4xl mx-auto px-6 py-16 grid gap-12 lg:grid-cols-2">
 
-      <!-- IN-GAME: PARTIE EN COURS -->
-      <div v-if="isAuthenticated && isInGame && isActive" class="lg:col-span-2">
-        <div class="max-w-lg mx-auto px-4 py-12 text-center flex flex-col items-center gap-6">
-          <div class="w-20 h-20 rounded-full bg-primary/20 flex items-center justify-center">
-            <Gamepad2 :stroke-width="1.5" class="w-10 h-10 text-primary" />
-          </div>
-          <h2 class="text-brown">{{ t('game.active.title') }}</h2>
-          <p class="text-brown/60 text-sm">{{ t('game.active.desc') }}</p>
-          <button @click="handleLeaveGame"
-            class="px-8 py-3 border-2 border-brown/30 text-brown/60 rounded-full text-sm font-semibold hover:border-red hover:text-red transition-colors cursor-pointer">
-            {{ t('game.active.leave') }}
-          </button>
-        </div>
-      </div>
-
       <!-- IN-GAME: LOBBY -->
-      <div v-else-if="isAuthenticated && isInGame" class="lg:col-span-2">
+      <div v-if="isAuthenticated && isInGame" class="lg:col-span-2">
         <GameLobby @leave="handleLeaveGame" />
       </div>
 
