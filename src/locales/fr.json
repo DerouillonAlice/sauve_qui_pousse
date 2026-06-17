@@ -6,20 +6,150 @@
     "rules": "Règles"
   },
   "home": {
-    "title": "Accueil",
-    "description": "Un jeu interactif amusant"
-  },
-  "play": {
-    "title": "Jouer",
-    "start": "Commencer",
-    "restart": "Recommencer"
-  },
-  "cards": {
-    "title": "Cartes",
-    "back": "Retour"
+    "hero": {
+      "title": "Et si sauver la planète tenait entre tes mains ?",
+      "subtitle": "Sauve qui Pousse est le jeu où ton jardin devient le terrain d'une bataille pour la biodiversité. Six cartes, une mission : avoir le jardin le plus propre.",
+      "tagline": "Sauve qui Pousse, le jeu qui fait du bien au jardin.",
+      "cta_rules": "Découvrir les règles",
+      "cta_play": "Jouer en ligne"
+    },
+    "concept": {
+      "title": "Autour de la table, chacun cultive son jardin.",
+      "p1": "Une abeille qui pollinise, une coccinelle qui veille, un ver de terre qui retourne la terre : chaque petite bête fait grimper ton score. Mais la nature est fragile, et la roue au centre de la table en a décidé ainsi.",
+      "p2": "À chaque tour, elle tourne et scelle ton destin. Tu plantes une haie, tu creuses une mare, tu fais venir les pollinisateurs... ou la tondeuse passe, le gel frappe, le chat du voisin sème la pagaille.",
+      "p3": "Tu protèges tes insectes. Tu sabotes ceux des autres. Tu refiles tes pesticides au voisin avec un grand sourire.",
+      "p4": "C'est ça, Sauve qui Pousse."
+    },
+    "how": {
+      "title": "Trois decks. Une roue. Un cri de victoire.",
+      "desc": "Pioche, bonus ou malus : à chaque tour, la roue décide. Construis ton jardin, protège-le, et quand tu penses avoir le meilleur écosystème de la table, crie 'Sauve qui pousse !'",
+      "cta": "Voir les règles complètes"
+    },
+    "pedagogy": {
+      "title": "Un jeu qui s'amuse, et qui apprend.",
+      "intro": "Chaque carte cache une information. Pas un cours, un fait, simple et marquant.",
+      "facts": [
+        "Les abeilles pollinisent 80 % des plantes à fleurs. Sans elles, pas de fruits, pas de légumes.",
+        "La tondeuse détruit les insectes et leurs habitats. Laisser pousser l'herbe protège la biodiversité.",
+        "La jachère, c'est laisser un champ se reposer. Ça permet aux insectes de se réinstaller naturellement."
+      ],
+      "conclusion": "Les insectes sont essentiels : abeilles, coccinelles, vers de terre font vivre nos écosystèmes. Défendre l'environnement n'a pas d'âge. C'est un combat qui traverse les générations."
+    },
+    "audience": {
+      "title": "De 7 à 77 ans.",
+      "desc": "En famille, entre amis, ou en classe : Sauve qui Pousse s'adapte à tous les jardins et à tous les jardiniers.",
+      "cta_cards": "Découvrir les cartes",
+      "cta_play": "Jouer en ligne"
+    }
   },
   "rules": {
-    "title": "Règles",
-    "description": "Comment jouer"
+    "hero": {
+      "title": "Sauve qui pousse !",
+      "subtitle": "Le jeu qui fait du bien au jardin.",
+      "intro": "Chaque joueur gère un jardin de 6 cartes. Plus ton jardin est rempli d'insectes, mieux tu te portes. Nettoie ta main des cartes pesticides, sabote tes adversaires, et sois le premier à finir !"
+    },
+    "principle": {
+      "title": "Principe",
+      "desc": "À chaque tour, pioche une nouvelle carte et échange-la avec une de ton jeu pour avoir un jardin propre."
+    },
+    "wheel": {
+      "title": "La roue numérique",
+      "desc": "La roue sert uniquement à piocher. Elle offre des cases infinies :",
+      "neutral": { "label": "Cases neutres", "desc": "Tu pioches et joues normalement." },
+      "bonus": { "label": "Cases bonus", "desc": "Actions positives : protection, débarras de mauvaises cartes..." },
+      "trap": { "label": "Cases piégées", "desc": "Actions négatives : ton jeu est saboté." }
+    },
+    "cards": {
+      "title": "Les cartes",
+      "positive": {
+        "title": "Cartes positives",
+        "items": [
+          { "name": "Pollinisateurs — Abeilles", "points": "+3 pts" },
+          { "name": "Prédateurs naturels — Coccinelles", "points": "+2 pts" },
+          { "name": "Décomposeurs — Vers de terre", "points": "+1 pt" }
+        ]
+      },
+      "neutral": {
+        "title": "Cartes neutres",
+        "items": [
+          { "name": "Agriculteurs", "points": "0 pt" }
+        ]
+      },
+      "negative": {
+        "title": "Cartes négatives",
+        "items": [
+          { "name": "Insecticides de contact", "points": "-3 pts" },
+          { "name": "Systémiques et herbicides", "points": "-2 pts" },
+          { "name": "Catastrophes et destructions", "points": "-1 pt" }
+        ]
+      }
+    },
+    "bonusmalus": {
+      "title": "Bonus & Malus",
+      "bonus": { "label": "Cartes bonus", "desc": "Actions des humains pour aider la biodiversité." },
+      "malus": { "label": "Cartes malus", "desc": "Actions néfastes, météo défavorable, insectes invasifs..." }
+    },
+    "win": {
+      "title": "Comment gagner",
+      "steps": [
+        "Un joueur crie « Sauve qui pousse ! » quand le total de sa main est positif.",
+        "Le tour en cours se termine : tous les joueurs finissent leur tour.",
+        "On révèle toutes les mains et on additionne les points de chaque joueur.",
+        "Le joueur avec le score le plus élevé remporte la manche."
+      ],
+      "tiebreak_label": "Égalité",
+      "tiebreak": "Celui avec le plus de cartes insectes gagne."
+    },
+    "cta_home": "Retour à l'accueil",
+    "cta_cards": "Découvrir les cartes",
+    "cta_play": "Jouer en ligne"
+  },
+  "cards": {
+    "hero": {
+      "title": "Chaque carte a une histoire.",
+      "subtitle": "Derrière chaque illustration, il y a un insecte, un geste ou un aléa du jardin — et toujours un petit fait qui en dit long sur la biodiversité."
+    },
+    "families": {
+      "title": "Trois familles de cartes",
+      "main": { "label": "Deck principal", "desc": "Insectes et pesticides" },
+      "bonus": { "label": "Cartes bonus", "desc": "Des alliés pour ton jardin" },
+      "malus": { "label": "Cartes malus", "desc": "Les aléas de la nature" }
+    },
+    "wip": "Les cartes bonus et malus arrivent bientôt !"
+  },
+  "play": {
+    "hero": {
+      "title": "Ton jardin t'attend.",
+      "subtitle": "Crée ton compte ou connecte-toi pour rejoindre une partie en ligne."
+    },
+    "login": {
+      "title": "Déjà un compte ?",
+      "email": "Email",
+      "password": "Mot de passe",
+      "submit": "Se connecter",
+      "forgot": "Mot de passe oublié ?"
+    },
+    "register": {
+      "title": "Premier jardin ?",
+      "subtitle": "Crée ton compte en quelques secondes pour commencer à jouer.",
+      "firstname": "Prénom",
+      "email": "Email",
+      "password": "Mot de passe",
+      "submit": "Créer mon compte",
+      "legal": "En créant un compte, tu acceptes nos conditions d'utilisation et notre politique de confidentialité."
+    },
+    "features": {
+      "title": "Une fois connecté :",
+      "items": [
+        "Crée une partie et invite tes amis avec un simple code",
+        "Fais tourner la roue directement depuis l'écran, comme sur la tablette physique",
+        "Suis ton jardin et celui des autres joueurs en temps réel"
+      ]
+    },
+    "demo": {
+      "title": "Juste envie de tester ?",
+      "desc": "Découvre une partie de démonstration sans créer de compte. Idéal pour se faire une idée avant de te lancer pour de vrai.",
+      "cta": "Lancer la démo"
+    }
   }
 }

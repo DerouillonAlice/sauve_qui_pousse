@@ -6,20 +6,150 @@
     "rules": "Rules"
   },
   "home": {
-    "title": "Home",
-    "description": "A fun interactive game"
-  },
-  "play": {
-    "title": "Play",
-    "start": "Start",
-    "restart": "Restart"
-  },
-  "cards": {
-    "title": "Cards",
-    "back": "Back"
+    "hero": {
+      "title": "What if saving the planet was in your hands?",
+      "subtitle": "Sauve qui Pousse is the game where your garden becomes the battlefield for biodiversity. Six cards, one mission: have the cleanest garden.",
+      "tagline": "Sauve qui Pousse, the game that does good for the garden.",
+      "cta_rules": "Discover the rules",
+      "cta_play": "Play online"
+    },
+    "concept": {
+      "title": "Around the table, everyone tends their garden.",
+      "p1": "A pollinating bee, a watchful ladybug, an earthworm turning the soil: every little creature boosts your score. But nature is fragile, and the wheel at the center of the table has the final say.",
+      "p2": "Each turn, it spins and seals your fate. You plant a hedge, dig a pond, attract pollinators... or the lawnmower rolls through, frost strikes, the neighbor's cat causes chaos.",
+      "p3": "You protect your insects. You sabotage others'. You pass your pesticides to your neighbor with a big smile.",
+      "p4": "That's Sauve qui Pousse."
+    },
+    "how": {
+      "title": "Three decks. One wheel. One victory cry.",
+      "desc": "Draw, bonus or malus: each turn, the wheel decides. Build your garden, protect it, and when you think you have the best ecosystem at the table, shout 'Sauve qui pousse!'",
+      "cta": "See full rules"
+    },
+    "pedagogy": {
+      "title": "A game that entertains and teaches.",
+      "intro": "Every card hides a fact. Not a lecture — a simple, striking truth.",
+      "facts": [
+        "Bees pollinate 80% of flowering plants. Without them, no fruit, no vegetables.",
+        "Lawnmowers destroy insects and their habitats. Letting grass grow protects biodiversity.",
+        "Fallow land is leaving a field to rest. It lets insects naturally resettle."
+      ],
+      "conclusion": "Insects are essential: bees, ladybugs, earthworms sustain our ecosystems. Defending the environment has no age. It's a fight that spans generations."
+    },
+    "audience": {
+      "title": "Ages 7 to 77.",
+      "desc": "With family, friends, or in class: Sauve qui Pousse fits every garden and every gardener.",
+      "cta_cards": "Discover the cards",
+      "cta_play": "Play online"
+    }
   },
   "rules": {
-    "title": "Rules",
-    "description": "How to play"
+    "hero": {
+      "title": "Sauve qui pousse!",
+      "subtitle": "The game that does good for the garden.",
+      "intro": "Each player manages a garden of 6 cards. The more insects in your garden, the better off you are. Clear your hand of pesticide cards, sabotage your opponents, and be the first to finish!"
+    },
+    "principle": {
+      "title": "Principle",
+      "desc": "Each turn, draw a new card and swap it with one in your hand to build a clean garden."
+    },
+    "wheel": {
+      "title": "The digital wheel",
+      "desc": "The wheel is only used to draw. It offers infinite spaces:",
+      "neutral": { "label": "Neutral spaces", "desc": "You draw and play normally." },
+      "bonus": { "label": "Bonus spaces", "desc": "Positive actions: protection, getting rid of bad cards..." },
+      "trap": { "label": "Trap spaces", "desc": "Negative actions: your hand gets sabotaged." }
+    },
+    "cards": {
+      "title": "The cards",
+      "positive": {
+        "title": "Positive cards",
+        "items": [
+          { "name": "Pollinators — Bees", "points": "+3 pts" },
+          { "name": "Natural predators — Ladybugs", "points": "+2 pts" },
+          { "name": "Decomposers — Earthworms", "points": "+1 pt" }
+        ]
+      },
+      "neutral": {
+        "title": "Neutral cards",
+        "items": [
+          { "name": "Farmers", "points": "0 pt" }
+        ]
+      },
+      "negative": {
+        "title": "Negative cards",
+        "items": [
+          { "name": "Contact insecticides", "points": "-3 pts" },
+          { "name": "Systemic pesticides & herbicides", "points": "-2 pts" },
+          { "name": "Disasters & destruction", "points": "-1 pt" }
+        ]
+      }
+    },
+    "bonusmalus": {
+      "title": "Bonus & Malus",
+      "bonus": { "label": "Bonus cards", "desc": "Human actions to help biodiversity." },
+      "malus": { "label": "Malus cards", "desc": "Harmful actions, bad weather, invasive insects..." }
+    },
+    "win": {
+      "title": "How to win",
+      "steps": [
+        "A player shouts \"Sauve qui pousse!\" when their hand total is positive.",
+        "The current round ends: all players finish their turn.",
+        "All hands are revealed and each player's points are added up.",
+        "The player with the highest score wins the round."
+      ],
+      "tiebreak_label": "Tie",
+      "tiebreak": "The player with the most insect cards wins."
+    },
+    "cta_home": "Back to home",
+    "cta_cards": "Discover the cards",
+    "cta_play": "Play online"
+  },
+  "cards": {
+    "hero": {
+      "title": "Every card has a story.",
+      "subtitle": "Behind every illustration, there's an insect, a gesture or a garden hazard — and always a small fact that says a lot about biodiversity."
+    },
+    "families": {
+      "title": "Three card families",
+      "main": { "label": "Main deck", "desc": "Insects and pesticides" },
+      "bonus": { "label": "Bonus cards", "desc": "Allies for your garden" },
+      "malus": { "label": "Malus cards", "desc": "The hazards of nature" }
+    },
+    "wip": "Bonus and malus cards coming soon!"
+  },
+  "play": {
+    "hero": {
+      "title": "Your garden awaits.",
+      "subtitle": "Create an account or log in to join an online game."
+    },
+    "login": {
+      "title": "Already have an account?",
+      "email": "Email",
+      "password": "Password",
+      "submit": "Log in",
+      "forgot": "Forgot password?"
+    },
+    "register": {
+      "title": "First garden?",
+      "subtitle": "Create your account in seconds to start playing.",
+      "firstname": "First name",
+      "email": "Email",
+      "password": "Password",
+      "submit": "Create my account",
+      "legal": "By creating an account, you agree to our terms of use and privacy policy."
+    },
+    "features": {
+      "title": "Once logged in:",
+      "items": [
+        "Create a game and invite friends with a simple code",
+        "Spin the wheel directly from the screen, just like the physical tablet",
+        "Follow your garden and other players in real time"
+      ]
+    },
+    "demo": {
+      "title": "Just want to try?",
+      "desc": "Discover a demo game without creating an account. Perfect for getting a feel before diving in for real.",
+      "cta": "Launch demo"
+    }
   }
 }
