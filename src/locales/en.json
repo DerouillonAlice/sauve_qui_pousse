@@ -152,22 +152,28 @@
       "subtitle": "Create an account or log in to join an online game."
     },
     "login": {
-      "title": "Already have an account?",
-      "email": "Email",
+      "title": "Log in!",
+      "email": "E-mail",
       "password": "Password",
       "submit": "Log in",
-      "forgot": "Forgot password?"
+      "forgot": "Forgot password?",
+      "switch_register": "Don't have an account?",
+      "switch_register_link": "Sign up"
     },
     "register": {
-      "title": "First garden?",
+      "title": "Sign up!",
       "subtitle": "Create your account in seconds to start playing.",
-      "pseudo": "Username",
-      "email": "Email",
+      "firstname": "First name",
+      "lastname": "Last name",
+      "email": "E-mail",
       "password": "Password",
+      "password_hint": "8 characters minimum",
       "confirm_password": "Confirm password",
-      "submit": "Create my account",
-      "legal": "By creating an account, you agree to our terms of use and privacy policy.",
-      "success": "Account created! Logging in…"
+      "submit": "Create account",
+      "legal": "By creating an account, you agree to our terms of use.",
+      "success": "Account created! Logging in…",
+      "switch_login": "Already have an account?",
+      "switch_login_link": "Log in"
     },
     "logged": {
       "welcome": "Welcome,",

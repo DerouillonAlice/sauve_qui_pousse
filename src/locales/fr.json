@@ -152,22 +152,28 @@
       "subtitle": "Crée ton compte ou connecte-toi pour rejoindre une partie en ligne."
     },
     "login": {
-      "title": "Déjà un compte ?",
-      "email": "Email",
-      "password": "Mot de passe",
+      "title": "Connectez vous !",
+      "email": "E-mail",
+      "password": "Mot de Passe",
       "submit": "Se connecter",
-      "forgot": "Mot de passe oublié ?"
+      "forgot": "Mot de passe oublié ?",
+      "switch_register": "Pas encore de compte ?",
+      "switch_register_link": "S'inscrire"
     },
     "register": {
-      "title": "Premier jardin ?",
+      "title": "Inscrivez vous !",
       "subtitle": "Crée ton compte en quelques secondes pour commencer à jouer.",
-      "pseudo": "Pseudo",
-      "email": "Email",
-      "password": "Mot de passe",
+      "firstname": "Prénom",
+      "lastname": "Nom",
+      "email": "E-mail",
+      "password": "Mot de Passe",
+      "password_hint": "8 caractères minimum",
       "confirm_password": "Confirmer le mot de passe",
-      "submit": "Créer mon compte",
-      "legal": "En créant un compte, tu acceptes nos conditions d'utilisation et notre politique de confidentialité.",
-      "success": "Compte créé avec succès ! Connexion en cours…"
+      "submit": "Créer son compte",
+      "legal": "En créant un compte, tu acceptes les conditions d'utilisation.",
+      "success": "Compte créé avec succès ! Connexion en cours…",
+      "switch_login": "Déjà un compte ?",
+      "switch_login_link": "Se connecter"
     },
     "logged": {
       "welcome": "Bienvenue,",
