@@ -40,6 +40,29 @@ function next() {
 function prev() {
   currentIndex.value = (currentIndex.value - 1 + sliderCards.value.length) % sliderCards.value.length
 }
+
+/* ── Drag / swipe ── */
+const sliderRef = ref<HTMLElement | null>(null)
+let dragStartX = 0
+let isDragging = false
+
+function onPointerDown(e: PointerEvent) {
+  isDragging = true
+  dragStartX = e.clientX
+  ;(e.currentTarget as HTMLElement).setPointerCapture(e.pointerId)
+}
+function onPointerMove(e: PointerEvent) {
+  if (!isDragging) return
+  // visual feedback could go here
+}
+function onPointerUp(e: PointerEvent) {
+  if (!isDragging) return
+  isDragging = false
+  const delta = e.clientX - dragStartX
+  if (Math.abs(delta) > 40) {
+    delta < 0 ? next() : prev()
+  }
+}
 </script>
 
 <template>
@@ -94,7 +117,14 @@ function prev() {
       <!-- Slider -->
       <div class="relative">
         <!-- Cards fan -->
-        <div class="flex items-center justify-center gap-0 h-[380px] relative">
+        <div
+          ref="sliderRef"
+          class="flex items-center justify-center gap-0 h-[380px] relative select-none touch-pan-y"
+          @pointerdown="onPointerDown"
+          @pointermove="onPointerMove"
+          @pointerup="onPointerUp"
+          @pointercancel="onPointerUp"
+        >
           <TransitionGroup name="card-slide">
             <div
               v-for="card in visibleCards"
@@ -102,7 +132,6 @@ function prev() {
               class="absolute transition-all duration-500 ease-out"
               :style="{
                 transform: `translateX(${card.offset * 160}px) scale(${card.offset === 0 ? 1 : 0.85}) rotate(${card.offset * 4}deg)`,
-                opacity: card.offset === 0 ? 1 : Math.abs(card.offset) === 1 ? 0.6 : 0.3,
                 zIndex: 10 - Math.abs(card.offset),
               }"
             >
@@ -131,10 +160,10 @@ function prev() {
         </button>
       </div>
 
-      <!-- Card info -->
-      <div class="text-center mt-8">
+      <!-- Card info (fixed height to prevent layout shift) -->
+      <div class="text-center mt-8 h-24">
         <h3 class="text-brown mb-2">{{ currentCard.name }}</h3>
-        <p class="text-brown/60 max-w-md mx-auto leading-relaxed">{{ currentCard.desc }}</p>
+        <p class="text-brown/60 max-w-md mx-auto leading-relaxed line-clamp-2">{{ currentCard.desc }}</p>
       </div>
 
       <!-- Dots -->
