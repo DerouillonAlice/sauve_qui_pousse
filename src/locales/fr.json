@@ -205,5 +205,25 @@
       "server": "Une erreur est survenue. Réessaie dans quelques instants.",
       "passwords_mismatch": "Les mots de passe ne correspondent pas."
     }
+  },
+  "game": {
+    "lobby": {
+      "title": "Salle d'attente",
+      "code_label": "Code pour rejoindre",
+      "code_hint": "Partagez ce code avec les autres joueurs",
+      "copy": "Copier le code",
+      "players": "Joueurs",
+      "guest": "Invité",
+      "guest_name_placeholder": "Prénom du joueur…",
+      "start": "Lancer la partie",
+      "need_players": "Il faut au moins 2 joueurs pour commencer.",
+      "waiting_host": "En attente du lancement par l'hôte…"
+    },
+    "join": {
+      "title": "Rejoindre une partie",
+      "placeholder": "CODE",
+      "cancel": "Annuler",
+      "submit": "Rejoindre"
+    }
   }
 }

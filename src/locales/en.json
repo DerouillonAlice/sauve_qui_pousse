@@ -205,5 +205,25 @@
       "server": "Something went wrong. Please try again later.",
       "passwords_mismatch": "Passwords do not match."
     }
+  },
+  "game": {
+    "lobby": {
+      "title": "Waiting Room",
+      "code_label": "Join Code",
+      "code_hint": "Share this code with other players",
+      "copy": "Copy code",
+      "players": "Players",
+      "guest": "Guest",
+      "guest_name_placeholder": "Player name…",
+      "start": "Start Game",
+      "need_players": "You need at least 2 players to start.",
+      "waiting_host": "Waiting for the host to start…"
+    },
+    "join": {
+      "title": "Join a game",
+      "placeholder": "CODE",
+      "cancel": "Cancel",
+      "submit": "Join"
+    }
   }
 }
