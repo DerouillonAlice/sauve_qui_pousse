@@ -40,6 +40,19 @@
       "desc": "With family, friends, or in class: Sauve qui Pousse fits every garden and every gardener.",
       "cta_cards": "Discover the cards",
       "cta_play": "Play online"
+    },
+    "slider": {
+      "title": "Our cards",
+      "see_all": "See all →",
+      "cards": [
+        { "name": "Bees", "desc": "Essential pollinators, they visit up to 2,000 flowers per day!" },
+        { "name": "Earthworms", "desc": "Soil engineers, they aerate the ground and make it fertile." },
+        { "name": "Ladybugs", "desc": "Natural predators, they devour up to 100 aphids per day." },
+        { "name": "Hornets", "desc": "Fearsome predators, they regulate insect populations." },
+        { "name": "Pesticides", "desc": "A silent threat, they contaminate soils and groundwater." },
+        { "name": "Agriculture", "desc": "Intensive farming weakens ecosystems and biodiversity." },
+        { "name": "Scarecrow", "desc": "Garden guardian, it protects crops from hungry birds." }
+      ]
     }
   },
   "rules": {
