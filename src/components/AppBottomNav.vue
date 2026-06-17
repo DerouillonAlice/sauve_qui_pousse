@@ -35,7 +35,7 @@ const barPath = computed(() => {
 </script>
 
 <template>
-  <nav class="lg:hidden fixed bottom-0 inset-x-0 z-50 h-16">
+  <nav class="lg:hidden fixed bottom-0 inset-x-0 z-50 h-16" style="bottom: -1px">
 
     <!-- Barre SVG avec creux dynamique -->
     <svg

@@ -40,6 +40,19 @@
       "desc": "En famille, entre amis, ou en classe : Sauve qui Pousse s'adapte à tous les jardins et à tous les jardiniers.",
       "cta_cards": "Découvrir les cartes",
       "cta_play": "Jouer en ligne"
+    },
+    "slider": {
+      "title": "Nos cartes",
+      "see_all": "Voir toutes →",
+      "cards": [
+        { "name": "Abeilles", "desc": "Pollinisatrices essentielles, elles visitent jusqu'à 2 000 fleurs par jour !" },
+        { "name": "Vers de Terre", "desc": "Ingénieurs du sol, ils aèrent la terre et la rendent fertile." },
+        { "name": "Coccinelles", "desc": "Prédatrices naturelles, elles dévorent jusqu'à 100 pucerons par jour." },
+        { "name": "Frelons", "desc": "Prédateurs redoutables, ils régulent les populations d'insectes." },
+        { "name": "Pesticides", "desc": "Menace silencieuse, ils contaminent les sols et les nappes phréatiques." },
+        { "name": "Agricole", "desc": "L'agriculture intensive fragilise les écosystèmes et la biodiversité." },
+        { "name": "Épouvantail", "desc": "Gardien du jardin, il protège les cultures des oiseaux gourmands." }
+      ]
     }
   },
   "rules": {
