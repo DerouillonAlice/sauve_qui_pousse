@@ -24,6 +24,11 @@ export interface ApiError {
   message: string
 }
 
+let _onUnauthorized: (() => void) | null = null
+export function setOnUnauthorized(cb: () => void) {
+  _onUnauthorized = cb
+}
+
 export async function apiFetch<T = unknown>(
   endpoint: string,
   { method = 'GET', body, auth = true }: ApiOptions = {},
@@ -49,6 +54,7 @@ export async function apiFetch<T = unknown>(
   const data = await res.json().catch(() => null)
 
   if (!res.ok) {
+    if (res.status === 401 && auth) _onUnauthorized?.()
     const error: ApiError = {
       status: res.status,
       message: data?.error ?? data?.message ?? `Erreur ${res.status}`,
