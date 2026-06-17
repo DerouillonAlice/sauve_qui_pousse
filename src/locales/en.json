@@ -209,12 +209,17 @@
   "game": {
     "lobby": {
       "title": "Waiting Room",
-      "code_label": "Join Code",
+      "code_label": "Code",
       "code_hint": "Share this code with other players",
       "copy": "Copy code",
-      "players": "Players",
+      "players": "players",
       "guest": "Guest",
+      "host": "Host",
       "guest_name_placeholder": "Player name…",
+      "add_players_title": "Who's playing at the table?",
+      "add_players_hint": "Enter a name and press Enter to add each player.",
+      "add_btn": "Add",
+      "empty_slot": "Open slot",
       "start": "Start Game",
       "need_players": "You need at least 2 players to start.",
       "waiting_host": "Waiting for the host to start…"

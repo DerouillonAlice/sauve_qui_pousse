@@ -209,12 +209,17 @@
   "game": {
     "lobby": {
       "title": "Salle d'attente",
-      "code_label": "Code pour rejoindre",
+      "code_label": "Code",
       "code_hint": "Partagez ce code avec les autres joueurs",
       "copy": "Copier le code",
-      "players": "Joueurs",
+      "players": "joueurs",
       "guest": "Invité",
+      "host": "Hôte",
       "guest_name_placeholder": "Prénom du joueur…",
+      "add_players_title": "Qui joue autour de la table ?",
+      "add_players_hint": "Entre un prénom et appuie sur Entrée pour ajouter chaque joueur.",
+      "add_btn": "Ajouter",
+      "empty_slot": "Place disponible",
       "start": "Lancer la partie",
       "need_players": "Il faut au moins 2 joueurs pour commencer.",
       "waiting_host": "En attente du lancement par l'hôte…"
