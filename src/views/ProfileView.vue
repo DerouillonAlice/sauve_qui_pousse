@@ -1,13 +1,11 @@
 <script setup lang="ts">
 import { ref, onMounted, computed, watch } from 'vue'
-import { useI18n } from 'vue-i18n'
 import { useRouter } from 'vue-router'
 import { useAuth } from '@/composables/useAuth'
 import { useGame } from '@/composables/useGame'
 import { apiFetch } from '@/services/api'
 import { Loader2, Trophy, Target, RotateCcw, Gamepad2, LogOut, Calendar } from 'lucide-vue-next'
 
-const { t } = useI18n()
 const router = useRouter()
 const { state: auth, isAuthenticated, logout } = useAuth()
 const { leaveGame } = useGame()
@@ -32,6 +30,11 @@ interface ProfileData {
     playerCount: number
     players: string[]
     isHost: boolean
+  }[]
+  teammates: {
+    name: string
+    gamesCount: number
+    lastPlayed: string | null
   }[]
 }
 
@@ -195,6 +198,31 @@ const avatarLetter = computed(() => (auth.user?.pseudo ?? 'U').charAt(0).toUpper
               :class="statusClass(game.status)">
               {{ statusLabel(game.status) }}
             </span>
+          </div>
+        </div>
+      </section>
+
+      <!-- Coéquipiers -->
+      <section class="max-w-3xl mx-auto px-6 pb-10">
+        <h2 class="text-brown mb-6">Coéquipiers</h2>
+
+        <div v-if="profile.teammates.length === 0"
+          class="bg-white rounded-2xl p-10 text-center text-brown/40 shadow-sm">
+          Aucun coéquipier pour l'instant. Ajoute des invités dans tes prochaines parties !
+        </div>
+
+        <div v-else class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3">
+          <div v-for="teammate in profile.teammates" :key="teammate.name"
+            class="bg-white rounded-2xl p-4 text-center shadow-sm flex flex-col items-center gap-2">
+            <!-- Avatar lettre -->
+            <div class="w-12 h-12 rounded-full bg-primary flex items-center justify-center text-white text-lg font-bold font-game">
+              {{ teammate.name.charAt(0).toUpperCase() }}
+            </div>
+            <p class="text-brown font-semibold text-sm truncate w-full text-center">{{ teammate.name }}</p>
+            <p class="text-brown/40 text-xs">
+              {{ teammate.gamesCount }} partie{{ teammate.gamesCount > 1 ? 's' : '' }}
+            </p>
+            <p class="text-brown/30 text-xs">{{ formatDate(teammate.lastPlayed) }}</p>
           </div>
         </div>
       </section>
