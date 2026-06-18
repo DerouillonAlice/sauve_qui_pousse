@@ -13,6 +13,9 @@ const ERROR_MAP: Record<string, string> = {
   'Invalid or expired join code.': 'game.error.invalid_code',
   'Cannot join a game session that is already started or finished.': 'game.error.session_started',
   'Active game session not found for this room code.': 'game.error.not_found',
+  'It is not this participant\'s turn.': 'game.error.not_your_turn',
+  'The game session is not active.': 'game.error.not_active',
+  'No active round found for this session.': 'game.error.no_round',
 }
 
 function mapError(msg: string): string {

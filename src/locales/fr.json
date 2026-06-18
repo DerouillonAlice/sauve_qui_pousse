@@ -266,7 +266,10 @@
       "pseudo_taken": "Ce prénom est déjà utilisé dans cette partie.",
       "invalid_code": "Code invalide ou expiré.",
       "session_started": "Cette partie est déjà lancée ou terminée.",
-      "not_found": "Aucune partie active trouvée pour ce code."
+      "not_found": "Aucune partie active trouvée pour ce code.",
+      "not_your_turn": "Ce n'est pas ton tour.",
+      "not_active": "La partie n'est pas en cours.",
+      "no_round": "Aucune manche active."
     },
     "join": {
       "title": "Rejoindre une partie",

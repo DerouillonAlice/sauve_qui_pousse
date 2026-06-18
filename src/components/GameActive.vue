@@ -4,8 +4,10 @@ import { useI18n } from 'vue-i18n'
 import { useGame } from '@/composables/useGame'
 import { ChevronRight, Award, Leaf, LogOut, Loader2, Trophy } from 'lucide-vue-next'
 import type { SpinResult } from '@/composables/useGame'
-import deckImg   from '@/assets/img/deck_of_cards.svg'
-import medalImg  from '@/assets/img/medal.svg'
+import deckImg      from '@/assets/img/deck_of_cards.svg'
+import medalImg     from '@/assets/img/medal.svg'
+import ladybugImg   from '@/assets/img/ladybug.svg'
+import pesticideImg from '@/assets/img/pesticide.svg'
 import logoSauveImg from '@/assets/logo_sauve.png'
 
 const { t } = useI18n()
@@ -55,6 +57,15 @@ type Phase = 'idle' | 'spinning' | 'result'
 const phase      = ref<Phase>('idle')
 const spinResult = ref<SpinResult | null>(null)
 const isEndingTurn = ref(false)
+
+// Sépare la description écologique de l'effet de jeu
+function splitCardDesc(desc: string | null | undefined): { story: string; effect: string } {
+  if (!desc) return { story: '', effect: '' }
+  const idx = desc.indexOf('Effet :')
+  if (idx === -1) return { story: desc, effect: '' }
+  return { story: desc.slice(0, idx).trim(), effect: desc.slice(idx + 7).trim() }
+}
+const cardParts = computed(() => splitCardDesc(spinResult.value?.card?.description))
 
 async function handleSpin() {
   if (!currentParticipant.value || phase.value !== 'idle') return
@@ -124,16 +135,9 @@ onUnmounted(() => { document.body.style.overflow = '' })
   <div class="min-h-screen bg-white flex flex-col">
 
     <!-- ═══ TOP BAR ═══ -->
-    <div class="flex items-center justify-between px-4 py-3 bg-brown">
-      <div class="flex items-center gap-2">
-        <Leaf :stroke-width="1.5" class="w-5 h-5 text-primary" />
-        <span class="font-game text-cream text-lg">{{ t('game.active.round', { n: roundNumber }) }}</span>
-      </div>
-      <button @click="showWinModal = true" :disabled="isFinished"
-        class="flex items-center gap-2 px-6 py-2.5 bg-primary text-cream rounded-full font-bold text-base cursor-pointer hover:scale-105 active:scale-95 transition-transform disabled:opacity-40 disabled:cursor-not-allowed shadow-lg shadow-primary/30 ring-2 ring-primary/30">
-        <Award :stroke-width="2.5" class="w-5 h-5" />
-        {{ t('game.active.sauve') }}
-      </button>
+    <div class="flex items-center justify-center px-4 py-3 bg-brown gap-2">
+      <Leaf :stroke-width="1.5" class="w-5 h-5 text-primary" />
+      <span class="font-game text-cream text-lg">{{ t('game.active.round', { n: roundNumber }) }}</span>
     </div>
 
     <!-- ═══ CONTENT ═══ -->
@@ -147,24 +151,33 @@ onUnmounted(() => { document.body.style.overflow = '' })
       <!-- ── SCORES ── -->
       <div class="w-full">
         <p class="text-brown/40 text-xs uppercase tracking-wider mb-2 text-center">{{ t('game.active.scores') }}</p>
-        <div class="grid grid-cols-2 gap-2 sm:grid-cols-4">
+        <div class="flex flex-wrap justify-center gap-3">
           <div v-for="(p, i) in participants" :key="p.id"
             :class="p.id === currentParticipant?.id ? 'ring-2 ring-primary bg-primary/5' : 'ring-1 ring-brown/10 bg-cream-dark'"
             class="rounded-2xl py-3 px-3 flex flex-col items-center gap-1 shadow-sm">
-            <div class="relative w-9 h-9 rounded-full flex items-center justify-center text-white text-sm font-bold shadow-sm"
+
+            <!-- Avatar avec emoji d'effet superposé -->
+            <div class="relative w-10 h-10 rounded-full flex items-center justify-center text-white text-sm font-bold shadow-sm shrink-0"
               :class="avatarColors[i % 4]">
               {{ p.displayName.charAt(0).toUpperCase() }}
-              
-              <!-- Active Effects -->
-              <div v-if="getPlayerEffects(p.id).length > 0" class="absolute -top-2 -right-2 flex gap-0.5">
-                <div v-for="effect in getPlayerEffects(p.id)" :key="effect.id" 
-                     class="w-5 h-5 bg-white rounded-full flex items-center justify-center shadow cursor-help text-xs"
-                     :title="effect.effectCode && EFFECT_ICONS[effect.effectCode] ? EFFECT_ICONS[effect.effectCode].tooltip : (effect.cardTitle || 'Effet actif')">
-                  {{ effect.effectCode && EFFECT_ICONS[effect.effectCode] ? EFFECT_ICONS[effect.effectCode].icon : '✨' }}
-                </div>
-              </div>
+              <!-- Premier effet actif affiché EN GRAND sur l'avatar -->
+              <span v-if="getPlayerEffects(p.id).length > 0"
+                class="absolute inset-0 flex items-center justify-center text-lg rounded-full bg-black/30"
+                :title="EFFECT_ICONS[getPlayerEffects(p.id)[0]?.effectCode ?? '']?.tooltip ?? 'Effet actif'">
+                {{ EFFECT_ICONS[getPlayerEffects(p.id)[0]?.effectCode ?? '']?.icon ?? '✨' }}
+              </span>
             </div>
+
             <p class="text-brown text-xs font-semibold truncate w-full text-center">{{ p.displayName }}</p>
+
+            <!-- Libellé de l'effet sous le nom -->
+            <p v-if="getPlayerEffects(p.id).length > 0"
+              class="text-xs text-primary font-medium text-center leading-tight truncate w-full"
+              :title="EFFECT_ICONS[getPlayerEffects(p.id)[0]?.effectCode ?? '']?.tooltip">
+              {{ EFFECT_ICONS[getPlayerEffects(p.id)[0]?.effectCode ?? '']?.tooltip ?? 'Effet actif' }}
+              <span class="text-brown/40">({{ getPlayerEffects(p.id)[0]?.turnsRemaining }}t)</span>
+            </p>
+
             <div class="flex gap-0.5">
               <span v-for="n in totalRounds" :key="n"
                 :class="n <= p.roundsWon ? 'bg-primary' : 'bg-brown/15'"
@@ -255,6 +268,13 @@ onUnmounted(() => { document.body.style.overflow = '' })
         <Loader2 v-if="phase === 'spinning'" :stroke-width="2" class="w-5 h-5 animate-spin" />
         <span>{{ phase === 'spinning' ? '…' : t('game.active.spin') }}</span>
       </button>
+
+      <!-- Bouton SAUVE QUI POUSSE — prominent, sous la roue -->
+      <button @click="showWinModal = true" :disabled="isFinished"
+        class="flex items-center gap-3 px-8 py-4 bg-primary text-cream rounded-full font-bold text-lg cursor-pointer hover:scale-105 active:scale-95 transition-transform shadow-xl shadow-primary/30 disabled:opacity-40 disabled:cursor-not-allowed ring-4 ring-primary/20">
+        <Award :stroke-width="2.5" class="w-6 h-6" />
+        {{ t('game.active.sauve') }}
+      </button>
       </div>
 
       <!-- ── RÉSULTAT (Popup) ── -->
@@ -299,16 +319,23 @@ onUnmounted(() => { document.body.style.overflow = '' })
             <div class="absolute -top-10 -right-10 w-40 h-40 bg-yellow/30 rounded-full blur-3xl"></div>
             
             <div class="flex flex-col items-center text-center mb-6 relative z-10">
-              <div class="w-20 h-20 rounded-full bg-yellow/30 flex items-center justify-center text-5xl mb-4 shadow-inner ring-4 ring-yellow/20">⭐</div>
+              <div class="w-20 h-20 rounded-full bg-yellow/30 flex items-center justify-center mb-4 shadow-inner ring-4 ring-yellow/20 p-2">
+                <img :src="ladybugImg" alt="Bonus" class="w-full h-full object-contain" />
+              </div>
               <h3 class="text-brown font-game text-3xl leading-tight">{{ spinResult.card?.title ?? 'Bonus !' }}</h3>
             </div>
             
-            <div v-if="spinResult.card?.description" class="relative z-10 bg-yellow/30 border-2 border-yellow/50 rounded-2xl px-5 py-5 mb-6 shadow-inner text-center">
-              <p class="text-brown font-bold text-lg leading-snug">
-                {{ spinResult.card.description }}
+            <div v-if="spinResult.card" class="relative z-10 flex flex-col gap-3 mb-6">
+              <!-- Contexte écologique -->
+              <p v-if="cardParts.story" class="text-brown/70 text-sm italic text-center leading-relaxed">
+                {{ cardParts.story }}
               </p>
+              <!-- Effet de jeu -->
+              <div v-if="cardParts.effect" class="bg-yellow/40 border-2 border-yellow/60 rounded-2xl px-4 py-3 text-center">
+                <p class="text-xs font-bold text-brown/50 uppercase tracking-wide mb-1">⚡ Effet</p>
+                <p class="text-brown font-bold text-base leading-snug">{{ cardParts.effect }}</p>
+              </div>
             </div>
-            <p v-else class="relative z-10 text-brown/60 text-sm mb-6 text-center font-medium">Appliquez l'effet bonus.</p>
             
             <button @click="handleContinue" :disabled="isEndingTurn"
               class="relative z-10 w-full py-4 bg-brown text-cream rounded-full font-bold text-lg cursor-pointer hover:scale-[1.02] active:scale-[0.98] transition-all disabled:opacity-50 flex items-center justify-center gap-2 shadow-md">
@@ -341,16 +368,21 @@ onUnmounted(() => { document.body.style.overflow = '' })
             <div class="absolute -top-10 -right-10 w-40 h-40 bg-red/10 rounded-full blur-3xl"></div>
             
             <div class="flex flex-col items-center text-center mb-6 relative z-10">
-              <div class="w-20 h-20 rounded-full bg-red/15 flex items-center justify-center text-5xl mb-4 shadow-inner ring-4 ring-red/10">💀</div>
+              <div class="w-20 h-20 rounded-full bg-red/15 flex items-center justify-center mb-4 shadow-inner ring-4 ring-red/10 p-2">
+                <img :src="pesticideImg" alt="Malus" class="w-full h-full object-contain" />
+              </div>
               <h3 class="text-brown font-game text-3xl leading-tight">{{ spinResult.card?.title ?? 'Malus !' }}</h3>
             </div>
             
-            <div v-if="spinResult.card?.description" class="relative z-10 bg-red/10 border-2 border-red/20 rounded-2xl px-5 py-5 mb-6 shadow-inner text-center">
-              <p class="text-red font-bold text-lg leading-snug">
-                {{ spinResult.card.description }}
+            <div v-if="spinResult.card" class="relative z-10 flex flex-col gap-3 mb-6">
+              <p v-if="cardParts.story" class="text-brown/70 text-sm italic text-center leading-relaxed">
+                {{ cardParts.story }}
               </p>
+              <div v-if="cardParts.effect" class="bg-red/15 border-2 border-red/30 rounded-2xl px-4 py-3 text-center">
+                <p class="text-xs font-bold text-red/60 uppercase tracking-wide mb-1">⚡ Effet</p>
+                <p class="text-red font-bold text-base leading-snug">{{ cardParts.effect }}</p>
+              </div>
             </div>
-            <p v-else class="relative z-10 text-red/60 text-sm mb-6 text-center font-medium">Appliquez l'effet malus.</p>
             
             <button @click="handleContinue" :disabled="isEndingTurn"
               class="relative z-10 w-full py-4 bg-red text-white rounded-full font-bold text-lg cursor-pointer hover:scale-[1.02] active:scale-[0.98] transition-all disabled:opacity-50 flex items-center justify-center gap-2 shadow-md">
