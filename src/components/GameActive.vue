@@ -138,15 +138,22 @@ onUnmounted(() => { document.body.style.overflow = '' })
   <div class="min-h-screen bg-white flex flex-col">
 
     <!-- ═══ TOP BAR ═══ -->
-    <div class="flex items-center justify-between px-4 py-3 bg-brown">
-      <div class="flex items-center gap-2">
+    <div class="flex items-center justify-between px-4 py-5 bg-brown">
+      <div class="flex items-center gap-2 min-w-[80px]">
         <Leaf :stroke-width="1.5" class="w-5 h-5 text-primary" />
         <span class="font-game text-cream text-lg">{{ t('game.active.round', { n: roundNumber }) }}</span>
       </div>
-      <button @click="leaveGame"
-        class="flex items-center gap-1.5 text-cream/50 hover:text-red transition-colors cursor-pointer text-sm">
-        <LogOut :stroke-width="1.5" class="w-4 h-4" />
+      <button @click="showWinModal = true" :disabled="isFinished"
+        class="flex items-center gap-2 px-5 py-2.5 bg-primary text-cream rounded-full font-bold text-sm cursor-pointer hover:scale-105 active:scale-95 transition-transform shadow-lg shadow-primary/40 disabled:opacity-40 disabled:cursor-not-allowed ring-2 ring-primary/30">
+        <Award :stroke-width="2.5" class="w-4 h-4" />
+        {{ t('game.active.sauve') }}
       </button>
+      <div class="min-w-[80px] flex justify-end">
+        <button @click="leaveGame"
+          class="flex items-center gap-1.5 text-cream/50 hover:text-red transition-colors cursor-pointer text-sm">
+          <LogOut :stroke-width="1.5" class="w-4 h-4" />
+        </button>
+      </div>
     </div>
 
     <!-- ═══ CONTENT ═══ -->
@@ -313,12 +320,6 @@ onUnmounted(() => { document.body.style.overflow = '' })
         <span>{{ phase === 'spinning' ? '…' : t('game.active.spin') }}</span>
       </button>
 
-      <!-- Bouton SAUVE QUI POUSSE — prominent, sous la roue -->
-      <button @click="showWinModal = true" :disabled="isFinished"
-        class="flex items-center gap-3 px-8 py-4 bg-primary text-cream rounded-full font-bold text-lg cursor-pointer hover:scale-105 active:scale-95 transition-transform shadow-xl shadow-primary/30 disabled:opacity-40 disabled:cursor-not-allowed ring-4 ring-primary/20">
-        <Award :stroke-width="2.5" class="w-6 h-6" />
-        {{ t('game.active.sauve') }}
-      </button>
       </div>
 
       <!-- ── RÉSULTAT (Popup) ── -->
