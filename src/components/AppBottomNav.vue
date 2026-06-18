@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 import { useRoute } from 'vue-router'
-import { Home, Gamepad2, Layers, BookOpen } from 'lucide-vue-next'
+import { Home, Gamepad2, Layers, User } from 'lucide-vue-next'
 
 const route = useRoute()
 
@@ -9,7 +9,7 @@ const navItems = [
   { to: '/',       icon: Home,     label: 'Accueil' },
   { to: '/jouer',  icon: Gamepad2, label: 'Jouer'   },
   { to: '/cartes', icon: Layers,   label: 'Cartes'  },
-  { to: '/regles', icon: BookOpen, label: 'Règles'  },
+  { to: '/compte', icon: User,     label: 'Compte'  },
 ]
 
 const activeIndex = computed(() => {

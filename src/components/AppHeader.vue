@@ -6,10 +6,11 @@ import logoBlanc from '@/assets/logo_blanc.png'
 const { t } = useI18n()
 
 const links = [
-  { to: '/', i18nKey: 'nav.home' },
+  { to: '/',       i18nKey: 'nav.home' },
   { to: '/regles', i18nKey: 'nav.rules' },
   { to: '/cartes', i18nKey: 'nav.cards' },
-  { to: '/jouer', i18nKey: 'nav.play' },
+  { to: '/jouer',  i18nKey: 'nav.play' },
+  { to: '/compte', i18nKey: 'nav.account' },
 ]
 </script>
 
