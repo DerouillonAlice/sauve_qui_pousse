@@ -76,7 +76,7 @@ const emptySlots = computed(() => Math.max(0, MAX_PLAYERS - participants.value.l
 <template>
   <div class="relative">
     <img :src="ladybugImg" aria-hidden="true"
-      class="hidden lg:block absolute bottom-8 right-8 w-36 pointer-events-none select-none opacity-60 rotate-12" />
+      class="hidden lg:block absolute top-24 right-4 w-36 pointer-events-none select-none opacity-60 -rotate-12" />
 
   <div class="max-w-lg mx-auto px-4 py-6 flex flex-col gap-5">
 
