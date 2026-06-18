@@ -5,20 +5,15 @@ import { RouterLink } from 'vue-router'
 import WaveEdge from '@/components/WaveEdge.vue'
 import { ChevronLeft, ChevronRight, ArrowRight } from 'lucide-vue-next'
 
-import wheelImg      from '@/assets/img/spinning_wheel.svg'
-import deckImg       from '@/assets/img/deck_of_cards.svg'
-import medalImg      from '@/assets/img/medal.svg'
-import beeLadybugImg from '@/assets/img/bee_ladybug.svg'
-import hornet1Img    from '@/assets/img/hornet_1.svg'
-import branchBee1Img    from '@/assets/img/branch_bee_1.svg'
-import branchBee2Img    from '@/assets/img/branch_bee_2.svg'
-import branchLadybug1Img from '@/assets/img/branch_ladybug_1.svg'
-import branchLadybug2Img from '@/assets/img/branch_ladybug_2.svg'
-import leafsImg      from '@/assets/img/leafs.svg'
-import ladybugImg    from '@/assets/img/ladybug.svg'
-import scarecrowImg  from '@/assets/img/scarecrow.svg'
-import pesticideImg  from '@/assets/img/pesticide.svg'
-import wormImg       from '@/assets/img/worm.svg'
+import wheelImg          from '@/assets/img/spinning_wheel.svg'
+import deckImg            from '@/assets/img/deck_of_cards.svg'
+import medalImg           from '@/assets/img/medal.svg'
+import beeLadybugImg      from '@/assets/img/bee_ladybug.svg'
+import hornet1Img         from '@/assets/img/hornet_1.svg'
+import branchBee1Img      from '@/assets/img/branch_bee_1.svg'
+import branchLadybug2Img  from '@/assets/img/branch_ladybug_2.svg'
+import scarecrowImg       from '@/assets/img/scarecrow.svg'
+import pesticideImg       from '@/assets/img/pesticide.svg'
 
 import imgAbeilles from '@/assets/img/cards/VersoAbeilles.webp'
 import imgVers from '@/assets/img/cards/VersoVers.webp'
@@ -91,8 +86,7 @@ function onPointerUp(e: PointerEvent) {
   <WaveEdge color="var(--color-primary)" :size="56" />
 
   <!-- CONCEPT -->
-  <section class="relative overflow-hidden py-16 px-6 bg-white">
-    <img :src="leafsImg" aria-hidden="true" class="absolute -right-8 top-1/2 -translate-y-1/2 w-24 sm:w-32 opacity-30 pointer-events-none select-none hidden sm:block" />
+  <section class="py-16 px-6 bg-white">
     <div class="max-w-2xl mx-auto text-center">
       <h2 class="text-brown mb-8">{{ t('home.concept.title') }}</h2>
       <p class="text-brown/75 mb-4 leading-relaxed">{{ t('home.concept.p1') }}</p>
@@ -103,9 +97,7 @@ function onPointerUp(e: PointerEvent) {
   </section>
 
   <!-- LES RÈGLES DU JEU -->
-  <section class="relative overflow-hidden py-16 px-6 bg-cream">
-    <img :src="ladybugImg"     aria-hidden="true" class="absolute top-6 right-4 w-16 sm:w-20 pointer-events-none select-none hidden sm:block" />
-    <img :src="branchBee2Img"  aria-hidden="true" class="absolute bottom-0 left-0 w-32 sm:w-44 pointer-events-none select-none hidden sm:block" />
+  <section class="py-16 px-6 bg-cream">
     <div class="max-w-4xl mx-auto">
       <h2 class="text-brown text-center mb-3">{{ t('home.how.title') }}</h2>
       <p class="text-brown/55 text-center text-sm leading-relaxed mb-12 max-w-xl mx-auto">{{ t('home.how.desc') }}</p>
@@ -134,9 +126,9 @@ function onPointerUp(e: PointerEvent) {
   </section>
 
   <!-- PRÊT À JOUER ? -->
-  <section class="relative overflow-hidden py-16 px-6 bg-brown">
-    <img :src="scarecrowImg" aria-hidden="true" class="absolute left-0 bottom-0 h-40 sm:h-56 pointer-events-none select-none hidden sm:block" />
-    <img :src="pesticideImg" aria-hidden="true" class="absolute right-0 bottom-0 h-36 sm:h-48 pointer-events-none select-none hidden sm:block" />
+  <section class="relative py-20 px-6 bg-brown">
+    <img :src="scarecrowImg" aria-hidden="true" class="absolute left-0 bottom-0 h-52 lg:h-64 pointer-events-none select-none hidden md:block" />
+    <img :src="pesticideImg" aria-hidden="true" class="absolute right-0 bottom-0 h-44 lg:h-56 pointer-events-none select-none hidden md:block" />
     <div class="max-w-lg mx-auto text-center">
       <h2 class="text-cream mb-3">{{ t('home.cta.title') }}</h2>
       <p class="text-cream/55 text-sm mb-8 leading-relaxed">{{ t('home.cta.subtitle') }}</p>
@@ -211,9 +203,7 @@ function onPointerUp(e: PointerEvent) {
   <WaveEdge color="var(--color-cream-dark)" :size="56" />
 
   <!-- PÉDAGOGIE -->
-  <section class="relative overflow-hidden py-16 px-6 bg-cream">
-    <img :src="wormImg" aria-hidden="true" class="absolute right-0 bottom-0 w-20 sm:w-28 opacity-60 pointer-events-none select-none hidden sm:block" />
-    <img :src="branchLadybug1Img" aria-hidden="true" class="absolute left-0 top-0 w-28 sm:w-36 opacity-50 pointer-events-none select-none hidden sm:block" />
+  <section class="py-16 px-6 bg-cream">
     <div class="max-w-2xl mx-auto">
       <h2 class="text-brown mb-3">{{ t('home.pedagogy.title') }}</h2>
       <p class="text-brown/55 text-sm italic mb-8">{{ t('home.pedagogy.intro') }}</p>
