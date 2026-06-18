@@ -262,7 +262,8 @@
     "error": {
       "pseudo_taken": "Ce prénom est déjà utilisé dans cette partie.",
       "invalid_code": "Code invalide ou expiré.",
-      "session_started": "Cette partie est déjà lancée ou terminée."
+      "session_started": "Cette partie est déjà lancée ou terminée.",
+      "not_found": "Aucune partie active trouvée pour ce code."
     },
     "join": {
       "title": "Rejoindre une partie",

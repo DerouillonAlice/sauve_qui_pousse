@@ -262,7 +262,8 @@
     "error": {
       "pseudo_taken": "This name is already taken in this game.",
       "invalid_code": "Invalid or expired code.",
-      "session_started": "This game has already started or finished."
+      "session_started": "This game has already started or finished.",
+      "not_found": "No active game session found for this code."
     },
     "join": {
       "title": "Join a game",

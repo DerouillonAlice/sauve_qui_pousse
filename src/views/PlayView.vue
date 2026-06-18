@@ -6,7 +6,6 @@ import { useGame } from '@/composables/useGame'
 import GameLobby from '@/components/GameLobby.vue'
 import GameActive from '@/components/GameActive.vue'
 import { LogOut, Gamepad2, Users, Loader2, AlertCircle, CheckCircle2 } from 'lucide-vue-next'
-import WaveEdge from '@/components/WaveEdge.vue'
 import { useRouter } from 'vue-router'
 
 const { t, tm } = useI18n()
@@ -55,22 +54,9 @@ onUnmounted(() => stopPolling())
   <!-- Full-screen game view — bypasses hero+grid entirely -->
   <GameActive v-if="isAuthenticated && isInGame && (isActive || isFinished)" />
 
-  <div v-else class="min-h-screen">
+  <div v-else class="bg-white min-h-screen pt-10 lg:pt-16 pb-24">
 
-    <!-- HERO -->
-    <section class="py-16 px-6 text-center bg-cream-dark">
-        <div class="max-w-xl mx-auto">
-        <h1 class="text-brown mb-3">{{ t('play.hero.title') }}</h1>
-        <p class="text-brown/70 text-lg">{{ t('play.hero.subtitle') }}</p>
-      </div>
-    </section>
-
-    <!-- Vagues crème -->
-    <WaveEdge color="var(--color-cream-dark)" :size="48" />
-
-
-
-    <div class="max-w-4xl mx-auto px-6 py-10 gap-12">
+    <div class="max-w-3xl mx-auto px-6 gap-12">
 
       <!-- IN-GAME: LOBBY -->
       <div v-if="isAuthenticated && isInGame" class="lg:col-span-2">
@@ -78,14 +64,13 @@ onUnmounted(() => stopPolling())
       </div>
 
       <!-- LOGGED-IN: CREATE / JOIN -->
-      <div v-else-if="isAuthenticated" class="bg-white/70 rounded-3xl p-8 shadow-sm lg:col-span-2">
-        <div class="max-w-lg mx-auto text-center">
-          <div class="w-20 h-20 mx-auto mb-4 rounded-full bg-gradient-to-br from-primary to-lime flex items-center justify-center text-cream text-3xl font-game shadow-lg">
-            {{ auth.user?.pseudo?.charAt(0)?.toUpperCase() ?? '?' }}
+      <div v-else-if="isAuthenticated" class="bg-cream rounded-3xl p-8 sm:p-12 shadow-sm text-center">
+        <div class="max-w-md mx-auto">
+          <div class="w-16 h-16 mx-auto mb-6 rounded-full bg-primary/10 flex items-center justify-center text-primary">
+            <Gamepad2 :stroke-width="1.5" class="w-8 h-8" />
           </div>
-          <h2 class="text-brown mb-1">{{ t('play.logged.welcome') }}</h2>
-          <p class="text-primary font-semibold text-2xl font-game mb-2">{{ auth.user?.pseudo }}</p>
-          <p class="text-brown/60 text-sm mb-10">{{ t('play.logged.subtitle') }}</p>
+          <h2 class="text-brown font-game text-3xl mb-2">Prêt à jouer ?</h2>
+          <p class="text-brown/60 text-sm mb-10">Créez une nouvelle partie ou rejoignez vos amis avec un code.</p>
 
           <Transition
             enter-active-class="transition-all duration-300 ease-out"
@@ -101,17 +86,17 @@ onUnmounted(() => stopPolling())
             </div>
           </Transition>
 
-          <div class="grid gap-4 sm:grid-cols-2 mb-8">
+          <div class="flex flex-col sm:flex-row gap-4 mb-8">
             <button id="btn-create-game" @click="handleCreateGame" :disabled="isCreating"
-              class="flex items-center justify-center gap-3 px-6 py-4 bg-primary text-cream rounded-2xl font-semibold text-lg hover:scale-[1.03] active:scale-[0.98] transition-all shadow-md cursor-pointer disabled:opacity-50">
+              class="flex-1 flex items-center justify-center gap-3 px-6 py-4 bg-primary text-cream rounded-2xl font-semibold text-lg hover:scale-[1.02] active:scale-[0.98] transition-all shadow-md cursor-pointer disabled:opacity-50">
               <Loader2 v-if="isCreating" :stroke-width="2" class="w-6 h-6 animate-spin" />
               <Gamepad2 v-else :stroke-width="1.8" class="w-6 h-6" />
-              {{ t('play.logged.create_game') }}
+              Créer une partie
             </button>
             <button id="btn-join-game" @click="showJoinModal = true"
-              class="flex items-center justify-center gap-3 px-6 py-4 border-2 border-brown text-brown rounded-2xl font-semibold text-lg hover:bg-brown hover:text-cream transition-colors cursor-pointer">
+              class="flex-1 flex items-center justify-center gap-3 px-6 py-4 bg-brown text-cream rounded-2xl font-semibold text-lg hover:scale-[1.02] active:scale-[0.98] transition-all shadow-md cursor-pointer">
               <Users :stroke-width="1.8" class="w-6 h-6" />
-              {{ t('play.logged.join_game') }}
+              Rejoindre
             </button>
           </div>
 

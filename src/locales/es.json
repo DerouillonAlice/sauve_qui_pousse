@@ -262,7 +262,8 @@
     "error": {
       "pseudo_taken": "Este nombre ya está en uso en esta partida.",
       "invalid_code": "Código inválido o expirado.",
-      "session_started": "Esta partida ya ha comenzado o terminado."
+      "session_started": "Esta partida ya ha comenzado o terminado.",
+      "not_found": "No se encontró ninguna partida activa para este código."
     },
     "join": {
       "title": "Unirse a una partida",

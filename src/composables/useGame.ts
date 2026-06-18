@@ -12,6 +12,7 @@ const ERROR_MAP: Record<string, string> = {
   'This pseudo is already taken in this game session.': 'game.error.pseudo_taken',
   'Invalid or expired join code.': 'game.error.invalid_code',
   'Cannot join a game session that is already started or finished.': 'game.error.session_started',
+  'Active game session not found for this room code.': 'game.error.not_found',
 }
 
 function mapError(msg: string): string {

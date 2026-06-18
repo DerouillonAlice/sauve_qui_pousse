@@ -30,6 +30,18 @@ const winSteps = computed(() => tm('rules.win.steps') as string[])
 
     <div class="max-w-2xl mx-auto px-6 py-16 space-y-16">
 
+      <!-- VIDEO -->
+      <section>
+        <iframe 
+          class="w-full aspect-video rounded-2xl shadow-md" 
+          src="https://www.youtube.com/embed/qtWtEbnrTac" 
+          title="Tutoriel Sauve qui Pousse" 
+          frameborder="0" 
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+          allowfullscreen>
+        </iframe>
+      </section>
+
       <!-- PRINCIPE -->
       <section>
         <h2 class="text-brown mb-4">{{ t('rules.principle.title') }}</h2>
