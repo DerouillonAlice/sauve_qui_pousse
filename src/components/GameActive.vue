@@ -21,6 +21,22 @@ const {
   leaveGame,
 } = useGame()
 
+const EFFECT_ICONS: Record<string, { icon: string, tooltip: string }> = {
+  'protect_malus': { icon: '🛡️', tooltip: 'Protégé contre les malus' },
+  'global_no_malus': { icon: '🚫', tooltip: 'Aucun malus pour personne' },
+  'redirect_malus': { icon: '↩️', tooltip: 'Redirige le prochain malus' },
+  'protect_decomposers': { icon: '🐛', tooltip: 'Décomposeurs protégés' },
+  'protect_player': { icon: '🫂', tooltip: 'Immunisé contre les attaques' },
+  'skip_turn': { icon: '⌛', tooltip: 'Passe son tour' },
+  'neighbor_chooses_discard': { icon: '👉', tooltip: 'Le voisin choisit la défausse' },
+  'hand_visible': { icon: '👁️', tooltip: 'Main visible' },
+  'cannot_win': { icon: '🤐', tooltip: 'Ne peut pas gagner ce tour' },
+}
+
+function getPlayerEffects(participantId: number) {
+  return game.session?.activeEffects?.filter(e => e.participantId === participantId) ?? []
+}
+
 /* ── wheel ── */
 const wheelDeg    = ref(0)
 const wheelMoving = ref(false)
@@ -135,9 +151,18 @@ onUnmounted(() => { document.body.style.overflow = '' })
           <div v-for="(p, i) in participants" :key="p.id"
             :class="p.id === currentParticipant?.id ? 'ring-2 ring-primary bg-primary/5' : 'ring-1 ring-brown/10 bg-cream-dark'"
             class="rounded-2xl py-3 px-3 flex flex-col items-center gap-1 shadow-sm">
-            <div class="w-9 h-9 rounded-full flex items-center justify-center text-white text-sm font-bold shadow-sm"
+            <div class="relative w-9 h-9 rounded-full flex items-center justify-center text-white text-sm font-bold shadow-sm"
               :class="avatarColors[i % 4]">
               {{ p.displayName.charAt(0).toUpperCase() }}
+              
+              <!-- Active Effects -->
+              <div v-if="getPlayerEffects(p.id).length > 0" class="absolute -top-2 -right-2 flex gap-0.5">
+                <div v-for="effect in getPlayerEffects(p.id)" :key="effect.id" 
+                     class="w-5 h-5 bg-white rounded-full flex items-center justify-center shadow cursor-help text-xs"
+                     :title="effect.effectCode && EFFECT_ICONS[effect.effectCode] ? EFFECT_ICONS[effect.effectCode].tooltip : (effect.cardTitle || 'Effet actif')">
+                  {{ effect.effectCode && EFFECT_ICONS[effect.effectCode] ? EFFECT_ICONS[effect.effectCode].icon : '✨' }}
+                </div>
+              </div>
             </div>
             <p class="text-brown text-xs font-semibold truncate w-full text-center">{{ p.displayName }}</p>
             <div class="flex gap-0.5">

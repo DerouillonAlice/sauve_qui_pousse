@@ -41,6 +41,16 @@ export interface GameRound {
   currentParticipantId: number | null
 }
 
+export interface ActiveEffect {
+  id: number
+  participantId: number
+  cardId: number | null
+  cardTitle: string | null
+  effectCode: string | null
+  turnsRemaining: number | null
+  appliedAt: string | null
+}
+
 export interface GameSession {
   id: number
   roomCode: string
@@ -53,6 +63,7 @@ export interface GameSession {
   currentParticipantId: number | null
   participants: GameParticipant[]
   rounds: GameRound[]
+  activeEffects?: ActiveEffect[]
 }
 
 export interface SpinResult {
