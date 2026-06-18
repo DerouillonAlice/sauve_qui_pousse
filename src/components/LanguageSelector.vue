@@ -20,7 +20,7 @@
 import { useI18n } from 'vue-i18n'
 
 const i18n = useI18n()
-const locales = ['fr', 'en']
+const locales = ['fr', 'en', 'es']
 
 const changeLocale = (locale: string) => {
   i18n.locale.value = locale

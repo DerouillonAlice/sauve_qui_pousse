@@ -6,7 +6,7 @@
  */
 
 import { reactive, computed, readonly } from 'vue'
-import { apiFetch, type ApiError } from '@/services/api'
+import { apiFetch, setOnUnauthorized, type ApiError } from '@/services/api'
 
 /* ───────── Types ───────── */
 
@@ -25,18 +25,37 @@ interface AuthState {
 
 /* ───────── État singleton ───────── */
 
+function isTokenExpired(token: string): boolean {
+  try {
+    const base64 = (token.split('.')[1] ?? '').replace(/-/g, '+').replace(/_/g, '/')
+    const payload = JSON.parse(atob(base64)) as { exp?: number }
+    return !payload.exp || Date.now() / 1000 > payload.exp
+  } catch {
+    return true
+  }
+}
+
+const storedToken = localStorage.getItem('sqp_token')
+const tokenValid = storedToken && !isTokenExpired(storedToken)
+if (!tokenValid) {
+  localStorage.removeItem('sqp_token')
+  localStorage.removeItem('sqp_user')
+}
+
 const state = reactive<AuthState>({
-  token: localStorage.getItem('sqp_token'),
-  user: (() => {
-    try {
-      return JSON.parse(localStorage.getItem('sqp_user') || 'null')
-    } catch {
-      return null
-    }
-  })(),
+  token: tokenValid ? storedToken : null,
+  user: tokenValid
+    ? (() => {
+        try { return JSON.parse(localStorage.getItem('sqp_user') || 'null') }
+        catch { return null }
+      })()
+    : null,
   isLoading: false,
   error: null,
 })
+
+/* Quand le backend renvoie 401 (token expiré en cours de session) */
+setOnUnauthorized(() => clear())
 
 /* ───────── Helpers ───────── */
 
@@ -61,7 +80,7 @@ function clear() {
  */
 function decodeJwtPayload(token: string): Record<string, unknown> {
   try {
-    const base64 = token.split('.')[1].replace(/-/g, '+').replace(/_/g, '/')
+    const base64 = (token.split('.')[1] ?? '').replace(/-/g, '+').replace(/_/g, '/')
     return JSON.parse(atob(base64))
   } catch {
     return {}

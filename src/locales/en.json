@@ -24,9 +24,23 @@
       "p4": "That's Sauve qui Pousse."
     },
     "how": {
-      "title": "Three decks. One wheel. One victory cry.",
+      "title": "How to play",
       "desc": "Draw, bonus or malus: each turn, the wheel decides. Build your garden, protect it, and when you think you have the best ecosystem at the table, shout 'Sauve qui pousse!'",
-      "cta": "See full rules"
+      "steps": ["Spin the wheel", "Draw a card", "Win!!!"],
+      "cta": "Learn more →"
+    },
+    "cta": {
+      "title": "Ready to play?",
+      "subtitle": "Join or start a game with your friends in seconds.",
+      "chips": ["2 - 4 players", "~15 min", "Ages 7+"],
+      "create": "Start a game →",
+      "join": "Join a game →"
+    },
+    "newsletter": {
+      "title": "Newsletter",
+      "placeholder": "e.g. alice{'@'}example.com",
+      "submit": "OK",
+      "terms": "I accept the terms *"
     },
     "pedagogy": {
       "title": "A game that entertains and teaches.",
@@ -46,7 +60,7 @@
     },
     "slider": {
       "title": "Our cards",
-      "see_all": "See all →",
+      "see_all": "See all cards →",
       "cards": [
         { "name": "Bees", "desc": "Essential pollinators, they visit up to 2,000 flowers per day!" },
         { "name": "Earthworms", "desc": "Soil engineers, they aerate the ground and make it fertile." },
@@ -204,6 +218,57 @@
       "missing_fields": "All fields are required.",
       "server": "Something went wrong. Please try again later.",
       "passwords_mismatch": "Passwords do not match."
+    }
+  },
+  "game": {
+    "active": {
+      "title": "Game in progress!",
+      "desc": "The game has started.",
+      "leave": "Leave game",
+      "round": "Round {n}",
+      "sauve": "Sauve qui pousse!",
+      "turn": "It's the turn of",
+      "spin": "Spin",
+      "extra_spin_title": "Bonus Spin!",
+      "extra_spin_desc": "You get to spin the wheel one more time.",
+      "spin_again": "Spin Again",
+      "skip_title": "Turn Skipped",
+      "skip_desc": "No card this time. Pass it on.",
+      "end_turn": "End Turn",
+      "scores": "Scores",
+      "winner_prompt": "Who won the round?",
+      "cancel": "Cancel",
+      "confirm_win": "Confirm",
+      "game_over": "Game Over!",
+      "finish": "End Game"
+    },
+    "lobby": {
+      "title": "Waiting Room",
+      "code_label": "Code",
+      "code_hint": "Share this code with other players",
+      "copy": "Copy code",
+      "players": "players",
+      "guest": "Guest",
+      "host": "Host",
+      "guest_name_placeholder": "Player name…",
+      "add_players_title": "Who's playing at the table?",
+      "add_players_hint": "Enter a name and press Enter to add each player.",
+      "add_btn": "Add",
+      "empty_slot": "Open slot",
+      "start": "Start Game",
+      "need_players": "You need at least 2 players to start.",
+      "waiting_host": "Waiting for the host to start…"
+    },
+    "error": {
+      "pseudo_taken": "This name is already taken in this game.",
+      "invalid_code": "Invalid or expired code.",
+      "session_started": "This game has already started or finished."
+    },
+    "join": {
+      "title": "Join a game",
+      "placeholder": "CODE",
+      "cancel": "Cancel",
+      "submit": "Join"
     }
   }
 }

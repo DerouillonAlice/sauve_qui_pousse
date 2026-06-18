@@ -6,10 +6,11 @@ import logoBlanc from '@/assets/logo_blanc.png'
 const { t } = useI18n()
 
 const links = [
-  { to: '/', i18nKey: 'nav.home' },
+  { to: '/',       i18nKey: 'nav.home' },
   { to: '/regles', i18nKey: 'nav.rules' },
   { to: '/cartes', i18nKey: 'nav.cards' },
-  { to: '/jouer', i18nKey: 'nav.play' },
+  { to: '/jouer',  i18nKey: 'nav.play' },
+  { to: '/compte', i18nKey: 'nav.account' },
 ]
 </script>
 
@@ -19,7 +20,8 @@ const links = [
       <img :src="logoBlanc" alt="Sauve qui pousse" class="h-12 w-auto" />
     </RouterLink>
     <nav class="flex gap-6 items-center">
-      <RouterLink v-for="link in links" :key="link.to" :to="link.to" class="text-cream no-underline hover:underline"
+      <RouterLink v-for="link in links" :key="link.to" :to="link.to"
+        class="hidden lg:block text-cream no-underline hover:underline"
         active-class="font-bold underline">
         {{ t(link.i18nKey) }}
       </RouterLink>
