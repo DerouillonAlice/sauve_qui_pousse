@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, computed } from 'vue'
+import { ref, computed, watch, onUnmounted } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { useGame } from '@/composables/useGame'
 import { ChevronRight, Award, Leaf, LogOut, Loader2, Trophy } from 'lucide-vue-next'
@@ -95,6 +95,12 @@ const sortedParticipants = computed(() =>
 )
 const winner = computed(() => sortedParticipants.value[0] ?? null)
 
+// Bloquer le scroll du body quand le podium est affiché
+watch(isFinished, (val) => {
+  document.body.style.overflow = val ? 'hidden' : ''
+}, { immediate: true })
+
+onUnmounted(() => { document.body.style.overflow = '' })
 </script>
 
 <template>
