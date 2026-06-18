@@ -163,7 +163,7 @@ onUnmounted(() => { document.body.style.overflow = '' })
         <div class="flex flex-wrap justify-center gap-3">
           <div v-for="(p, i) in participants" :key="p.id"
             :class="p.id === currentParticipant?.id ? 'ring-2 ring-primary bg-primary/5' : 'ring-1 ring-brown/10 bg-cream-dark'"
-            class="rounded-2xl py-4 px-5 w-28 flex flex-col items-center gap-2 shadow-sm">
+            class="rounded-2xl py-4 px-5 w-28 flex flex-col items-center gap-2 shadow-sm relative group">
 
             <!-- Avatar avec anneau coloré si effet actif -->
             <div class="relative w-14 h-14 shrink-0">
@@ -195,6 +195,20 @@ onUnmounted(() => { document.body.style.overflow = '' })
               <span v-for="n in totalRounds" :key="n"
                 :class="n <= p.roundsWon ? 'bg-primary' : 'bg-brown/15'"
                 class="w-2 h-2 rounded-full" />
+            </div>
+
+            <!-- Tooltip effet au hover -->
+            <div v-if="!spinResult && getPlayerEffects(p.id).length > 0"
+              class="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 w-48 rounded-xl px-3 py-2.5 shadow-lg z-30
+                     opacity-0 group-hover:opacity-100 pointer-events-none transition-opacity duration-150"
+              :class="effectMeta(getPlayerEffects(p.id)[0]?.effectCode ?? '').badge">
+              <p class="font-bold text-xs mb-0.5">
+                {{ effectMeta(getPlayerEffects(p.id)[0]?.effectCode ?? '').icon }}
+                {{ effectMeta(getPlayerEffects(p.id)[0]?.effectCode ?? '').label }}
+              </p>
+              <p v-for="e in getPlayerEffects(p.id)" :key="e.effectCode ?? ''" class="text-xs opacity-80">
+                {{ effectMeta(e.effectCode ?? '').label }} — {{ e.turnsRemaining ?? 0 }} tour{{ (e.turnsRemaining ?? 0) > 1 ? 's' : '' }} restant{{ (e.turnsRemaining ?? 0) > 1 ? 's' : '' }}
+              </p>
             </div>
           </div>
         </div>
