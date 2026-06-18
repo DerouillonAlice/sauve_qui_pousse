@@ -16,12 +16,14 @@ import wormImg        from '@/assets/img/worm.svg'
 
 const { t } = useI18n()
 
-type Category = 'Insecte' | 'Événement' | 'Action'
+type Group = 'Bénéfique' | 'Nuisible' | 'Neutre'
+type Role  = 'Pollinisateur' | 'Prédateur' | 'Décomposeur' | 'Cultivateur' | 'Invasif' | 'Polluant' | 'Stratégie'
 
 interface CardData {
   id:         number
   name:       string
-  category:   Category
+  role:       Role
+  group:      Group
   points:     string
   effect:     string
   img:        string
@@ -30,54 +32,58 @@ interface CardData {
 
 const allCards: CardData[] = [
   {
-    id: 1, name: 'Abeilles', category: 'Insecte', points: '+3 pts',
+    id: 1, name: 'Abeilles', role: 'Pollinisateur', group: 'Bénéfique', points: '+3 pts',
     effect: 'Pollinisateurs essentiels. Sans elles, 80 % des plantes à fleurs ne se reproduiraient pas.',
     img: imgAbeilles, pointColor: 'text-primary',
   },
   {
-    id: 2, name: 'Coccinelles', category: 'Insecte', points: '+2 pts',
+    id: 2, name: 'Coccinelles', role: 'Prédateur', group: 'Bénéfique', points: '+2 pts',
     effect: 'Prédateurs naturels des pucerons. Elles protègent tes cultures sans chimie.',
     img: imgCoccinelles, pointColor: 'text-primary',
   },
   {
-    id: 3, name: 'Vers de terre', category: 'Insecte', points: '+1 pt',
+    id: 3, name: 'Vers de terre', role: 'Décomposeur', group: 'Bénéfique', points: '+1 pt',
     effect: 'Décomposeurs indispensables. Ils aèrent et fertilisent le sol naturellement.',
     img: imgVers, pointColor: 'text-primary',
   },
   {
-    id: 4, name: 'Agriculteurs', category: 'Action', points: '0 pt',
+    id: 4, name: 'Agriculteurs', role: 'Cultivateur', group: 'Neutre', points: '0 pt',
     effect: "Ni bénéfiques ni néfastes. Les agriculteurs maintiennent l'équilibre du jardin.",
     img: imgAgricole, pointColor: 'text-brown/50',
   },
   {
-    id: 5, name: 'Frelons asiatiques', category: 'Événement', points: '-1 pt / voisin',
+    id: 5, name: 'Frelons asiatiques', role: 'Invasif', group: 'Nuisible', points: '-1 pt / voisin',
     effect: 'Espèces invasives. Tous les voisins perdent un insecte de leur main.',
     img: imgFrelons, pointColor: 'text-red',
   },
   {
-    id: 6, name: 'Pesticides systémiques', category: 'Action', points: '-2 pts',
+    id: 6, name: 'Pesticides systémiques', role: 'Polluant', group: 'Nuisible', points: '-2 pts',
     effect: 'Contaminent les sols et éliminent insectes utiles comme nuisibles.',
     img: imgPesticides, pointColor: 'text-red',
   },
   {
-    id: 7, name: 'Épouvantail', category: 'Action', points: 'Protection',
+    id: 7, name: 'Épouvantail', role: 'Stratégie', group: 'Neutre', points: 'Protection',
     effect: 'Transfère une carte négative de ta main vers un adversaire de ton choix.',
     img: imgEpouvantail, pointColor: 'text-brown',
   },
 ]
 
-const categoryMeta: Record<Category, { color: string; dot: string }> = {
-  'Insecte':   { color: 'text-primary', dot: 'bg-primary' },
-  'Événement': { color: 'text-red',     dot: 'bg-red'     },
-  'Action':    { color: 'text-brown',   dot: 'bg-brown'   },
+const roleMeta: Record<Role, { color: string; dot: string }> = {
+  'Pollinisateur': { color: 'text-primary', dot: 'bg-primary'    },
+  'Prédateur':     { color: 'text-primary', dot: 'bg-primary'    },
+  'Décomposeur':   { color: 'text-primary', dot: 'bg-primary'    },
+  'Cultivateur':   { color: 'text-brown',   dot: 'bg-brown'      },
+  'Invasif':       { color: 'text-red',     dot: 'bg-red'        },
+  'Polluant':      { color: 'text-red',     dot: 'bg-red'        },
+  'Stratégie':     { color: 'text-brown',   dot: 'bg-brown'      },
 }
 
-type Filter = 'Toutes' | Category
+type Filter = 'Toutes' | Group
 const filters: { key: Filter; label: string }[] = [
-  { key: 'Toutes',    label: t('cards.filter.all') },
-  { key: 'Insecte',   label: t('cards.filter.insects') },
-  { key: 'Événement', label: t('cards.filter.events') },
-  { key: 'Action',    label: t('cards.filter.actions') },
+  { key: 'Toutes',     label: t('cards.filter.all')       },
+  { key: 'Bénéfique',  label: t('cards.filter.insects')   },
+  { key: 'Nuisible',   label: t('cards.filter.events')    },
+  { key: 'Neutre',     label: t('cards.filter.actions')   },
 ]
 
 const activeFilter = ref<Filter>('Toutes')
@@ -86,7 +92,7 @@ const selectedCard = ref<CardData | null>(null)
 const filteredCards = computed(() =>
   activeFilter.value === 'Toutes'
     ? allCards
-    : allCards.filter(c => c.category === activeFilter.value)
+    : allCards.filter(c => c.group === activeFilter.value)
 )
 
 function setFilter(f: Filter) {
@@ -170,10 +176,10 @@ function nextCard() {
           <!-- Info -->
           <div class="px-3 pt-2.5 pb-3">
             <div class="flex items-center gap-1.5 mb-1">
-              <span class="w-1.5 h-1.5 rounded-full shrink-0" :class="categoryMeta[card.category].dot" />
+              <span class="w-1.5 h-1.5 rounded-full shrink-0" :class="roleMeta[card.role].dot" />
               <span class="text-[10px] font-semibold uppercase tracking-wide"
-                :class="categoryMeta[card.category].color">
-                {{ card.category }}
+                :class="roleMeta[card.role].color">
+                {{ card.role }}
               </span>
             </div>
             <p class="text-brown font-semibold text-sm leading-snug">{{ card.name }}</p>
@@ -207,10 +213,10 @@ function nextCard() {
           <div class="px-6 py-5 overflow-y-auto">
             <div class="flex items-start justify-between mb-1">
               <div class="flex items-center gap-2">
-                <span class="w-2 h-2 rounded-full" :class="categoryMeta[selectedCard.category].dot" />
+                <span class="w-2 h-2 rounded-full" :class="roleMeta[selectedCard.role].dot" />
                 <span class="text-xs font-semibold uppercase tracking-wide"
-                  :class="categoryMeta[selectedCard.category].color">
-                  {{ selectedCard.category }}
+                  :class="roleMeta[selectedCard.role].color">
+                  {{ selectedCard.role }}
                 </span>
               </div>
               <button @click="selectedCard = null"
