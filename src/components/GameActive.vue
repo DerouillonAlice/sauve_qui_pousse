@@ -86,8 +86,8 @@ async function handleWinRound() {
 }
 
 /* ── misc ── */
-const roundNumber      = computed(() => currentRound.value?.roundNumber ?? 1)
-const totalRoundsToWin = 3
+const roundNumber  = computed(() => currentRound.value?.roundNumber ?? 1)
+const totalRounds  = 3  // la partie se finit après 3 manches jouées
 const avatarColors     = ['bg-primary', 'bg-amber-400', 'bg-sky-400', 'bg-pink-400']
 
 const sortedParticipants = computed(() =>
@@ -264,7 +264,7 @@ const winner = computed(() => sortedParticipants.value[0] ?? null)
             </div>
             <p class="text-brown text-xs font-semibold truncate w-full text-center">{{ p.displayName }}</p>
             <div class="flex gap-0.5">
-              <span v-for="n in totalRoundsToWin" :key="n"
+              <span v-for="n in totalRounds" :key="n"
                 :class="n <= p.roundsWon ? 'bg-primary' : 'bg-brown/15'"
                 class="w-2 h-2 rounded-full" />
             </div>
