@@ -180,7 +180,8 @@ function onPointerUp(e: PointerEvent) {
   </section>
 
   <!-- NOS CARTES -->
-  <section class="py-16 px-6 bg-white overflow-hidden">
+  <WaveEdge color="var(--color-cream-dark)" position="top" :size="56" />
+  <section class="py-16 px-6 bg-cream-dark overflow-hidden">
     <div class="max-w-5xl mx-auto">
       <div class="flex items-center justify-between mb-10">
         <h2 class="text-brown">{{ t('home.slider.title') }}</h2>
@@ -227,6 +228,7 @@ function onPointerUp(e: PointerEvent) {
       </div>
     </div>
   </section>
+  <WaveEdge color="var(--color-cream-dark)" :size="56" />
 
   <!-- PÉDAGOGIE -->
   <section class="py-16 px-6 bg-white">
