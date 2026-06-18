@@ -68,7 +68,7 @@ function onPointerUp(e: PointerEvent) {
   if (!isDragging) return
   isDragging = false
   const delta = e.clientX - dragStartX
-  if (Math.abs(delta) > 40) { delta < 0 ? next() : prev() }
+  if (Math.abs(delta) > 40) { if (delta < 0) next(); else prev() }
 }
 </script>
 

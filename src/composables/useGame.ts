@@ -5,7 +5,7 @@
  * État singleton partagé entre tous les composants.
  */
 
-import { reactive, computed, readonly, ref } from 'vue'
+import { reactive, computed, readonly } from 'vue'
 import { apiFetch, type ApiError } from '@/services/api'
 
 const ERROR_MAP: Record<string, string> = {
