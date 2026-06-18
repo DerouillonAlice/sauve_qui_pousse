@@ -22,9 +22,9 @@ const legalLinks = [
 
     <!-- Fleurs qui flottent au-dessus de la vague -->
     <img :src="yellowFlowerImg" aria-hidden="true"
-      class="absolute -top-28 left-2 sm:left-6 w-32 sm:w-44 pointer-events-none select-none" />
+      class="absolute -top-48 left-2 sm:left-6 w-64 sm:w-80 pointer-events-none select-none" />
     <img :src="pinkFlowerImg" aria-hidden="true"
-      class="absolute -top-24 right-2 sm:right-6 w-28 sm:w-40 pointer-events-none select-none" />
+      class="absolute -top-44 right-2 sm:right-6 w-56 sm:w-80 pointer-events-none select-none" />
 
     <!-- Colonnes -->
     <div class="relative z-10 max-w-4xl mx-auto px-8 grid grid-cols-1 sm:grid-cols-3 gap-10 text-center">

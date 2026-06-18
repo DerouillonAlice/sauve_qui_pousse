@@ -10,7 +10,7 @@ import WaveEdge from '@/components/WaveEdge.vue'
   <main class="w-full pb-16 lg:pb-0">
     <RouterView />
   </main>
-  <WaveEdge color="var(--color-primary)" :size="60" />
+  <WaveEdge color="var(--color-primary)" position="top" :size="60" />
   <AppFooter />
   <AppBottomNav />
 </template>
