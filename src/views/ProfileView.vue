@@ -221,7 +221,7 @@ const avatarLetter = computed(() => (auth.user?.pseudo ?? 'U').charAt(0).toUpper
                   <Calendar :stroke-width="1.5" class="w-3.5 h-3.5" />
                   {{ formatDate(game.createdAt) }}
                 </span>
-                <span>{{ t('profile.round_won', game.roundsWon, { n: game.roundsWon }) }}</span>
+                <span>{{ game.roundsWon }} manche{{ game.roundsWon > 1 ? 's' : '' }} gagnée{{ game.roundsWon > 1 ? 's' : '' }}</span>
               </div>
               <!-- Joueurs -->
               <div class="flex flex-wrap gap-1">
