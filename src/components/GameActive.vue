@@ -23,12 +23,13 @@ const {
 const wheelDeg    = ref(0)
 const wheelMoving = ref(false)
 
-// Angles where the pointer (top) lands on the center of each sector
-// Layout (clockwise from top): Piocher 0→180°, Bonus 180→270°, Malus 270→360°
+// Rotation cible (mod 360) pour que le pointeur TOP (270° SVG) pointe le bon secteur.
+// Centres SVG (0°=right, CW): Pioche=0°, Bonus=135°, Malus=225°
+// Rotation = 270° - centre_secteur  (mod 360)
 const LANDING: Record<string, number> = {
-  card:       90,   // center of Piocher (0–180°)
-  extra_spin: 225,  // center of Bonus  (180–270°)
-  skip:       315,  // center of Malus  (270–360°)
+  card:       270,  // Pioche  (centre 0°)   → 270-0   = 270
+  extra_spin: 135,  // Bonus   (centre 135°) → 270-135 = 135
+  skip:       45,   // Malus   (centre 225°) → 270-225 = 45
 }
 
 /* ── spin phase ── */
