@@ -1,11 +1,13 @@
 /**
  * Service API — wrapper fetch pour le backend Sauve qui Pousse.
  *
- * Toutes les requêtes passent par le proxy Vite `/api` → http://127.0.0.1:8081/api
- * afin d'éviter les problèmes CORS en développement.
+ * En dev  : le proxy Vite redirige `/api` → http://127.0.0.1:8081/api
+ * En prod : appel direct vers https://api.sauvequipousse.fr/api
  */
 
-const API_BASE = '/api'
+const API_BASE = import.meta.env.PROD
+  ? 'https://api.sauvequipousse.fr/api'
+  : '/api'
 
 function getToken(): string | null {
   return localStorage.getItem('sqp_token')
@@ -20,6 +22,11 @@ interface ApiOptions {
 export interface ApiError {
   status: number
   message: string
+}
+
+let _onUnauthorized: (() => void) | null = null
+export function setOnUnauthorized(cb: () => void) {
+  _onUnauthorized = cb
 }
 
 export async function apiFetch<T = unknown>(
@@ -47,6 +54,7 @@ export async function apiFetch<T = unknown>(
   const data = await res.json().catch(() => null)
 
   if (!res.ok) {
+    if (res.status === 401 && auth) _onUnauthorized?.()
     const error: ApiError = {
       status: res.status,
       message: data?.error ?? data?.message ?? `Erreur ${res.status}`,
