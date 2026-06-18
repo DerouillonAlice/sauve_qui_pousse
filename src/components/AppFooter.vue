@@ -65,7 +65,7 @@ const legalLinks = [
     </div>
 
     <div class="border-t border-white/10 mt-8 pt-5 text-center">
-      <p class="text-white/30 text-xs">© {{ new Date().getFullYear() }} Sauve qui Pousse · Projet SAE6 BUT3 MMI · IUT Troyes & Castres</p>
+      <p class="text-white/70 text-xs">© {{ new Date().getFullYear() }} Sauve qui Pousse · Projet SAE6 BUT3 MMI · IUT Troyes & Castres</p>
     </div>
   </footer>
 </template>
