@@ -192,7 +192,7 @@ export function useGame() {
     if (!state.session) return false
     state.error = null
     try {
-      await apiFetch(`/participant/${participantId}`, { method: 'DELETE' })
+      await apiFetch(`/game/participant/${participantId}`, { method: 'DELETE' })
       if (state.session) await refreshSession(state.session.id)
       return true
     } catch (err) {
