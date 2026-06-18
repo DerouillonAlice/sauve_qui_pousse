@@ -25,7 +25,7 @@ const legalLinks = [
         <p class="font-game text-white text-xl sm:text-2xl mb-5">Menu</p>
         <ul class="space-y-2">
           <li v-for="link in menuLinks" :key="link.to">
-            <RouterLink :to="link.to" class="text-white/80 text-sm hover:text-white hover:font-bold transition-all">
+            <RouterLink :to="link.to" class="text-white text-sm hover:underline transition-all">
               {{ link.label }}
             </RouterLink>
           </li>
@@ -37,7 +37,7 @@ const legalLinks = [
         <p class="font-game text-white text-xl sm:text-2xl mb-5">Légal</p>
         <ul class="space-y-2">
           <li v-for="link in legalLinks" :key="link.to">
-            <RouterLink :to="link.to" class="text-white/80 text-sm hover:text-white hover:font-bold transition-all leading-snug block">
+            <RouterLink :to="link.to" class="text-white text-sm hover:underline transition-all leading-snug block">
               {{ link.label }}
             </RouterLink>
           </li>
@@ -47,9 +47,9 @@ const legalLinks = [
       <!-- Contact + Boutique -->
       <div class="col-span-2 sm:col-span-1">
         <p class="font-game text-white text-xl sm:text-2xl mb-5">Contact</p>
-        <ul class="space-y-2 text-white/80 text-sm">
+        <ul class="space-y-2 text-white text-sm">
           <li>
-            <a href="mailto:contact@sauvequipousse.fr" class="hover:text-white hover:font-bold transition-all">
+            <a href="mailto:contact@sauvequipousse.fr" class="hover:underline transition-all">
               contact@sauvequipousse.fr
             </a>
           </li>
@@ -65,7 +65,7 @@ const legalLinks = [
     </div>
 
     <div class="border-t border-white/10 mt-8 pt-5 text-center">
-      <p class="text-white/70 text-xs">© {{ new Date().getFullYear() }} Sauve qui Pousse · Projet SAE6 BUT3 MMI · IUT Troyes & Castres</p>
+      <p class="text-white/90 text-xs">© {{ new Date().getFullYear() }} Sauve qui Pousse · Projet SAE6 BUT3 MMI · IUT Troyes & Castres</p>
     </div>
   </footer>
 </template>
