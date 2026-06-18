@@ -12,6 +12,7 @@ import beeLadybugImg      from '@/assets/img/bee_ladybug.svg'
 import hornet1Img         from '@/assets/img/hornet_1.svg'
 import branchBee1Img      from '@/assets/img/branch_bee_1.svg'
 import branchLadybug2Img  from '@/assets/img/branch_ladybug_2.svg'
+import branchLadybug1Img  from '@/assets/img/branch_ladybug_1.svg'
 import scarecrowImg       from '@/assets/img/scarecrow.svg'
 import pesticideImg       from '@/assets/img/pesticide.svg'
 import beeImg             from '@/assets/img/bee.svg'
@@ -246,29 +247,71 @@ function onPointerUp(e: PointerEvent) {
   </section>
 
   <!-- INSCRIVEZ VOUS -->
-  <section class="py-16 px-6 bg-brown">
-    <div class="max-w-md mx-auto">
-      <h2 class="text-cream mb-1">{{ t('play.register.title') }}</h2>
-      <p class="text-cream/50 text-sm mb-8">{{ t('play.register.subtitle') }}</p>
-      <form class="space-y-3" @submit.prevent>
-        <div class="grid grid-cols-2 gap-3">
-          <input type="text" :placeholder="t('play.register.firstname')"
-            class="px-4 py-3 rounded-xl border-2 border-primary bg-cream text-brown placeholder:text-brown/40 focus:outline-none focus:ring-2 focus:ring-primary/30 text-sm w-full" />
-          <input type="text" :placeholder="t('play.register.lastname')"
-            class="px-4 py-3 rounded-xl border-2 border-primary bg-cream text-brown placeholder:text-brown/40 focus:outline-none focus:ring-2 focus:ring-primary/30 text-sm w-full" />
+  <section class="relative py-16 px-4 bg-white overflow-visible">
+
+    <!-- Frelon haut-gauche -->
+    <img :src="hornet1Img" aria-hidden="true"
+      class="hidden lg:block absolute -top-10 left-0 w-52 xl:w-64 pointer-events-none select-none z-10" />
+    <!-- Branche coccinelle haut-droit -->
+    <img :src="branchLadybug1Img" aria-hidden="true"
+      class="hidden lg:block absolute top-0 right-0 w-48 xl:w-60 pointer-events-none select-none z-10" />
+    <!-- Pesticide bas-droit -->
+    <img :src="pesticideImg" aria-hidden="true"
+      class="hidden lg:block absolute bottom-0 right-0 w-44 xl:w-56 pointer-events-none select-none z-10" />
+
+    <!-- Carte brune centrée -->
+    <div class="relative max-w-2xl mx-auto bg-brown rounded-3xl px-8 sm:px-12 py-10 z-20">
+      <h2 class="font-game text-white text-4xl mb-8">{{ t('play.register.title') }}</h2>
+
+      <form class="space-y-5" @submit.prevent>
+        <!-- Prénom + Nom -->
+        <div class="grid grid-cols-2 gap-4">
+          <div>
+            <label class="block text-white text-sm font-medium mb-1">{{ t('play.register.firstname') }}</label>
+            <input type="text" autocomplete="given-name"
+              class="w-full px-4 py-3 rounded-xl bg-white text-brown placeholder:text-brown/30 focus:outline-none focus:ring-2 focus:ring-primary/40 text-sm" />
+          </div>
+          <div>
+            <label class="block text-white text-sm font-medium mb-1">{{ t('play.register.lastname') }}</label>
+            <input type="text" autocomplete="family-name"
+              class="w-full px-4 py-3 rounded-xl bg-white text-brown placeholder:text-brown/30 focus:outline-none focus:ring-2 focus:ring-primary/40 text-sm" />
+          </div>
         </div>
-        <input type="email" :placeholder="t('play.register.email')"
-          class="w-full px-4 py-3 rounded-xl border-2 border-primary bg-cream text-brown placeholder:text-brown/40 focus:outline-none focus:ring-2 focus:ring-primary/30 text-sm" />
-        <input type="password" :placeholder="t('play.register.password')"
-          class="w-full px-4 py-3 rounded-xl border-2 border-primary bg-cream text-brown placeholder:text-brown/40 focus:outline-none focus:ring-2 focus:ring-primary/30 text-sm" />
-        <input type="password" :placeholder="t('play.register.confirm_password')"
-          class="w-full px-4 py-3 rounded-xl border-2 border-primary bg-cream text-brown placeholder:text-brown/40 focus:outline-none focus:ring-2 focus:ring-primary/30 text-sm" />
+
+        <!-- Email -->
+        <div>
+          <label class="block text-white text-sm font-medium mb-1">{{ t('play.register.email') }}</label>
+          <input type="email" autocomplete="email"
+            class="w-full px-4 py-3 rounded-xl bg-white text-brown placeholder:text-brown/30 focus:outline-none focus:ring-2 focus:ring-primary/40 text-sm" />
+        </div>
+
+        <!-- Mot de passe + Confirmer -->
+        <div class="grid grid-cols-2 gap-4">
+          <div>
+            <label class="block text-white text-sm font-medium mb-1">{{ t('play.register.password') }}</label>
+            <input type="password" autocomplete="new-password"
+              class="w-full px-4 py-3 rounded-xl bg-white text-brown placeholder:text-brown/30 focus:outline-none focus:ring-2 focus:ring-primary/40 text-sm" />
+            <p class="text-white/40 text-xs mt-1">{{ t('play.register.password_hint') }}</p>
+          </div>
+          <div>
+            <label class="block text-white text-sm font-medium mb-1">{{ t('play.register.confirm_password') }}</label>
+            <input type="password" autocomplete="new-password"
+              class="w-full px-4 py-3 rounded-xl bg-white text-brown placeholder:text-brown/30 focus:outline-none focus:ring-2 focus:ring-primary/40 text-sm" />
+          </div>
+        </div>
+
+        <!-- Submit -->
         <RouterLink to="/jouer"
-          class="block w-full py-4 bg-primary text-cream rounded-full font-bold text-center hover:scale-[1.02] transition-transform">
+          class="block w-1/2 mx-auto py-4 bg-primary text-white rounded-full font-bold text-center hover:scale-[1.03] transition-transform mt-2">
           {{ t('play.register.submit') }}
         </RouterLink>
-        <p class="text-cream/35 text-xs text-center">{{ t('play.register.legal') }}</p>
-        <p class="text-center text-sm text-cream/55">
+
+        <!-- Légal -->
+        <p class="text-white/50 text-xs text-center leading-relaxed">
+          {{ t('play.register.legal') }}
+          <span class="underline cursor-pointer">{{ t('play.register.legal').includes('conditions') ? '' : '' }}</span>
+        </p>
+        <p class="text-center text-sm text-white/60">
           {{ t('play.register.switch_login') }}
           <RouterLink to="/jouer" class="text-primary font-semibold hover:underline">
             {{ t('play.register.switch_login_link') }}
