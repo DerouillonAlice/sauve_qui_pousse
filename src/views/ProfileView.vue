@@ -117,6 +117,25 @@ function statusClass(status: string): string {
 }
 
 const avatarLetter = computed(() => (auth.user?.pseudo ?? 'U').charAt(0).toUpperCase())
+
+type HistoryFilter = 'all' | 'finished' | 'host' | 'won'
+const historyFilter = ref<HistoryFilter>('all')
+
+const historyFilters: { key: HistoryFilter; label: string }[] = [
+  { key: 'all',      label: 'Toutes'    },
+  { key: 'finished', label: 'Terminées' },
+  { key: 'host',     label: 'Hôte'      },
+  { key: 'won',      label: 'Victoires' },
+]
+
+const filteredHistory = computed(() => {
+  if (!profile.value) return []
+  const h = profile.value.history
+  if (historyFilter.value === 'finished') return h.filter(g => g.status === 'finished')
+  if (historyFilter.value === 'host')     return h.filter(g => g.isHost)
+  if (historyFilter.value === 'won')      return h.filter(g => g.roundsWon > 0)
+  return h
+})
 </script>
 
 <template>
@@ -192,15 +211,28 @@ const avatarLetter = computed(() => (auth.user?.pseudo ?? 'U').charAt(0).toUpper
 
       <!-- Historique -->
       <section class="max-w-3xl mx-auto px-4 sm:px-6 pb-10">
-        <h2 class="text-brown text-2xl sm:text-3xl mb-5">{{ t('profile.history') }}</h2>
+        <div class="flex items-center justify-between gap-3 mb-5 flex-wrap">
+          <h2 class="text-brown text-2xl sm:text-3xl">{{ t('profile.history') }}</h2>
+          <div class="flex gap-2 flex-wrap">
+            <button
+              v-for="f in historyFilters" :key="f.key"
+              @click="historyFilter = f.key"
+              class="px-3 py-1 rounded-full text-xs font-semibold border transition-all"
+              :class="historyFilter === f.key
+                ? 'bg-primary text-cream border-primary'
+                : 'text-brown/60 border-brown/20 hover:border-primary hover:text-primary'">
+              {{ f.label }}
+            </button>
+          </div>
+        </div>
 
-        <div v-if="profile.history.length === 0"
+        <div v-if="filteredHistory.length === 0"
           class="bg-white rounded-2xl p-10 text-center text-brown/40 shadow-sm">
-          {{ t('profile.no_history') }}
+          {{ profile.history.length === 0 ? t('profile.no_history') : 'Aucune partie dans ce filtre.' }}
         </div>
 
         <div v-else class="flex flex-col gap-3">
-          <div v-for="game in profile.history" :key="game.sessionId"
+          <div v-for="game in filteredHistory" :key="game.sessionId"
             class="bg-white rounded-2xl px-4 py-4 shadow-sm">
 
             <!-- Ligne 1 : titre + statut -->
