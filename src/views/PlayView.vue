@@ -9,7 +9,7 @@ import { LogOut, Gamepad2, Users, Loader2, AlertCircle, CheckCircle2 } from 'luc
 
 const { t, tm } = useI18n()
 const { state: auth, isAuthenticated, login, register, logout, clearError } = useAuth()
-const { state: game, isInGame, isActive, createGame, joinGame, leaveGame, stopPolling } = useGame()
+const { state: game, isInGame, isActive, isFinished, createGame, joinGame, leaveGame, stopPolling } = useGame()
 
 const featureItems = computed(() => tm('play.features.items') as string[])
 
@@ -92,7 +92,7 @@ onUnmounted(() => stopPolling())
 
 <template>
   <!-- Full-screen game view — bypasses hero+grid entirely -->
-  <GameActive v-if="isAuthenticated && isInGame && isActive" />
+  <GameActive v-if="isAuthenticated && isInGame && (isActive || isFinished)" />
 
   <div v-else class="bg-cream min-h-screen">
 

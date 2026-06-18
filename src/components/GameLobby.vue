@@ -66,12 +66,7 @@ const isOwner = computed(() => game.session?.ownerId === auth.user?.id)
 const canStart = computed(() => isOwner.value && participants.value.length >= 2 && isLobby.value)
 const canAddMore = computed(() => participants.value.length < MAX_PLAYERS)
 
-const avatarColors = [
-  'from-primary to-lime',
-  'from-amber-500 to-orange-400',
-  'from-sky-400 to-blue-500',
-  'from-pink-400 to-rose-500',
-]
+const avatarColors = ['bg-primary', 'bg-amber-400', 'bg-sky-400', 'bg-pink-400']
 
 /* ── Slots restants visualisés ── */
 const emptySlots = computed(() => Math.max(0, MAX_PLAYERS - participants.value.length))
