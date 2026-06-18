@@ -5,7 +5,7 @@ import { RouterLink } from 'vue-router'
 import WaveEdge from '@/components/WaveEdge.vue'
 import { ChevronLeft, ChevronRight, ArrowRight } from 'lucide-vue-next'
 
-import heroImg from '@/assets/img/hero.svg'
+import heroRaw from '@/assets/img/hero.svg?raw'
 import scarecrowImg from '@/assets/img/scarecrow.svg'
 import pesticideImg from '@/assets/img/pesticide.svg'
 import wheelImg from '@/assets/img/spinning_wheel.svg'
@@ -76,9 +76,7 @@ function onPointerUp(e: PointerEvent) {
   <!-- ═══════════════════════════════════════════════
        HERO — le SVG est sa propre composition complète
   ═══════════════════════════════════════════════ -->
-  <section>
-    <img :src="heroImg" alt="Sauve qui Pousse!" class="w-full block" />
-  </section>
+  <section class="[&>svg]:w-full [&>svg]:h-auto [&>svg]:block" v-html="heroRaw" />
 
   <!-- ═══════════════════════════════════════════════
        CONCEPT
