@@ -326,14 +326,6 @@ onUnmounted(() => stopPolling())
             </ul>
           </div>
 
-          <div class="bg-cream-dark rounded-3xl p-8 text-center">
-            <p class="font-semibold text-brown text-lg mb-2">{{ t('play.demo.title') }}</p>
-            <p class="text-brown/60 text-sm mb-6 leading-relaxed">{{ t('play.demo.desc') }}</p>
-            <button id="btn-demo"
-              class="px-8 py-3 border-2 border-brown text-brown rounded-full font-semibold hover:bg-brown hover:text-cream transition-colors cursor-pointer">
-              {{ t('play.demo.cta') }}
-            </button>
-          </div>
         </div>
       </template>
 
