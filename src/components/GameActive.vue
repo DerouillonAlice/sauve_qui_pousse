@@ -177,12 +177,12 @@ onUnmounted(() => { document.body.style.overflow = '' })
               <div class="w-full h-full rounded-full flex items-center justify-center text-white text-xl font-bold shadow-sm transition-all"
                 :class="[
                   avatarColors[i % 4],
-                  !spinResult && getPlayerEffects(p.id).length > 0 ? 'ring-4 ' + effectMeta(getPlayerEffects(p.id)[0]?.effectCode ?? '').ring : ''
+                  (!spinResult || p.id !== currentParticipant?.id) && getPlayerEffects(p.id).length > 0 ? 'ring-4 ' + effectMeta(getPlayerEffects(p.id)[0]?.effectCode ?? '').ring : ''
                 ]">
                 {{ p.displayName.charAt(0).toUpperCase() }}
               </div>
               <!-- Badge coin haut-droite -->
-              <span v-if="!spinResult && getPlayerEffects(p.id).length > 0"
+              <span v-if="(!spinResult || p.id !== currentParticipant?.id) && getPlayerEffects(p.id).length > 0"
                 class="absolute -top-1 -right-1 w-6 h-6 rounded-full bg-white shadow-md flex items-center justify-center text-sm leading-none">
                 {{ effectMeta(getPlayerEffects(p.id)[0]?.effectCode ?? '').icon }}
               </span>
@@ -191,7 +191,7 @@ onUnmounted(() => { document.body.style.overflow = '' })
             <p class="text-brown text-sm font-semibold truncate w-full text-center">{{ p.displayName }}</p>
 
             <!-- Badge effet visible -->
-            <div v-if="!spinResult && getPlayerEffects(p.id).length > 0"
+            <div v-if="(!spinResult || p.id !== currentParticipant?.id) && getPlayerEffects(p.id).length > 0"
               class="rounded-full px-2 py-0.5 text-xs font-bold text-center w-full truncate"
               :class="effectMeta(getPlayerEffects(p.id)[0]?.effectCode ?? '').badge">
               {{ effectMeta(getPlayerEffects(p.id)[0]?.effectCode ?? '').label }}
@@ -205,7 +205,7 @@ onUnmounted(() => { document.body.style.overflow = '' })
             </div>
 
             <!-- Tooltip effet au hover -->
-            <div v-if="!spinResult && getPlayerEffects(p.id).length > 0"
+            <div v-if="(!spinResult || p.id !== currentParticipant?.id) && getPlayerEffects(p.id).length > 0"
               class="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 w-56 rounded-xl px-3 py-3 shadow-xl z-30 bg-brown text-cream
                      opacity-0 group-hover:opacity-100 pointer-events-none transition-opacity duration-150">
               <p class="font-bold text-sm mb-1">
