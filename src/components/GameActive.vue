@@ -4,6 +4,7 @@ import { useI18n } from 'vue-i18n'
 import { useGame } from '@/composables/useGame'
 import { ChevronRight, Award, Leaf, LogOut, Trophy, Loader2 } from 'lucide-vue-next'
 import type { SpinResult } from '@/composables/useGame'
+import deckImg from '@/assets/img/deck_of_cards.svg'
 
 const { t } = useI18n()
 const {
@@ -99,21 +100,6 @@ const totalRoundsToWin = 3
 // Solid avatar colors (no gradients)
 const avatarColors = ['bg-primary', 'bg-amber-400', 'bg-sky-400', 'bg-pink-400']
 
-/* ── card styling (pioche) ── */
-interface CardStyle { bg: string; text: string; badge: string; icon: string; sign: string }
-function cardStyle(type: string | undefined): CardStyle {
-  switch (type) {
-    case 'insect_pollinator':   return { bg: 'bg-lime/30',  text: 'text-primary', badge: 'bg-primary/20 text-primary', icon: '🐝', sign: '+3' }
-    case 'insect_predator':     return { bg: 'bg-lime/20',  text: 'text-primary', badge: 'bg-primary/20 text-primary', icon: '🐞', sign: '+2' }
-    case 'insect_decomposer':   return { bg: 'bg-lime/20',  text: 'text-primary', badge: 'bg-primary/20 text-primary', icon: '🪱', sign: '+1' }
-    case 'neutral':             return { bg: 'bg-cream-dark', text: 'text-brown', badge: 'bg-brown/10 text-brown',    icon: '🌾', sign: '0'  }
-    case 'insecticide_contact': return { bg: 'bg-red/10',   text: 'text-red',    badge: 'bg-red/15 text-red',        icon: '☠️', sign: '-3' }
-    case 'pesticide_systemic':  return { bg: 'bg-red/10',   text: 'text-red',    badge: 'bg-red/15 text-red',        icon: '🧪', sign: '-2' }
-    case 'disaster':            return { bg: 'bg-red/10',   text: 'text-red',    badge: 'bg-red/15 text-red',        icon: '⚡', sign: '-1' }
-    default:                    return { bg: 'bg-cream-dark', text: 'text-brown', badge: 'bg-brown/10 text-brown',    icon: '🎴', sign: '?'  }
-  }
-}
-const cs = computed(() => cardStyle(spinResult.value?.card?.type))
 </script>
 
 <template>
@@ -241,14 +227,11 @@ const cs = computed(() => cardStyle(spinResult.value?.card?.type))
             </button>
           </div>
 
-          <!-- PIOCHE (card) -->
-          <div v-else-if="spinResult.card" :class="cs.bg" class="rounded-3xl p-6 text-center shadow-md">
-            <div class="text-4xl mb-2">{{ cs.icon }}</div>
-            <span :class="cs.badge" class="inline-block px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wide mb-3">
-              {{ cs.sign }} pts
-            </span>
-            <h3 :class="cs.text" class="font-game text-xl mb-1">{{ spinResult.card.title }}</h3>
-            <p class="text-brown/60 text-sm leading-relaxed mb-5">{{ spinResult.card.description }}</p>
+          <!-- PIOCHE (card) — piocher dans la pioche physique -->
+          <div v-else-if="spinResult.resultType === 'card'" class="bg-cream-dark rounded-3xl p-6 text-center shadow-md">
+            <img :src="deckImg" alt="Pioche" class="w-32 h-32 mx-auto mb-4 object-contain" />
+            <h3 class="text-brown font-game text-2xl mb-2">Piochez une carte !</h3>
+            <p class="text-brown/55 text-sm mb-6 leading-relaxed">Prenez la première carte de la pioche physique et appliquez son effet.</p>
             <button @click="handleContinue" :disabled="isEndingTurn"
               class="px-8 py-3 bg-brown text-cream rounded-full font-bold cursor-pointer hover:scale-105 active:scale-95 transition-transform disabled:opacity-50 flex items-center gap-2 mx-auto">
               <Loader2 v-if="isEndingTurn" :stroke-width="2" class="w-5 h-5 animate-spin" />
