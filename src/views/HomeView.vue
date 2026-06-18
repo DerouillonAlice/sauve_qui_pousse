@@ -5,14 +5,6 @@ import { RouterLink } from 'vue-router'
 import WaveEdge from '@/components/WaveEdge.vue'
 import { ChevronLeft, ChevronRight, ArrowRight } from 'lucide-vue-next'
 
-import heroImg from '@/assets/img/hero.svg'
-import scarecrowImg from '@/assets/img/scarecrow.svg'
-import pesticideImg from '@/assets/img/pesticide.svg'
-import wheelImg from '@/assets/img/spinning_wheel.svg'
-import deckImg from '@/assets/img/deck_of_cards.svg'
-import medalImg from '@/assets/img/medal.svg'
-import wormImg from '@/assets/img/worm.svg'
-
 import imgAbeilles from '@/assets/img/cards/VersoAbeilles.webp'
 import imgVers from '@/assets/img/cards/VersoVers.webp'
 import imgCoccinelles from '@/assets/img/cards/VersoCoccinelles.webp'
@@ -23,18 +15,13 @@ import imgEpouvantail from '@/assets/img/cards/VersoEpouvantail.webp'
 
 const { t, tm } = useI18n()
 
-/* ── Rules steps ── */
-const howSteps = computed(() => [
-  { label: (tm('home.how.steps') as string[])[0], img: wheelImg, n: '1' },
-  { label: (tm('home.how.steps') as string[])[1], img: deckImg,  n: '2' },
-  { label: (tm('home.how.steps') as string[])[2], img: medalImg, n: '3' },
-])
-
-/* ── CTA chips ── */
-const ctaChips = computed(() => tm('home.cta.chips') as string[])
-
-/* ── Pedagogy ── */
 const pedagogyFacts = computed(() => tm('home.pedagogy.facts') as string[])
+const ctaChips = computed(() => tm('home.cta.chips') as string[])
+const howSteps = computed(() => [
+  { label: (tm('home.how.steps') as string[])[0], n: '1' },
+  { label: (tm('home.how.steps') as string[])[1], n: '2' },
+  { label: (tm('home.how.steps') as string[])[2], n: '3' },
+])
 
 /* ── Card slider ── */
 const cardImages = [imgAbeilles, imgVers, imgCoccinelles, imgFrelons, imgPesticides, imgAgricole, imgEpouvantail]
@@ -73,16 +60,16 @@ function onPointerUp(e: PointerEvent) {
 
 <template>
 
-  <!-- ═══════════════════════════════════════════════
-       HERO — le SVG est sa propre composition complète
-  ═══════════════════════════════════════════════ -->
-  <section>
-    <img :src="heroImg" alt="Sauve qui Pousse!" class="w-full block" />
+  <!-- HERO -->
+  <section class="relative overflow-hidden bg-primary py-20 px-6 text-center">
+    <h1 class="font-game text-cream text-7xl sm:text-9xl leading-none">SAUVE</h1>
+    <p class="font-game text-cream/80 text-4xl sm:text-5xl italic my-1">qui</p>
+    <h1 class="font-game text-cream text-7xl sm:text-9xl leading-none">POUSSE&nbsp;!</h1>
+    <p class="text-cream/70 mt-6 text-base max-w-lg mx-auto leading-relaxed">{{ t('home.hero.tagline') }}</p>
   </section>
+  <WaveEdge color="var(--color-primary)" :size="56" />
 
-  <!-- ═══════════════════════════════════════════════
-       CONCEPT
-  ═══════════════════════════════════════════════ -->
+  <!-- CONCEPT -->
   <section class="py-16 px-6 bg-white">
     <div class="max-w-2xl mx-auto text-center">
       <h2 class="text-brown mb-8">{{ t('home.concept.title') }}</h2>
@@ -93,27 +80,23 @@ function onPointerUp(e: PointerEvent) {
     </div>
   </section>
 
-  <!-- ═══════════════════════════════════════════════
-       LES RÈGLES DU JEU — 3 étapes
-  ═══════════════════════════════════════════════ -->
+  <!-- LES RÈGLES DU JEU -->
   <section class="py-16 px-6 bg-cream">
     <div class="max-w-4xl mx-auto">
       <h2 class="text-brown text-center mb-3">{{ t('home.how.title') }}</h2>
       <p class="text-brown/55 text-center text-sm leading-relaxed mb-12 max-w-xl mx-auto">{{ t('home.how.desc') }}</p>
 
-      <!-- Étapes -->
       <div class="flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-2 mb-12">
         <template v-for="(step, i) in howSteps" :key="step.n">
-          <div class="bg-white rounded-2xl shadow-sm flex flex-col items-center justify-center gap-3 p-5 w-40 h-44 relative shrink-0">
+          <div class="bg-white rounded-2xl shadow-sm flex flex-col items-center justify-center gap-3 p-6 w-44 h-44 relative shrink-0">
             <span
               class="absolute -top-3 -left-3 w-8 h-8 rounded-full flex items-center justify-center text-white font-bold text-sm shadow-md"
               :class="i === 2 ? 'bg-red' : 'bg-primary'"
             >{{ step.n }}</span>
-            <img :src="step.img" :alt="step.label" class="w-20 h-20 object-contain" />
+            <span class="text-5xl">{{ ['🌀','🃏','🏆'][i] }}</span>
             <p class="text-brown font-semibold text-sm text-center leading-snug">{{ step.label }}</p>
           </div>
-          <ArrowRight v-if="i < 2" :stroke-width="1.5"
-            class="w-7 h-7 text-brown/25 shrink-0 rotate-90 sm:rotate-0" />
+          <ArrowRight v-if="i < 2" :stroke-width="1.5" class="w-7 h-7 text-brown/25 shrink-0 rotate-90 sm:rotate-0" />
         </template>
       </div>
 
@@ -126,26 +109,17 @@ function onPointerUp(e: PointerEvent) {
     </div>
   </section>
 
-  <!-- ═══════════════════════════════════════════════
-       PRÊT À JOUER ? — CTA
-  ═══════════════════════════════════════════════ -->
-  <section class="relative py-16 px-6 bg-brown overflow-hidden">
-    <img :src="scarecrowImg" aria-hidden="true"
-      class="absolute left-0 bottom-0 h-48 sm:h-56 pointer-events-none select-none hidden sm:block" />
-    <img :src="pesticideImg" aria-hidden="true"
-      class="absolute right-0 bottom-0 h-40 sm:h-48 pointer-events-none select-none hidden sm:block" />
-
-    <div class="max-w-lg mx-auto text-center relative z-10">
+  <!-- PRÊT À JOUER ? -->
+  <section class="py-16 px-6 bg-brown">
+    <div class="max-w-lg mx-auto text-center">
       <h2 class="text-cream mb-3">{{ t('home.cta.title') }}</h2>
       <p class="text-cream/55 text-sm mb-8 leading-relaxed">{{ t('home.cta.subtitle') }}</p>
-
       <div class="flex flex-wrap justify-center gap-3 mb-10">
         <span v-for="chip in ctaChips" :key="chip"
           class="px-4 py-1.5 rounded-full border border-cream/25 text-cream/70 text-sm font-medium">
           {{ chip }}
         </span>
       </div>
-
       <div class="flex flex-col sm:flex-row gap-4 justify-center">
         <RouterLink to="/jouer"
           class="px-8 py-4 bg-primary text-cream rounded-full font-semibold hover:scale-105 transition-transform shadow-lg shadow-primary/20">
@@ -159,9 +133,7 @@ function onPointerUp(e: PointerEvent) {
     </div>
   </section>
 
-  <!-- ═══════════════════════════════════════════════
-       NOS CARTES — Slider
-  ═══════════════════════════════════════════════ -->
+  <!-- NOS CARTES -->
   <WaveEdge color="var(--color-cream-dark)" position="top" :size="56" />
   <section class="py-16 px-6 bg-cream-dark overflow-hidden">
     <div class="max-w-5xl mx-auto">
@@ -174,16 +146,13 @@ function onPointerUp(e: PointerEvent) {
       </div>
 
       <div class="relative">
-        <div
-          class="flex items-center justify-center h-85 relative select-none touch-pan-y"
+        <div class="flex items-center justify-center h-85 relative select-none touch-pan-y"
           @pointerdown="onPointerDown"
           @pointerup="onPointerUp"
           @pointercancel="onPointerUp"
         >
           <TransitionGroup name="card-slide">
-            <div
-              v-for="card in visibleCards"
-              :key="(card.name ?? '') + card.offset"
+            <div v-for="card in visibleCards" :key="(card.name ?? '') + card.offset"
               class="absolute transition-all duration-500 ease-out"
               :style="{
                 transform: `translateX(${card.offset * 140}px) scale(${card.offset === 0 ? 1 : 0.82}) rotate(${card.offset * 4}deg)`,
@@ -194,13 +163,10 @@ function onPointerUp(e: PointerEvent) {
             </div>
           </TransitionGroup>
         </div>
-
-        <button @click="prev"
-          class="absolute left-0 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-white/80 shadow flex items-center justify-center hover:bg-white transition-all cursor-pointer z-20">
+        <button @click="prev" class="absolute left-0 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-white/80 shadow flex items-center justify-center hover:bg-white transition-all cursor-pointer z-20">
           <ChevronLeft :stroke-width="2" class="w-5 h-5 text-brown" />
         </button>
-        <button @click="next"
-          class="absolute right-0 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-white/80 shadow flex items-center justify-center hover:bg-white transition-all cursor-pointer z-20">
+        <button @click="next" class="absolute right-0 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-white/80 shadow flex items-center justify-center hover:bg-white transition-all cursor-pointer z-20">
           <ChevronRight :stroke-width="2" class="w-5 h-5 text-brown" />
         </button>
       </div>
@@ -210,60 +176,46 @@ function onPointerUp(e: PointerEvent) {
         <p class="text-brown/50 text-sm max-w-xs mx-auto line-clamp-2 leading-relaxed">{{ currentCard?.desc }}</p>
       </div>
       <div class="flex justify-center gap-2 mt-4">
-        <button
-          v-for="(_, i) in sliderCards" :key="i"
-          @click="currentIndex = i"
+        <button v-for="(_, i) in sliderCards" :key="i" @click="currentIndex = i"
           class="w-2.5 h-2.5 rounded-full transition-all cursor-pointer"
-          :class="i === currentIndex ? 'bg-brown scale-110' : 'bg-brown/25 hover:bg-brown/40'"
-        />
+          :class="i === currentIndex ? 'bg-brown scale-110' : 'bg-brown/25 hover:bg-brown/40'" />
       </div>
     </div>
   </section>
   <WaveEdge color="var(--color-cream-dark)" :size="56" />
 
-  <!-- ═══════════════════════════════════════════════
-       UN JEU QUI AMUSE ET QUI APPREND
-  ═══════════════════════════════════════════════ -->
+  <!-- PÉDAGOGIE -->
   <section class="py-16 px-6 bg-cream">
     <div class="max-w-2xl mx-auto">
       <h2 class="text-brown mb-3">{{ t('home.pedagogy.title') }}</h2>
       <p class="text-brown/55 text-sm italic mb-8">{{ t('home.pedagogy.intro') }}</p>
-
       <ul class="flex flex-col gap-3 mb-10">
         <li v-for="(fact, i) in pedagogyFacts" :key="i"
           class="flex items-center gap-3 bg-primary rounded-full px-5 py-3">
           <span class="text-cream text-sm leading-snug">{{ fact }}</span>
         </li>
       </ul>
-
-      <p class="text-brown font-bold leading-relaxed mb-2">{{ t('home.pedagogy.conclusion').split('.')[0] + '.' }}</p>
-      <p class="text-brown/60 leading-relaxed text-sm">{{ t('home.pedagogy.conclusion').split('.').slice(1).join('.').trim() }}</p>
+      <p class="text-brown/70 leading-relaxed">{{ t('home.pedagogy.conclusion') }}</p>
     </div>
   </section>
 
-  <!-- ═══════════════════════════════════════════════
-       INSCRIVEZ VOUS !
-  ═══════════════════════════════════════════════ -->
-  <section class="relative py-16 px-6 bg-brown overflow-hidden">
-    <img :src="wormImg" aria-hidden="true"
-      class="absolute right-4 top-1/2 -translate-y-1/2 h-32 opacity-30 pointer-events-none select-none hidden lg:block" />
-
-    <div class="max-w-md mx-auto relative z-10">
+  <!-- INSCRIVEZ VOUS -->
+  <section class="py-16 px-6 bg-brown">
+    <div class="max-w-md mx-auto">
       <h2 class="text-cream mb-1">{{ t('play.register.title') }}</h2>
       <p class="text-cream/50 text-sm mb-8">{{ t('play.register.subtitle') }}</p>
-
       <form class="space-y-3" @submit.prevent>
         <div class="grid grid-cols-2 gap-3">
-          <input type="text" :placeholder="t('play.register.firstname')" autocomplete="given-name"
+          <input type="text" :placeholder="t('play.register.firstname')"
             class="px-4 py-3 rounded-xl border-2 border-primary bg-cream text-brown placeholder:text-brown/40 focus:outline-none focus:ring-2 focus:ring-primary/30 text-sm w-full" />
-          <input type="text" :placeholder="t('play.register.lastname')" autocomplete="family-name"
+          <input type="text" :placeholder="t('play.register.lastname')"
             class="px-4 py-3 rounded-xl border-2 border-primary bg-cream text-brown placeholder:text-brown/40 focus:outline-none focus:ring-2 focus:ring-primary/30 text-sm w-full" />
         </div>
-        <input type="email" :placeholder="t('play.register.email')" autocomplete="email"
+        <input type="email" :placeholder="t('play.register.email')"
           class="w-full px-4 py-3 rounded-xl border-2 border-primary bg-cream text-brown placeholder:text-brown/40 focus:outline-none focus:ring-2 focus:ring-primary/30 text-sm" />
-        <input type="password" :placeholder="t('play.register.password')" autocomplete="new-password"
+        <input type="password" :placeholder="t('play.register.password')"
           class="w-full px-4 py-3 rounded-xl border-2 border-primary bg-cream text-brown placeholder:text-brown/40 focus:outline-none focus:ring-2 focus:ring-primary/30 text-sm" />
-        <input type="password" :placeholder="t('play.register.confirm_password')" autocomplete="new-password"
+        <input type="password" :placeholder="t('play.register.confirm_password')"
           class="w-full px-4 py-3 rounded-xl border-2 border-primary bg-cream text-brown placeholder:text-brown/40 focus:outline-none focus:ring-2 focus:ring-primary/30 text-sm" />
         <RouterLink to="/jouer"
           class="block w-full py-4 bg-primary text-cream rounded-full font-bold text-center hover:scale-[1.02] transition-transform">
@@ -280,17 +232,14 @@ function onPointerUp(e: PointerEvent) {
     </div>
   </section>
 
-  <!-- ═══════════════════════════════════════════════
-       NEWSLETTER
-  ═══════════════════════════════════════════════ -->
+  <!-- NEWSLETTER -->
   <section class="py-12 px-6 bg-cream">
     <div class="max-w-sm mx-auto">
       <h3 class="text-brown font-semibold text-lg mb-5">{{ t('home.newsletter.title') }}</h3>
       <div class="flex gap-2 mb-3">
         <input type="email" :placeholder="t('home.newsletter.placeholder')"
           class="flex-1 min-w-0 px-4 py-3 rounded-xl border-2 border-brown/20 bg-cream text-brown placeholder:text-brown/35 focus:outline-none focus:border-primary text-sm transition-colors" />
-        <button
-          class="px-5 py-3 bg-primary text-cream rounded-xl font-bold hover:scale-105 transition-transform cursor-pointer shrink-0">
+        <button class="px-5 py-3 bg-primary text-cream rounded-xl font-bold hover:scale-105 transition-transform cursor-pointer shrink-0">
           {{ t('home.newsletter.submit') }}
         </button>
       </div>
@@ -305,15 +254,7 @@ function onPointerUp(e: PointerEvent) {
 
 <style scoped>
 .card-slide-enter-active,
-.card-slide-leave-active {
-  transition: all 0.5s ease;
-}
-.card-slide-enter-from {
-  opacity: 0;
-  transform: translateX(100px) scale(0.7);
-}
-.card-slide-leave-to {
-  opacity: 0;
-  transform: translateX(-100px) scale(0.7);
-}
+.card-slide-leave-active { transition: all 0.5s ease; }
+.card-slide-enter-from { opacity: 0; transform: translateX(100px) scale(0.7); }
+.card-slide-leave-to { opacity: 0; transform: translateX(-100px) scale(0.7); }
 </style>
