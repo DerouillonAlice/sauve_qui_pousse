@@ -2,7 +2,7 @@
 import { ref, computed, watch, onUnmounted } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { useGame } from '@/composables/useGame'
-import { ChevronRight, Award, Leaf, LogOut, Loader2, Trophy } from 'lucide-vue-next'
+import { ChevronRight, Leaf, LogOut, Loader2, Trophy } from 'lucide-vue-next'
 import type { SpinResult } from '@/composables/useGame'
 import deckImg      from '@/assets/img/deck_of_cards.svg'
 import medalImg     from '@/assets/img/medal.svg'
@@ -49,10 +49,10 @@ const wheelMoving = ref(false)
 // Rotation cible (mod 360) pour que le pointeur TOP pointe le bon secteur.
 // Angle d'atterrissage = 360 - angle_centre_secteur_depuis_le_haut
 const LANDING: Record<string, number> = {
-  card:       252,  // Pioche (centre 108°)
-  skip:       108,  // Passe ton tour (centre 252°)
-  malus:      54,   // Malus (centre 306°)
-  extra_spin: 18,   // Bonus (centre 342°)
+  card:       315,  // Pioche   (centre ~45°  dans le SVG)
+  skip:       207,  // Passe    (centre ~153° dans le SVG)
+  malus:       80,  // Malus    (centre ~280° dans le SVG)
+  extra_spin: 334,  // Bonus    (centre ~26°  dans le SVG)
 }
 
 /* ── spin phase ── */
@@ -145,7 +145,7 @@ onUnmounted(() => { document.body.style.overflow = '' })
       </div>
       <button @click="showWinModal = true" :disabled="isFinished"
         class="flex items-center gap-2 px-5 py-2.5 bg-primary text-cream rounded-full font-bold text-sm cursor-pointer hover:scale-105 active:scale-95 transition-transform disabled:opacity-40 disabled:cursor-not-allowed">
-        <Award :stroke-width="2.5" class="w-4 h-4" />
+        <img :src="ladybugImg" class="w-5 h-5 object-contain" aria-hidden="true" />
         {{ t('game.active.sauve') }}
       </button>
       <div class="min-w-[80px] flex justify-end">
