@@ -33,4 +33,10 @@ export default defineConfigWithVueTs(
   ...pluginOxlint.buildFromOxlintConfigFile('.oxlintrc.json'),
 
   skipFormatting,
+
+  {
+    rules: {
+      'no-unused-expressions': ['error', { allowTernary: true }],
+    },
+  },
 )
