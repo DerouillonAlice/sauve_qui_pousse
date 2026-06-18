@@ -157,7 +157,7 @@ onUnmounted(() => { document.body.style.overflow = '' })
     </div>
 
     <!-- ═══ CONTENT ═══ -->
-    <div class="flex-1 flex flex-col items-center px-4 py-6 gap-6 max-w-5xl mx-auto w-full">
+    <div class="flex-1 flex flex-col items-center px-4 py-3 gap-3 max-w-5xl mx-auto w-full">
 
       <!-- Error -->
       <div v-if="game.error" class="w-full px-4 py-3 bg-red/10 text-red rounded-xl text-sm">
