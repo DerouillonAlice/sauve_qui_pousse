@@ -216,61 +216,85 @@ onUnmounted(() => { document.body.style.overflow = '' })
       <div class="flex flex-col items-center justify-center gap-6 w-full mt-2 md:mt-6">
         
         <!-- ── ROUE ── -->
-        <div class="relative w-64 h-64 sm:w-72 sm:h-72 select-none">
+        <div class="relative w-72 h-72 sm:w-80 sm:h-80 select-none drop-shadow-xl">
+          <svg viewBox="0 0 566.93 566.93" class="w-full h-full" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <style>
+                .wh-cream { fill: #f5debf; font-family: MagicalNeverland-Regular, 'Magical Neverland'; font-size: 12px; }
+                .wh-brown { fill: #623435; font-family: MagicalNeverland-Regular, 'Magical Neverland'; font-size: 12px; }
+              </style>
+            </defs>
 
-            <!-- Pointeur fixe (haut) -->
-        <div class="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1 z-20">
-          <svg width="20" height="20" viewBox="0 0 20 20">
-            <polygon points="10,18 2,2 18,2" fill="#623435" />
+            <!-- Corps de la roue (tourne) -->
+            <g :style="{
+              transform: `rotate(${wheelDeg}deg)`,
+              transformOrigin: '283.46px 285.07px',
+              transition: wheelMoving ? 'transform 3.2s cubic-bezier(0.1, 0.85, 0.2, 1)' : 'none'
+            }">
+              <!-- rayons centre -->
+              <polyline fill="none" stroke="#1d1d1b" stroke-width="3" stroke-miterlimit="10" points="283.46 259.58 283.46 285.06 283.46 310.57"/>
+              <polyline fill="none" stroke="#1d1d1b" stroke-width="3" stroke-miterlimit="10" points="291.34 309.32 283.47 285.08 275.59 260.82"/>
+              <polyline fill="none" stroke="#1d1d1b" stroke-width="3" stroke-miterlimit="10" points="268.48 264.45 283.46 285.06 298.45 305.69"/>
+              <polyline fill="none" stroke="#1d1d1b" stroke-width="3" stroke-miterlimit="10" points="262.84 270.09 283.45 285.07 304.08 300.05"/>
+              <polyline fill="none" stroke="#1d1d1b" stroke-width="3" stroke-miterlimit="10" points="259.22 277.2 283.45 285.07 307.71 292.95"/>
+              <polyline fill="none" stroke="#1d1d1b" stroke-width="3" stroke-miterlimit="10" points="257.97 285.07 283.46 285.07 308.96 285.07"/>
+              <polyline fill="none" stroke="#1d1d1b" stroke-width="3" stroke-miterlimit="10" points="259.22 292.95 283.46 285.08 307.71 277.2"/>
+              <polyline fill="none" stroke="#1d1d1b" stroke-width="3" stroke-miterlimit="10" points="262.85 300.05 283.46 285.08 304.09 270.09"/>
+              <polyline fill="none" stroke="#1d1d1b" stroke-width="3" stroke-miterlimit="10" points="268.48 305.69 283.46 285.08 298.45 264.45"/>
+              <polyline fill="none" stroke="#1d1d1b" stroke-width="3" stroke-miterlimit="10" points="275.59 309.32 283.46 285.09 291.34 260.82"/>
+              <!-- secteurs -->
+              <path fill="#aed227" stroke="#1d1d1b" stroke-miterlimit="10" d="M262.84,270.09c-1.57,2.14-2.8,4.53-3.62,7.11l-180.49-58.65c7.05-21.71,17.45-41.91,30.61-59.98l153.5,111.52Z"/>
+              <path fill="#7ba049" stroke="#1d1d1b" stroke-miterlimit="10" d="M268.48,264.45c-2.17,1.57-4.07,3.48-5.64,5.64l-153.5-111.52c13.28-18.26,29.36-34.34,47.61-47.62l111.53,153.5Z"/>
+              <path fill="#aed227" stroke="#1d1d1b" stroke-miterlimit="10" d="M275.58,260.82c-2.58.83-4.96,2.07-7.1,3.63l-111.53-153.5c18.07-13.16,38.28-23.57,59.99-30.62l58.64,180.49Z"/>
+              <path fill="#e23a12" stroke="#1d1d1b" stroke-miterlimit="10" d="M283.46,69.85v189.73c-2.75,0-5.39.43-7.87,1.24h-.01l-58.64-180.49c20.95-6.8,43.31-10.48,66.52-10.48Z"/>
+              <path fill="#aed227" stroke="#1d1d1b" stroke-miterlimit="10" d="M349.99,80.33l-58.64,180.49h0c-2.48-.8-5.13-1.24-7.88-1.24V69.85c23.22,0,45.58,3.68,66.53,10.48Z"/>
+              <path fill="#7ba049" stroke="#1d1d1b" stroke-miterlimit="10" d="M409.98,110.95l-111.53,153.5c-2.14-1.56-4.52-2.8-7.1-3.63l58.64-180.49c21.71,7.05,41.92,17.46,59.99,30.62Z"/>
+              <path fill="#aed227" stroke="#1d1d1b" stroke-miterlimit="10" d="M457.59,158.57l-153.5,111.52c-1.57-2.16-3.47-4.07-5.64-5.64l111.53-153.5c18.25,13.28,34.33,29.36,47.61,47.62Z"/>
+              <path fill="#e23a12" stroke="#1d1d1b" stroke-miterlimit="10" d="M488.2,218.55l-180.49,58.65c-.82-2.58-2.05-4.97-3.62-7.11l153.5-111.52c13.16,18.07,23.56,38.27,30.61,59.98Z"/>
+              <path fill="#aed227" stroke="#1d1d1b" stroke-miterlimit="10" d="M498.68,285.07h-189.72c0-2.75-.43-5.39-1.25-7.87l180.49-58.65c6.8,20.95,10.48,43.31,10.48,66.52Z"/>
+              <path fill="#7ba049" stroke="#1d1d1b" stroke-miterlimit="10" d="M498.68,285.07c0,23.21-3.68,45.57-10.48,66.52l-180.49-58.64c.81-2.48,1.25-5.13,1.25-7.88h189.72Z"/>
+              <path fill="#aed227" stroke="#1d1d1b" stroke-miterlimit="10" d="M488.2,351.59c-7.05,21.72-17.46,41.92-30.61,59.99l-153.51-111.53c1.57-2.14,2.8-4.53,3.63-7.1l180.49,58.64Z"/>
+              <path fill="#e23a12" stroke="#1d1d1b" stroke-miterlimit="10" d="M457.59,411.58c-13.28,18.25-29.36,34.33-47.61,47.61l-111.53-153.5c2.17-1.57,4.07-3.47,5.63-5.64l153.51,111.53Z"/>
+              <path fill="#aed227" stroke="#1d1d1b" stroke-miterlimit="10" d="M409.98,459.19c-18.07,13.16-38.28,23.57-59.99,30.62l-58.65-180.49c2.58-.83,4.97-2.06,7.11-3.63l111.53,153.5Z"/>
+              <path fill="#7ba049" stroke="#1d1d1b" stroke-miterlimit="10" d="M349.99,489.81c-20.95,6.8-43.31,10.48-66.53,10.48v-189.72c2.75,0,5.4-.44,7.88-1.25l58.65,180.49Z"/>
+              <path fill="#aed227" stroke="#1d1d1b" stroke-miterlimit="10" d="M283.46,310.57v189.72c-23.21,0-45.57-3.68-66.52-10.48l58.65-180.49c2.48.82,5.12,1.25,7.87,1.25Z"/>
+              <path fill="#e23a12" stroke="#1d1d1b" stroke-miterlimit="10" d="M275.59,309.32l-58.65,180.49c-21.71-7.05-41.92-17.46-59.99-30.62l111.53-153.5c2.14,1.57,4.53,2.81,7.11,3.63Z"/>
+              <path fill="#aed227" stroke="#1d1d1b" stroke-miterlimit="10" d="M268.48,305.69l-111.53,153.5c-18.25-13.28-34.33-29.36-47.61-47.61l153.51-111.53c1.56,2.17,3.46,4.07,5.63,5.64Z"/>
+              <path fill="#7ba049" stroke="#1d1d1b" stroke-miterlimit="10" d="M262.85,300.05l-153.51,111.53c-13.15-18.07-23.56-38.27-30.61-59.98l180.49-58.65c.83,2.57,2.06,4.96,3.63,7.1Z"/>
+              <path fill="#aed227" stroke="#1d1d1b" stroke-miterlimit="10" d="M259.22,292.95l-180.49,58.64c-6.8-20.95-10.48-43.31-10.48-66.52h189.72c0,2.75.44,5.4,1.25,7.88Z"/>
+              <path fill="#e23a12" stroke="#1d1d1b" stroke-miterlimit="10" d="M259.22,277.2c-.82,2.48-1.25,5.12-1.25,7.87H68.25c0-23.21,3.68-45.57,10.48-66.52l180.49,58.65Z"/>
+              <!-- centre blanc + logo -->
+              <path fill="#fff" stroke="#1d1d1b" stroke-miterlimit="10" d="M308.96,285.07c0,13.53-10.97,24.5-24.5,24.5s-24.5-10.97-24.5-24.5,10.97-24.5,24.5-24.5,24.5,10.97,24.5,24.5Z"/>
+              <image :href="logoSauveImg" x="260" y="260" width="47" height="47" />
+              <!-- labels MALUS -->
+              <text class="wh-cream" transform="translate(87.69 271.09) rotate(-80)">MALUS</text>
+              <text class="wh-cream" transform="translate(239.23 92.96) rotate(-10)">MALUS</text>
+              <text class="wh-cream" transform="translate(450.21 181.54) rotate(62)">MALUS</text>
+              <text class="wh-cream" transform="translate(433.75 412.62) rotate(135)">MALUS</text>
+              <text class="wh-cream" transform="translate(208.12 465.82) rotate(-155)">MALUS</text>
+              <!-- labels PIOCHE -->
+              <text class="wh-brown" transform="translate(297.41 85.64) rotate(10)">PIOCHE</text>
+              <text class="wh-brown" transform="translate(409.24 133.41) rotate(45)">PIOCHE</text>
+              <text class="wh-brown" transform="translate(473.27 236.57) rotate(80)">PIOCHE</text>
+              <text class="wh-brown" transform="translate(465.24 356.86) rotate(115)">PIOCHE</text>
+              <text class="wh-brown" transform="translate(387.38 450.07) rotate(153)">PIOCHE</text>
+              <text class="wh-brown" transform="translate(271.33 479.53) rotate(-170)">PIOCHE</text>
+              <text class="wh-brown" transform="translate(158.93 434.91) rotate(-137)">PIOCHE</text>
+              <text class="wh-brown" transform="translate(93.08 332.44) rotate(-99)">PIOCHE</text>
+              <text class="wh-brown" transform="translate(102.9 211.76) rotate(-64)">PIOCHE</text>
+              <text class="wh-brown" transform="translate(178.35 118.55) rotate(-26)">PIOCHE</text>
+              <!-- labels BONUS -->
+              <text class="wh-cream" transform="translate(356.65 101.44) rotate(26)">BONUS</text>
+              <text class="wh-cream" transform="translate(479.7 300.15) rotate(99)">BONUS</text>
+              <text class="wh-cream" transform="translate(330.94 476.26) rotate(170)">BONUS</text>
+              <text class="wh-cream" transform="translate(115.57 389.09) rotate(-116)">BONUS</text>
+              <text class="wh-cream" transform="translate(132.75 157.45) rotate(-46)">BONUS</text>
+            </g>
+
+            <!-- Pointeur fixe -->
+            <polygon fill="#b5d14c" stroke="#623435" stroke-miterlimit="10" points="283.46,90.95 267.4,42.28 299.52,42.28"/>
           </svg>
         </div>
-
-        <!-- Roue SVG rotative -->
-        <div
-          class="w-full h-full rounded-full overflow-hidden shadow-xl"
-          :style="{
-            transform: `rotate(${wheelDeg}deg)`,
-            transition: wheelMoving ? 'transform 3.2s cubic-bezier(0.1, 0.85, 0.2, 1)' : 'none'
-          }"
-        >
-          <svg viewBox="0 0 200 200" class="w-full h-full" xmlns="http://www.w3.org/2000/svg">
-            <!-- Pioche (60% — de 0° à 216°) -->
-            <path d="M 100 100 L 100 10 A 90 90 0 1 1 47.1 172.8 Z" fill="#bec059" />
-            <!-- Passe ton tour (20% — de 216° à 288°) -->
-            <path d="M 100 100 L 47.1 172.8 A 90 90 0 0 1 14.4 72.2 Z" fill="#38bdf8" />
-            <!-- Malus (10% — de 288° à 324°) -->
-            <path d="M 100 100 L 14.4 72.2 A 90 90 0 0 1 47.1 27.2 Z" fill="#e20000" />
-            <!-- Bonus (10% — de 324° à 360°) -->
-            <path d="M 100 100 L 47.1 27.2 A 90 90 0 0 1 100 10 Z" fill="#fadd83" />
-
-            <!-- Séparateurs -->
-            <line x1="100" y1="100" x2="100" y2="10" stroke="white" stroke-width="3" />
-            <line x1="100" y1="100" x2="47.1" y2="172.8" stroke="white" stroke-width="3" />
-            <line x1="100" y1="100" x2="14.4" y2="72.2" stroke="white" stroke-width="3" />
-            <line x1="100" y1="100" x2="47.1" y2="27.2" stroke="white" stroke-width="3" />
-
-            <!-- Labels -->
-            <g transform="rotate(108, 100, 100)">
-              <text x="100" y="38" text-anchor="middle" font-size="11" fill="white" font-weight="bold" font-family="sans-serif">Pioche</text>
-              <text x="100" y="52" text-anchor="middle" font-size="9" fill="white" font-family="sans-serif">une carte</text>
-            </g>
-            <g transform="rotate(252, 100, 100)">
-              <text x="100" y="38" text-anchor="middle" font-size="10" fill="white" font-weight="bold" font-family="sans-serif">Passe</text>
-              <text x="100" y="50" text-anchor="middle" font-size="9" fill="white" font-family="sans-serif">ton tour</text>
-            </g>
-            <g transform="rotate(306, 100, 100)">
-              <text x="100" y="45" text-anchor="middle" font-size="11" fill="white" font-weight="bold" font-family="sans-serif">Malus</text>
-            </g>
-            <g transform="rotate(342, 100, 100)">
-              <text x="100" y="45" text-anchor="middle" font-size="11" fill="#623435" font-weight="bold" font-family="sans-serif">Bonus</text>
-            </g>
-
-            <!-- Centre pivot avec logo -->
-            <circle cx="100" cy="100" r="18" fill="white" stroke="#623435" stroke-width="2.5" />
-            <image :href="logoSauveImg" x="87" y="87" width="26" height="26" />
-          </svg>
-        </div>
-      </div>
 
       <!-- Bouton TOURNER -->
       <button
