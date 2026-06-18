@@ -31,6 +31,7 @@ export interface GameParticipant {
   roundsWon: number
   isUser: boolean
   isGuest: boolean
+  isOwner: boolean
 }
 
 export interface GameRound {

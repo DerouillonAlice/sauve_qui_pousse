@@ -170,7 +170,8 @@ const emptySlots = computed(() => Math.max(0, MAX_PLAYERS - participants.value.l
         <div class="flex-1 min-w-0">
           <p class="text-brown font-semibold text-sm truncate">{{ player.displayName }}</p>
           <p v-if="player.isGuest" class="text-primary text-xs font-medium">{{ t('game.lobby.guest') }}</p>
-          <p v-else class="text-brown/40 text-xs">{{ t('game.lobby.host') }}</p>
+          <p v-else-if="player.isOwner" class="text-brown/40 text-xs">{{ t('game.lobby.host') }}</p>
+          <p v-else class="text-brown/40 text-xs">Joueur</p>
         </div>
         <button v-if="isOwner && player.isGuest"
           @click="removeGuestPlayer(player.id)"

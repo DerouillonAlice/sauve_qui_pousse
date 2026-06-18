@@ -2,6 +2,7 @@
 import { ref, computed, watch, onUnmounted } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { useGame } from '@/composables/useGame'
+import { useAuth } from '@/composables/useAuth'
 import { ChevronRight, Leaf, LogOut, Loader2, Trophy } from 'lucide-vue-next'
 import type { SpinResult } from '@/composables/useGame'
 import deckImg      from '@/assets/img/deck_of_cards.svg'
@@ -11,6 +12,7 @@ import pesticideImg from '@/assets/img/pesticide.svg'
 import logoSauveImg from '@/assets/logo_sauve.png'
 
 const { t } = useI18n()
+const { state: auth } = useAuth()
 const {
   state: game,
   isFinished,
@@ -22,6 +24,8 @@ const {
   winRound,
   leaveGame,
 } = useGame()
+
+const isHost = computed(() => auth.user?.id === game.session?.ownerId)
 
 const EFFECT_META: Record<string, { icon: string; label: string; desc: string; ring: string; badge: string }> = {
   'protect_malus':           { icon: '🛡️', label: 'Protégé malus',      desc: 'Les cartes malus ne s\'appliquent pas à ce joueur pendant cet effet.',            ring: 'ring-primary ring-offset-2',   badge: 'bg-primary/20 text-primary' },
@@ -235,10 +239,25 @@ onUnmounted(() => { document.body.style.overflow = '' })
         </div>
       </div>
 
-      <!-- ── ZONE JEU (Roue + Bouton) ── -->
+      <!-- ── ZONE JEU ── -->
       <div class="flex flex-col items-center justify-center gap-6 w-full mt-0">
-        
-        <!-- ── ROUE ── -->
+
+        <!-- VUE NON-HÔTE : juste le bouton Sauve + c'est le tour de -->
+        <template v-if="!isHost">
+          <div class="flex flex-col items-center gap-6 py-12">
+            <p class="text-brown/45 text-xs uppercase tracking-widest">{{ t('game.active.turn') }}</p>
+            <div class="flex items-center gap-3">
+              <div class="w-12 h-12 rounded-full flex items-center justify-center text-white text-xl font-bold shadow-sm"
+                :class="avatarColors[(currentParticipant ? participants.indexOf(currentParticipant) : 0) % 4]">
+                {{ currentParticipant?.displayName.charAt(0).toUpperCase() ?? '?' }}
+              </div>
+              <span class="text-brown text-2xl font-game">{{ currentParticipant?.displayName ?? '—' }}</span>
+            </div>
+          </div>
+        </template>
+
+        <!-- VUE HÔTE : roue + bouton tourner -->
+        <template v-if="isHost">
         <div class="relative w-80 h-80 sm:w-96 sm:h-96 select-none drop-shadow-xl">
           <svg viewBox="0 0 566.93 566.93" class="w-full h-full" xmlns="http://www.w3.org/2000/svg">
             <!-- Corps de la roue (tourne) -->
@@ -321,6 +340,7 @@ onUnmounted(() => { document.body.style.overflow = '' })
         <Loader2 v-if="phase === 'spinning'" :stroke-width="2" class="w-5 h-5 animate-spin" />
         <span>{{ phase === 'spinning' ? '…' : t('game.active.spin') }}</span>
       </button>
+      </template>
 
       </div>
 
