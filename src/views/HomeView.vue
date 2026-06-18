@@ -1,8 +1,24 @@
 <script setup lang="ts">
 import { ref, computed } from 'vue'
 import { useI18n } from 'vue-i18n'
+import { RouterLink } from 'vue-router'
 import WaveEdge from '@/components/WaveEdge.vue'
-import { ChevronLeft, ChevronRight } from 'lucide-vue-next'
+import { ChevronLeft, ChevronRight, ArrowRight } from 'lucide-vue-next'
+
+import heroImg from '@/assets/img/hero.svg'
+import beeLadybugImg from '@/assets/img/bee_ladybug.svg'
+import hornet1Img from '@/assets/img/hornet_1.svg'
+import branchBee1Img from '@/assets/img/branch_bee_1.svg'
+import branchBee2Img from '@/assets/img/branch_bee_2.svg'
+import branchLadybug2Img from '@/assets/img/branch_ladybug_2.svg'
+import leafsImg from '@/assets/img/leafs.svg'
+import scarecrowImg from '@/assets/img/scarecrow.svg'
+import pesticideImg from '@/assets/img/pesticide.svg'
+import wheelImg from '@/assets/img/spinning_wheel.svg'
+import deckImg from '@/assets/img/deck_of_cards.svg'
+import medalImg from '@/assets/img/medal.svg'
+import wormImg from '@/assets/img/worm.svg'
+
 import imgAbeilles from '@/assets/img/cards/VersoAbeilles.webp'
 import imgVers from '@/assets/img/cards/VersoVers.webp'
 import imgCoccinelles from '@/assets/img/cards/VersoCoccinelles.webp'
@@ -10,8 +26,20 @@ import imgFrelons from '@/assets/img/cards/VersoFrelons.webp'
 import imgPesticides from '@/assets/img/cards/VersoPesticides.webp'
 import imgAgricole from '@/assets/img/cards/VersoAgricole.webp'
 import imgEpouvantail from '@/assets/img/cards/VersoEpouvantail.webp'
+
 const { t, tm } = useI18n()
 
+/* ── Rules steps ── */
+const howSteps = computed(() => [
+  { label: (tm('home.how.steps') as string[])[0], img: wheelImg, n: '1' },
+  { label: (tm('home.how.steps') as string[])[1], img: deckImg,  n: '2' },
+  { label: (tm('home.how.steps') as string[])[2], img: medalImg, n: '3' },
+])
+
+/* ── CTA chips ── */
+const ctaChips = computed(() => tm('home.cta.chips') as string[])
+
+/* ── Pedagogy ── */
 const pedagogyFacts = computed(() => tm('home.pedagogy.facts') as string[])
 
 /* ── Card slider ── */
@@ -20,9 +48,8 @@ const sliderCards = computed(() => {
   const translations = tm('home.slider.cards') as { name: string; desc: string }[]
   return translations.map((card, i) => ({ ...card, src: cardImages[i] }))
 })
-
 const currentIndex = ref(0)
-const currentCard = computed(() => sliderCards.value[currentIndex.value])
+const currentCard = computed(() => sliderCards.value[currentIndex.value] ?? sliderCards.value[0])
 
 function getVisibleCards() {
   const total = sliderCards.value.length
@@ -31,200 +58,267 @@ function getVisibleCards() {
     return { ...sliderCards.value[idx], offset }
   })
 }
-
 const visibleCards = computed(() => getVisibleCards())
+function next() { currentIndex.value = (currentIndex.value + 1) % sliderCards.value.length }
+function prev() { currentIndex.value = (currentIndex.value - 1 + sliderCards.value.length) % sliderCards.value.length }
 
-function next() {
-  currentIndex.value = (currentIndex.value + 1) % sliderCards.value.length
-}
-function prev() {
-  currentIndex.value = (currentIndex.value - 1 + sliderCards.value.length) % sliderCards.value.length
-}
-
-/* ── Drag / swipe ── */
-const sliderRef = ref<HTMLElement | null>(null)
 let dragStartX = 0
 let isDragging = false
-
 function onPointerDown(e: PointerEvent) {
   isDragging = true
   dragStartX = e.clientX
   ;(e.currentTarget as HTMLElement).setPointerCapture(e.pointerId)
 }
-function onPointerMove(e: PointerEvent) {
-  if (!isDragging) return
-  // visual feedback could go here
-}
 function onPointerUp(e: PointerEvent) {
   if (!isDragging) return
   isDragging = false
   const delta = e.clientX - dragStartX
-  if (Math.abs(delta) > 40) {
-    delta < 0 ? next() : prev()
-  }
+  if (Math.abs(delta) > 40) { delta < 0 ? next() : prev() }
 }
 </script>
 
 <template>
-  <!-- HERO -->
-  <section class="py-20 flex flex-col items-center justify-center text-center px-6 bg-primary">
-    <p class="text-cream/80 font-semibold tracking-widest uppercase text-sm mb-4">
-      {{ t('home.hero.tagline') }}
-    </p>
-    <h1 class="text-cream max-w-3xl mb-6">
-      {{ t('home.hero.title') }}
-    </h1>
-    <p class="text-cream/70 text-lg max-w-xl mb-10 leading-relaxed">
-      {{ t('home.hero.subtitle') }}
-    </p>
-    <div class="flex gap-4 flex-wrap justify-center">
-      <RouterLink to="/regles"
-        class="px-8 py-3 bg-cream text-brown rounded-full font-semibold hover:scale-105 transition-transform">
-        {{ t('home.hero.cta_rules') }}
-      </RouterLink>
-      <RouterLink to="/jouer"
-        class="px-8 py-3 border-2 border-cream text-cream rounded-full font-semibold hover:bg-cream hover:text-brown transition-colors">
-        {{ t('home.hero.cta_play') }}
-      </RouterLink>
+
+  <!-- ═══════════════════════════════════════════════
+       HERO
+  ═══════════════════════════════════════════════ -->
+  <section class="relative overflow-hidden bg-primary">
+    <!-- Doodles positionnés -->
+    <img :src="beeLadybugImg"   aria-hidden="true" class="absolute top-0 left-0 w-28 sm:w-36 pointer-events-none select-none" />
+    <img :src="hornet1Img"      aria-hidden="true" class="absolute top-4 right-0 w-24 sm:w-32 pointer-events-none select-none" />
+    <img :src="branchBee1Img"   aria-hidden="true" class="absolute bottom-0 left-0 w-32 sm:w-48 pointer-events-none select-none" />
+    <img :src="branchBee2Img"   aria-hidden="true" class="absolute top-0 right-24 w-20 sm:w-28 pointer-events-none select-none hidden sm:block" />
+    <img :src="branchLadybug2Img" aria-hidden="true" class="absolute bottom-0 right-0 w-32 sm:w-44 pointer-events-none select-none" />
+    <img :src="leafsImg"        aria-hidden="true" class="absolute top-1/2 -translate-y-1/2 right-0 w-16 pointer-events-none select-none hidden lg:block" />
+
+    <!-- Titre principal -->
+    <div class="relative z-10 flex justify-center py-10 px-6">
+      <img :src="heroImg" alt="Sauve qui Pousse!" class="w-full max-w-xs sm:max-w-md md:max-w-xl" />
     </div>
   </section>
-  <WaveEdge color="var(--color-primary)" :size="80" />
+  <WaveEdge color="var(--color-primary)" :size="56" />
 
-  <!-- SECTION BLANCHE -->
-  <section class="py-24 px-6 bg-white">
+  <!-- ═══════════════════════════════════════════════
+       CONCEPT
+  ═══════════════════════════════════════════════ -->
+  <section class="py-16 px-6 bg-white">
     <div class="max-w-2xl mx-auto text-center">
       <h2 class="text-brown mb-8">{{ t('home.concept.title') }}</h2>
-      <p class="text-brown/80 mb-5 leading-relaxed">{{ t('home.concept.p1') }}</p>
-      <p class="text-brown/80 mb-5 leading-relaxed">{{ t('home.concept.p2') }}</p>
-      <p class="text-brown/80 mb-5 leading-relaxed">{{ t('home.concept.p3') }}</p>
-      <p class="text-primary font-semibold text-xl mt-8">{{ t('home.concept.p4') }}</p>
+      <p class="text-brown/75 mb-4 leading-relaxed">{{ t('home.concept.p1') }}</p>
+      <p class="text-brown/75 mb-4 leading-relaxed">{{ t('home.concept.p2') }}</p>
+      <p class="text-brown/75 mb-4 leading-relaxed">{{ t('home.concept.p3') }}</p>
+      <p class="text-primary font-semibold text-lg mt-8">{{ t('home.concept.p4') }}</p>
     </div>
   </section>
 
-  <!-- NOS CARTES — Slider -->
-  <WaveEdge color="var(--color-cream-dark)" position="top" :size="80" />
-  <section class="py-20 px-6 bg-cream-dark overflow-hidden">
+  <!-- ═══════════════════════════════════════════════
+       LES RÈGLES DU JEU — 3 étapes
+  ═══════════════════════════════════════════════ -->
+  <section class="py-16 px-6 bg-cream">
+    <div class="max-w-4xl mx-auto">
+      <h2 class="text-brown text-center mb-3">{{ t('home.how.title') }}</h2>
+      <p class="text-brown/55 text-center text-sm leading-relaxed mb-12 max-w-xl mx-auto">{{ t('home.how.desc') }}</p>
+
+      <!-- Étapes -->
+      <div class="flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-2 mb-12">
+        <template v-for="(step, i) in howSteps" :key="step.n">
+          <div class="bg-white rounded-2xl shadow-sm flex flex-col items-center justify-center gap-3 p-5 w-40 h-44 relative shrink-0">
+            <span
+              class="absolute -top-3 -left-3 w-8 h-8 rounded-full flex items-center justify-center text-white font-bold text-sm shadow-md"
+              :class="i === 2 ? 'bg-red' : 'bg-primary'"
+            >{{ step.n }}</span>
+            <img :src="step.img" :alt="step.label" class="w-20 h-20 object-contain" />
+            <p class="text-brown font-semibold text-sm text-center leading-snug">{{ step.label }}</p>
+          </div>
+          <ArrowRight v-if="i < 2" :stroke-width="1.5"
+            class="w-7 h-7 text-brown/25 shrink-0 rotate-90 sm:rotate-0" />
+        </template>
+      </div>
+
+      <div class="text-center">
+        <RouterLink to="/regles"
+          class="inline-block px-8 py-3 border-2 border-brown text-brown rounded-full font-semibold hover:bg-brown hover:text-cream transition-colors">
+          {{ t('home.how.cta') }}
+        </RouterLink>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════
+       PRÊT À JOUER ? — CTA
+  ═══════════════════════════════════════════════ -->
+  <section class="relative py-16 px-6 bg-brown overflow-hidden">
+    <img :src="scarecrowImg" aria-hidden="true"
+      class="absolute left-0 bottom-0 h-48 sm:h-56 pointer-events-none select-none hidden sm:block" />
+    <img :src="pesticideImg" aria-hidden="true"
+      class="absolute right-0 bottom-0 h-40 sm:h-48 pointer-events-none select-none hidden sm:block" />
+
+    <div class="max-w-lg mx-auto text-center relative z-10">
+      <h2 class="text-cream mb-3">{{ t('home.cta.title') }}</h2>
+      <p class="text-cream/55 text-sm mb-8 leading-relaxed">{{ t('home.cta.subtitle') }}</p>
+
+      <div class="flex flex-wrap justify-center gap-3 mb-10">
+        <span v-for="chip in ctaChips" :key="chip"
+          class="px-4 py-1.5 rounded-full border border-cream/25 text-cream/70 text-sm font-medium">
+          {{ chip }}
+        </span>
+      </div>
+
+      <div class="flex flex-col sm:flex-row gap-4 justify-center">
+        <RouterLink to="/jouer"
+          class="px-8 py-4 bg-primary text-cream rounded-full font-semibold hover:scale-105 transition-transform shadow-lg shadow-primary/20">
+          {{ t('home.cta.create') }}
+        </RouterLink>
+        <RouterLink to="/jouer"
+          class="px-8 py-4 border-2 border-primary text-primary rounded-full font-semibold hover:bg-primary hover:text-cream transition-colors">
+          {{ t('home.cta.join') }}
+        </RouterLink>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════
+       NOS CARTES — Slider
+  ═══════════════════════════════════════════════ -->
+  <WaveEdge color="var(--color-cream-dark)" position="top" :size="56" />
+  <section class="py-16 px-6 bg-cream-dark overflow-hidden">
     <div class="max-w-5xl mx-auto">
-      <!-- Header -->
-      <div class="flex items-center justify-between mb-12">
+      <div class="flex items-center justify-between mb-10">
         <h2 class="text-brown">{{ t('home.slider.title') }}</h2>
         <RouterLink to="/cartes"
-          class="px-6 py-2 border-2 border-brown text-brown rounded-full font-semibold text-sm hover:bg-brown hover:text-cream transition-colors">
+          class="px-5 py-2 border-2 border-brown text-brown rounded-full text-sm font-semibold hover:bg-brown hover:text-cream transition-colors whitespace-nowrap">
           {{ t('home.slider.see_all') }}
         </RouterLink>
       </div>
 
-      <!-- Slider -->
       <div class="relative">
-        <!-- Cards fan -->
         <div
-          ref="sliderRef"
-          class="flex items-center justify-center gap-0 h-[380px] relative select-none touch-pan-y"
+          class="flex items-center justify-center h-[340px] relative select-none touch-pan-y"
           @pointerdown="onPointerDown"
-          @pointermove="onPointerMove"
           @pointerup="onPointerUp"
           @pointercancel="onPointerUp"
         >
           <TransitionGroup name="card-slide">
             <div
               v-for="card in visibleCards"
-              :key="card.name + card.offset"
+              :key="(card.name ?? '') + card.offset"
               class="absolute transition-all duration-500 ease-out"
               :style="{
-                transform: `translateX(${card.offset * 160}px) scale(${card.offset === 0 ? 1 : 0.85}) rotate(${card.offset * 4}deg)`,
+                transform: `translateX(${card.offset * 140}px) scale(${card.offset === 0 ? 1 : 0.82}) rotate(${card.offset * 4}deg)`,
                 zIndex: 10 - Math.abs(card.offset),
               }"
             >
-              <img
-                :src="card.src"
-                :alt="card.name"
-                class="w-48 h-auto"
-                draggable="false"
-              />
+              <img :src="card.src" :alt="card.name" class="w-44 h-auto" draggable="false" />
             </div>
           </TransitionGroup>
         </div>
 
-        <!-- Nav arrows -->
-        <button
-          @click="prev"
-          class="absolute left-0 top-1/2 -translate-y-1/2 w-12 h-12 rounded-full bg-white/80 shadow-md flex items-center justify-center hover:bg-white hover:scale-110 transition-all cursor-pointer z-20"
-        >
-          <ChevronLeft :stroke-width="2" class="w-6 h-6 text-brown" />
+        <button @click="prev"
+          class="absolute left-0 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-white/80 shadow flex items-center justify-center hover:bg-white transition-all cursor-pointer z-20">
+          <ChevronLeft :stroke-width="2" class="w-5 h-5 text-brown" />
         </button>
-        <button
-          @click="next"
-          class="absolute right-0 top-1/2 -translate-y-1/2 w-12 h-12 rounded-full bg-white/80 shadow-md flex items-center justify-center hover:bg-white hover:scale-110 transition-all cursor-pointer z-20"
-        >
-          <ChevronRight :stroke-width="2" class="w-6 h-6 text-brown" />
+        <button @click="next"
+          class="absolute right-0 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-white/80 shadow flex items-center justify-center hover:bg-white transition-all cursor-pointer z-20">
+          <ChevronRight :stroke-width="2" class="w-5 h-5 text-brown" />
         </button>
       </div>
 
-      <!-- Card info (fixed height to prevent layout shift) -->
-      <div class="text-center mt-8 h-24">
-        <h3 class="text-brown mb-2">{{ currentCard.name }}</h3>
-        <p class="text-brown/60 max-w-md mx-auto leading-relaxed line-clamp-2">{{ currentCard.desc }}</p>
+      <div class="text-center mt-6 h-20">
+        <h3 class="text-brown mb-1">{{ currentCard.name }}</h3>
+        <p class="text-brown/50 text-sm max-w-xs mx-auto line-clamp-2 leading-relaxed">{{ currentCard.desc }}</p>
       </div>
-
-      <!-- Dots -->
-      <div class="flex justify-center gap-2 mt-6">
+      <div class="flex justify-center gap-2 mt-4">
         <button
-          v-for="(card, i) in sliderCards"
-          :key="i"
+          v-for="(_, i) in sliderCards" :key="i"
           @click="currentIndex = i"
-          class="w-3 h-3 rounded-full transition-all cursor-pointer"
-          :class="i === currentIndex ? 'bg-brown scale-110' : 'bg-brown/30 hover:bg-brown/50'"
+          class="w-2.5 h-2.5 rounded-full transition-all cursor-pointer"
+          :class="i === currentIndex ? 'bg-brown scale-110' : 'bg-brown/25 hover:bg-brown/40'"
         />
       </div>
     </div>
   </section>
-  <WaveEdge color="var(--color-cream-dark)" :size="80" />
+  <WaveEdge color="var(--color-cream-dark)" :size="56" />
 
-  <!-- COMMENT ON JOUE -->
-  <section class="py-24 px-6 bg-cream">
-    <div class="max-w-2xl mx-auto text-center">
-      <h2 class="text-brown mb-6">{{ t('home.how.title') }}</h2>
-      <p class="text-brown/70 text-lg mb-10 leading-relaxed">{{ t('home.how.desc') }}</p>
-      <RouterLink to="/regles"
-        class="inline-block px-8 py-3 bg-brown text-cream rounded-full font-semibold hover:scale-105 transition-transform">
-        {{ t('home.how.cta') }}
-      </RouterLink>
-    </div>
-  </section>
-
-  <!-- PÉDAGOGIE -->
-  <section class="py-24 px-6 bg-primary/10">
+  <!-- ═══════════════════════════════════════════════
+       UN JEU QUI AMUSE ET QUI APPREND
+  ═══════════════════════════════════════════════ -->
+  <section class="py-16 px-6 bg-cream">
     <div class="max-w-2xl mx-auto">
-      <h2 class="text-brown mb-4">{{ t('home.pedagogy.title') }}</h2>
-      <p class="text-brown/70 mb-8 italic">{{ t('home.pedagogy.intro') }}</p>
-      <ul class="space-y-4 mb-10">
+      <h2 class="text-brown mb-3">{{ t('home.pedagogy.title') }}</h2>
+      <p class="text-brown/55 text-sm italic mb-8">{{ t('home.pedagogy.intro') }}</p>
+
+      <ul class="flex flex-col gap-3 mb-10">
         <li v-for="(fact, i) in pedagogyFacts" :key="i"
-          class="flex gap-3 items-start bg-cream rounded-xl px-5 py-4 shadow-sm">
-          <span class="text-primary text-xl mt-0.5">🌿</span>
-          <span class="text-brown/80 leading-relaxed">{{ fact }}</span>
+          class="flex items-center gap-3 bg-primary rounded-full px-5 py-3">
+          <span class="text-cream text-sm leading-snug">{{ fact }}</span>
         </li>
       </ul>
-      <p class="text-brown/70 leading-relaxed">{{ t('home.pedagogy.conclusion') }}</p>
+
+      <p class="text-brown font-bold leading-relaxed mb-2">{{ t('home.pedagogy.conclusion').split('.')[0] + '.' }}</p>
+      <p class="text-brown/60 leading-relaxed text-sm">{{ t('home.pedagogy.conclusion').split('.').slice(1).join('.').trim() }}</p>
     </div>
   </section>
 
-  <!-- POUR QUI -->
-  <section class="py-24 px-6 bg-cream text-center">
-    <div class="max-w-xl mx-auto">
-      <h2 class="text-brown mb-4">{{ t('home.audience.title') }}</h2>
-      <p class="text-brown/70 text-lg mb-10 leading-relaxed">{{ t('home.audience.desc') }}</p>
-      <div class="flex gap-4 flex-wrap justify-center">
-        <RouterLink to="/cartes"
-          class="px-8 py-3 bg-primary text-cream rounded-full font-semibold hover:scale-105 transition-transform">
-          {{ t('home.audience.cta_cards') }}
-        </RouterLink>
+  <!-- ═══════════════════════════════════════════════
+       INSCRIVEZ VOUS !
+  ═══════════════════════════════════════════════ -->
+  <section class="relative py-16 px-6 bg-brown overflow-hidden">
+    <img :src="wormImg" aria-hidden="true"
+      class="absolute right-4 top-1/2 -translate-y-1/2 h-32 opacity-30 pointer-events-none select-none hidden lg:block" />
+
+    <div class="max-w-md mx-auto relative z-10">
+      <h2 class="text-cream mb-1">{{ t('play.register.title') }}</h2>
+      <p class="text-cream/50 text-sm mb-8">{{ t('play.register.subtitle') }}</p>
+
+      <form class="space-y-3" @submit.prevent>
+        <div class="grid grid-cols-2 gap-3">
+          <input type="text" :placeholder="t('play.register.firstname')" autocomplete="given-name"
+            class="px-4 py-3 rounded-xl border-2 border-primary bg-cream text-brown placeholder:text-brown/40 focus:outline-none focus:ring-2 focus:ring-primary/30 text-sm w-full" />
+          <input type="text" :placeholder="t('play.register.lastname')" autocomplete="family-name"
+            class="px-4 py-3 rounded-xl border-2 border-primary bg-cream text-brown placeholder:text-brown/40 focus:outline-none focus:ring-2 focus:ring-primary/30 text-sm w-full" />
+        </div>
+        <input type="email" :placeholder="t('play.register.email')" autocomplete="email"
+          class="w-full px-4 py-3 rounded-xl border-2 border-primary bg-cream text-brown placeholder:text-brown/40 focus:outline-none focus:ring-2 focus:ring-primary/30 text-sm" />
+        <input type="password" :placeholder="t('play.register.password')" autocomplete="new-password"
+          class="w-full px-4 py-3 rounded-xl border-2 border-primary bg-cream text-brown placeholder:text-brown/40 focus:outline-none focus:ring-2 focus:ring-primary/30 text-sm" />
+        <input type="password" :placeholder="t('play.register.confirm_password')" autocomplete="new-password"
+          class="w-full px-4 py-3 rounded-xl border-2 border-primary bg-cream text-brown placeholder:text-brown/40 focus:outline-none focus:ring-2 focus:ring-primary/30 text-sm" />
         <RouterLink to="/jouer"
-          class="px-8 py-3 border-2 border-brown text-brown rounded-full font-semibold hover:bg-brown hover:text-cream transition-colors">
-          {{ t('home.audience.cta_play') }}
+          class="block w-full py-4 bg-primary text-cream rounded-full font-bold text-center hover:scale-[1.02] transition-transform">
+          {{ t('play.register.submit') }}
         </RouterLink>
-      </div>
+        <p class="text-cream/35 text-xs text-center">{{ t('play.register.legal') }}</p>
+        <p class="text-center text-sm text-cream/55">
+          {{ t('play.register.switch_login') }}
+          <RouterLink to="/jouer" class="text-primary font-semibold hover:underline">
+            {{ t('play.register.switch_login_link') }}
+          </RouterLink>
+        </p>
+      </form>
     </div>
   </section>
+
+  <!-- ═══════════════════════════════════════════════
+       NEWSLETTER
+  ═══════════════════════════════════════════════ -->
+  <section class="py-12 px-6 bg-cream">
+    <div class="max-w-sm mx-auto">
+      <h3 class="text-brown font-semibold text-lg mb-5">{{ t('home.newsletter.title') }}</h3>
+      <div class="flex gap-2 mb-3">
+        <input type="email" :placeholder="t('home.newsletter.placeholder')"
+          class="flex-1 min-w-0 px-4 py-3 rounded-xl border-2 border-brown/20 bg-cream text-brown placeholder:text-brown/35 focus:outline-none focus:border-primary text-sm transition-colors" />
+        <button
+          class="px-5 py-3 bg-primary text-cream rounded-xl font-bold hover:scale-105 transition-transform cursor-pointer shrink-0">
+          {{ t('home.newsletter.submit') }}
+        </button>
+      </div>
+      <label class="flex items-center gap-2 cursor-pointer">
+        <input type="checkbox" class="w-4 h-4 accent-primary shrink-0" />
+        <span class="text-brown/55 text-xs">{{ t('home.newsletter.terms') }}</span>
+      </label>
+    </div>
+  </section>
+
 </template>
 
 <style scoped>

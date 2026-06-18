@@ -24,9 +24,23 @@
       "p4": "C'est ça, Sauve qui Pousse."
     },
     "how": {
-      "title": "Trois decks. Une roue. Un cri de victoire.",
-      "desc": "Pioche, bonus ou malus : à chaque tour, la roue décide. Construis ton jardin, protège-le, et quand tu penses avoir le meilleur écosystème de la table, crie 'Sauve qui pousse !'",
-      "cta": "Voir les règles complètes"
+      "title": "Les règles du jeu",
+      "desc": "Pioche, bonus ou malus : à chaque tour, la roue décide. Construis ton jardin, protège-le, et quand tu penses avoir le meilleur écosystème de la table, crie « Sauve qui pousse ! »",
+      "steps": ["Tourne la roue", "Pioche", "Gagne !!!"],
+      "cta": "En savoir plus →"
+    },
+    "cta": {
+      "title": "Prêt à jouer ?",
+      "subtitle": "Rejoins ou lance une partie avec tes amis en quelques secondes.",
+      "chips": ["2 - 4 joueurs", "~15 min", "Dès 7 ans"],
+      "create": "Lancer une partie →",
+      "join": "Rejoindre une partie →"
+    },
+    "newsletter": {
+      "title": "Newsletter",
+      "placeholder": "Ex : alice@nomdedomaine.com",
+      "submit": "OK",
+      "terms": "J'accepte les termes *"
     },
     "pedagogy": {
       "title": "Un jeu qui s'amuse, et qui apprend.",
