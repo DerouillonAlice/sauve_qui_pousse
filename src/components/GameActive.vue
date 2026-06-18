@@ -3,9 +3,14 @@ import { ref, computed, watch, onUnmounted } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { useGame } from '@/composables/useGame'
 import { ChevronRight, Award, Leaf, LogOut, Loader2, Trophy } from 'lucide-vue-next'
+import WaveEdge from '@/components/WaveEdge.vue'
 import type { SpinResult } from '@/composables/useGame'
-import deckImg   from '@/assets/img/deck_of_cards.svg'
-import medalImg  from '@/assets/img/medal.svg'
+import deckImg          from '@/assets/img/deck_of_cards.svg'
+import medalImg         from '@/assets/img/medal.svg'
+import beeLadybugImg    from '@/assets/img/bee_ladybug.svg'
+import hornet1Img       from '@/assets/img/hornet_1.svg'
+import branchBee1Img    from '@/assets/img/branch_bee_1.svg'
+import branchLadybug2Img from '@/assets/img/branch_ladybug_2.svg'
 
 const { t } = useI18n()
 const {
@@ -106,92 +111,92 @@ onUnmounted(() => { document.body.style.overflow = '' })
 <template>
   <div class="min-h-screen bg-cream flex flex-col">
 
-    <!-- ═══ TOP BAR ═══ -->
-    <div class="flex items-center justify-between px-4 py-3 bg-brown">
-      <div class="flex items-center gap-2">
-        <Leaf :stroke-width="1.5" class="w-5 h-5 text-primary" />
-        <span class="font-game text-cream text-lg">{{ t('game.active.round', { n: roundNumber }) }}</span>
+    <!-- ═══ HERO PRIMARY — Doodles + Barre + Roue ═══ -->
+    <section class="relative overflow-hidden bg-primary pb-10">
+
+      <!-- Doodles absolus -->
+      <img :src="beeLadybugImg"    aria-hidden="true" class="absolute top-0 left-0 w-24 sm:w-36 pointer-events-none select-none" />
+      <img :src="hornet1Img"       aria-hidden="true" class="absolute top-0 right-0 w-20 sm:w-28 pointer-events-none select-none" />
+      <img :src="branchBee1Img"    aria-hidden="true" class="absolute bottom-0 left-0 w-32 sm:w-44 pointer-events-none select-none" />
+      <img :src="branchLadybug2Img" aria-hidden="true" class="absolute bottom-0 right-0 w-32 sm:w-44 pointer-events-none select-none" />
+
+      <!-- Barre info -->
+      <div class="relative z-10 flex items-center justify-between px-4 pt-3 pb-4">
+        <div class="flex items-center gap-2">
+          <Leaf :stroke-width="1.5" class="w-5 h-5 text-cream/70" />
+          <span class="font-game text-cream text-lg">{{ t('game.active.round', { n: roundNumber }) }}</span>
+        </div>
+        <button @click="showWinModal = true" :disabled="isFinished"
+          class="flex items-center gap-2 px-4 py-2 bg-brown text-cream rounded-full font-bold text-sm cursor-pointer hover:scale-105 active:scale-95 transition-transform disabled:opacity-40 disabled:cursor-not-allowed">
+          <Award :stroke-width="2" class="w-4 h-4" />
+          {{ t('game.active.sauve') }}
+        </button>
       </div>
-      <button @click="showWinModal = true" :disabled="isFinished"
-        class="flex items-center gap-2 px-4 py-2 bg-primary text-cream rounded-full font-bold text-sm cursor-pointer hover:scale-105 active:scale-95 transition-transform disabled:opacity-40 disabled:cursor-not-allowed">
-        <Award :stroke-width="2" class="w-4 h-4" />
-        {{ t('game.active.sauve') }}
-      </button>
-    </div>
 
-    <!-- ═══ CONTENT ═══ -->
-    <div class="flex-1 flex flex-col items-center px-4 py-6 gap-6 max-w-lg mx-auto w-full">
-
-      <!-- Error -->
-      <div v-if="game.error" class="w-full px-4 py-3 bg-red/10 text-red rounded-xl text-sm">
-        {{ game.error }}
-      </div>
-
-      <!-- Current player -->
-      <div class="text-center">
-        <p class="text-brown/45 text-xs uppercase tracking-widest mb-2">{{ t('game.active.turn') }}</p>
+      <!-- Joueur actuel -->
+      <div class="relative z-10 text-center mb-4">
+        <p class="text-cream/50 text-xs uppercase tracking-widest mb-2">{{ t('game.active.turn') }}</p>
         <div class="flex items-center justify-center gap-3">
-          <div class="w-11 h-11 rounded-full flex items-center justify-center text-white text-lg font-bold"
+          <div class="w-11 h-11 rounded-full flex items-center justify-center text-white text-lg font-bold ring-2 ring-cream/30"
             :class="avatarColors[(currentParticipant ? participants.indexOf(currentParticipant) : 0) % 4]">
             {{ currentParticipant?.displayName.charAt(0).toUpperCase() ?? '?' }}
           </div>
-          <span class="text-brown text-2xl font-game">{{ currentParticipant?.displayName ?? '—' }}</span>
+          <span class="text-cream text-2xl font-game">{{ currentParticipant?.displayName ?? '—' }}</span>
         </div>
       </div>
 
       <!-- ── ROUE ── -->
-      <div class="relative w-64 h-64 sm:w-72 sm:h-72 select-none">
-
+      <div class="relative z-10 w-56 h-56 sm:w-64 sm:h-64 mx-auto select-none">
         <!-- Pointeur fixe (haut) -->
         <div class="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1 z-20">
           <svg width="20" height="20" viewBox="0 0 20 20">
-            <polygon points="10,18 2,2 18,2" fill="#623435" />
+            <polygon points="10,18 2,2 18,2" fill="white" />
           </svg>
         </div>
-
         <!-- Roue SVG rotative -->
-        <div
-          class="w-full h-full rounded-full overflow-hidden shadow-xl"
+        <div class="w-full h-full rounded-full overflow-hidden shadow-2xl shadow-black/30"
           :style="{
             transform: `rotate(${wheelDeg}deg)`,
             transition: wheelMoving ? 'transform 3.2s cubic-bezier(0.1, 0.85, 0.2, 1)' : 'none'
-          }"
-        >
+          }">
           <svg viewBox="0 0 200 200" class="w-full h-full" xmlns="http://www.w3.org/2000/svg">
-            <!-- Piocher (50% — de 12h à 6h par la droite) -->
             <path d="M 100 100 L 100 10 A 90 90 0 0 1 100 190 Z" fill="#bec059" />
-            <!-- Bonus (25% — de 6h à 9h) -->
             <path d="M 100 100 L 100 190 A 90 90 0 0 1 10 100 Z" fill="#fadd83" />
-            <!-- Malus (25% — de 9h à 12h) -->
             <path d="M 100 100 L 10 100 A 90 90 0 0 1 100 10 Z" fill="#e20000" />
-
-            <!-- Séparateurs -->
             <line x1="100" y1="100" x2="100" y2="10"  stroke="white" stroke-width="3" />
             <line x1="100" y1="100" x2="100" y2="190" stroke="white" stroke-width="3" />
             <line x1="100" y1="100" x2="10"  y2="100" stroke="white" stroke-width="3" />
-
-            <!-- Labels -->
-            <text x="150" y="95" text-anchor="middle" font-size="11" fill="white" font-weight="bold" font-family="sans-serif">Pioche</text>
-            <text x="150" y="108" text-anchor="middle" font-size="9" fill="white" font-family="sans-serif">une carte</text>
-
-            <text x="63" y="132" text-anchor="middle" font-size="11" fill="#623435" font-weight="bold" font-family="sans-serif">BONUS</text>
-            <text x="63" y="68"  text-anchor="middle" font-size="11" fill="white"   font-weight="bold" font-family="sans-serif">MALUS</text>
-
-            <!-- Centre pivot -->
+            <text x="150" y="95"  text-anchor="middle" font-size="11" fill="white" font-weight="bold" font-family="sans-serif">Pioche</text>
+            <text x="150" y="108" text-anchor="middle" font-size="9"  fill="white" font-family="sans-serif">une carte</text>
+            <text x="63"  y="132" text-anchor="middle" font-size="11" fill="#623435" font-weight="bold" font-family="sans-serif">BONUS</text>
+            <text x="63"  y="68"  text-anchor="middle" font-size="11" fill="white"   font-weight="bold" font-family="sans-serif">MALUS</text>
             <circle cx="100" cy="100" r="14" fill="white" stroke="#623435" stroke-width="2.5" />
           </svg>
         </div>
       </div>
 
       <!-- Bouton TOURNER -->
-      <button
-        @click="handleSpin"
-        :disabled="phase !== 'idle' || isFinished || isEndingTurn"
-        class="flex items-center gap-3 px-10 py-4 bg-brown text-cream rounded-full font-bold text-base cursor-pointer hover:scale-105 active:scale-95 transition-transform shadow-lg disabled:opacity-40 disabled:cursor-not-allowed disabled:scale-100"
-      >
-        <Loader2 v-if="phase === 'spinning'" :stroke-width="2" class="w-5 h-5 animate-spin" />
-        <span>{{ phase === 'spinning' ? '…' : t('game.active.spin') }}</span>
-      </button>
+      <div class="relative z-10 flex justify-center mt-6">
+        <button @click="handleSpin"
+          :disabled="phase !== 'idle' || isFinished || isEndingTurn"
+          class="flex items-center gap-3 px-10 py-4 bg-cream text-brown rounded-full font-bold text-base cursor-pointer hover:scale-105 active:scale-95 transition-transform shadow-lg shadow-black/20 disabled:opacity-40 disabled:cursor-not-allowed disabled:scale-100">
+          <Loader2 v-if="phase === 'spinning'" :stroke-width="2" class="w-5 h-5 animate-spin" />
+          <span>{{ phase === 'spinning' ? '…' : t('game.active.spin') }}</span>
+        </button>
+      </div>
+
+    </section>
+
+    <!-- Vague de transition primary → cream -->
+    <WaveEdge color="var(--color-primary)" :size="56" />
+
+    <!-- ═══ SECTION CREAM — Résultat + Scores ═══ -->
+    <div class="flex-1 flex flex-col items-center px-4 pb-6 gap-6 max-w-lg mx-auto w-full">
+
+      <!-- Error -->
+      <div v-if="game.error" class="w-full px-4 py-3 bg-red/10 text-red rounded-xl text-sm mt-4">
+        {{ game.error }}
+      </div>
 
       <!-- ── RÉSULTAT ── -->
       <Transition
