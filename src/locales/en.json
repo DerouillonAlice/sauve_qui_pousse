@@ -32,7 +32,7 @@
     "cta": {
       "title": "Ready to play?",
       "subtitle": "Join or start a game with your friends in seconds.",
-      "chips": ["2 - 4 players", "~15 min", "Ages 7+"],
+      "chips": ["2 to 5 players", "~15 min", "Ages 7+"],
       "create": "Start a game →",
       "join": "Join a game →"
     },

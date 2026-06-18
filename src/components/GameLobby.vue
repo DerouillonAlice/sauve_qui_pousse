@@ -18,7 +18,7 @@ const {
   clearError,
 } = useGame()
 
-const MAX_PLAYERS = 4
+const MAX_PLAYERS = 5
 
 /* ── Add guest ── */
 const guestName = ref('')
@@ -76,8 +76,7 @@ const emptySlots = computed(() => Math.max(0, MAX_PLAYERS - participants.value.l
 <template>
   <div class="relative">
     <img :src="ladybugImg" aria-hidden="true"
-      class="hidden lg:block absolute top-4 right-4 w-36 pointer-events-none select-none opacity-60 -rotate-12" />
-
+      class="hidden sm:block absolute top-4 right-16 w-36 pointer-events-none select-none -rotate-10" />
   <div class="max-w-lg mx-auto px-4 py-6 flex flex-col gap-5">
 
     <!-- Header -->

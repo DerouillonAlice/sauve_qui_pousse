@@ -32,7 +32,7 @@
     "cta": {
       "title": "Prêt à jouer ?",
       "subtitle": "Rejoins ou lance une partie avec tes amis en quelques secondes.",
-      "chips": ["2 - 4 joueurs", "~15 min", "Dès 7 ans"],
+      "chips": ["2 à 5 joueurs", "~15 min", "Dès 7 ans"],
       "create": "Lancer une partie →",
       "join": "Rejoindre une partie →"
     },

@@ -133,6 +133,7 @@ const avatarLetter = computed(() => (auth.user?.pseudo ?? 'U').charAt(0).toUpper
         <p class="text-cream/50 text-sm">{{ auth.user?.email }}</p>
       </div>
     </section>
+    <WaveEdge color="var(--color-brown)" :size="48" />
 
     <!-- Loader -->
     <div v-if="loading" class="flex justify-center py-20">
