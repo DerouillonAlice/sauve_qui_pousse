@@ -135,9 +135,15 @@ onUnmounted(() => { document.body.style.overflow = '' })
   <div class="min-h-screen bg-white flex flex-col">
 
     <!-- ═══ TOP BAR ═══ -->
-    <div class="flex items-center justify-center px-4 py-3 bg-brown gap-2">
-      <Leaf :stroke-width="1.5" class="w-5 h-5 text-primary" />
-      <span class="font-game text-cream text-lg">{{ t('game.active.round', { n: roundNumber }) }}</span>
+    <div class="flex items-center justify-between px-4 py-3 bg-brown">
+      <div class="flex items-center gap-2">
+        <Leaf :stroke-width="1.5" class="w-5 h-5 text-primary" />
+        <span class="font-game text-cream text-lg">{{ t('game.active.round', { n: roundNumber }) }}</span>
+      </div>
+      <button @click="leaveGame"
+        class="flex items-center gap-1.5 text-cream/50 hover:text-red transition-colors cursor-pointer text-sm">
+        <LogOut :stroke-width="1.5" class="w-4 h-4" />
+      </button>
     </div>
 
     <!-- ═══ CONTENT ═══ -->
@@ -286,7 +292,7 @@ onUnmounted(() => { document.body.style.overflow = '' })
         leave-from-class="opacity-100"
         leave-to-class="opacity-0 scale-95"
       >
-        <div v-if="phase === 'result'" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-brown/80 backdrop-blur-sm">
+        <div v-if="phase === 'result'" class="fixed inset-0 z-[60] flex items-end sm:items-center justify-center p-4 pb-20 sm:pb-4 bg-brown/80 backdrop-blur-sm">
           <div class="w-full max-w-sm rounded-3xl bg-cream shadow-2xl overflow-hidden">
 
           <!-- ERREUR — l'API a échoué -->
@@ -399,18 +405,10 @@ onUnmounted(() => { document.body.style.overflow = '' })
 
     </div>
 
-    <!-- ═══ LEAVE ═══ -->
-    <div class="flex justify-center pb-24 lg:pb-8 pt-2">
-      <button @click="leaveGame"
-        class="flex items-center gap-2 px-6 py-3 rounded-full border-2 border-red/30 text-red/60 hover:bg-red/8 hover:border-red/60 hover:text-red font-semibold text-sm transition-all cursor-pointer">
-        <LogOut :stroke-width="1.5" class="w-4 h-4" />
-        {{ t('game.active.leave') }}
-      </button>
-    </div>
 
     <!-- ═══ MODAL SAUVE QUI POUSSE ═══ -->
     <Transition enter-active-class="transition-all duration-300 ease-out" enter-from-class="opacity-0" enter-to-class="opacity-100" leave-active-class="transition-all duration-200 ease-in" leave-from-class="opacity-100" leave-to-class="opacity-0">
-      <div v-if="showWinModal" class="fixed inset-0 z-50 flex items-end sm:items-center justify-center p-4 bg-brown/60 backdrop-blur-sm" @click.self="showWinModal = false">
+      <div v-if="showWinModal" class="fixed inset-0 z-[60] flex items-end sm:items-center justify-center p-4 pb-20 sm:pb-4 bg-brown/60 backdrop-blur-sm" @click.self="showWinModal = false">
         <div class="bg-cream rounded-3xl p-6 w-full max-w-sm shadow-2xl">
           <div class="text-center mb-5">
             <div class="text-3xl mb-2">🌿</div>
