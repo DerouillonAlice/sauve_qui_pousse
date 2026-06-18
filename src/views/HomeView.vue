@@ -14,6 +14,7 @@ import branchBee1Img      from '@/assets/img/branch_bee_1.svg'
 import branchLadybug2Img  from '@/assets/img/branch_ladybug_2.svg'
 import scarecrowImg       from '@/assets/img/scarecrow.svg'
 import pesticideImg       from '@/assets/img/pesticide.svg'
+import beeImg             from '@/assets/img/bee.svg'
 
 import imgAbeilles from '@/assets/img/cards/VersoAbeilles.webp'
 import imgVers from '@/assets/img/cards/VersoVers.webp'
@@ -52,6 +53,8 @@ function getVisibleCards() {
 const visibleCards = computed(() => getVisibleCards())
 function next() { currentIndex.value = (currentIndex.value + 1) % sliderCards.value.length }
 function prev() { currentIndex.value = (currentIndex.value - 1 + sliderCards.value.length) % sliderCards.value.length }
+
+const newsletterTerms = ref(false)
 
 let dragStartX = 0
 let isDragging = false
@@ -92,19 +95,29 @@ function onPointerUp(e: PointerEvent) {
       <p class="text-brown/75 mb-4 leading-relaxed">{{ t('home.concept.p1') }}</p>
       <p class="text-brown/75 mb-4 leading-relaxed">{{ t('home.concept.p2') }}</p>
       <p class="text-brown/75 mb-4 leading-relaxed">{{ t('home.concept.p3') }}</p>
-      <p class="text-primary font-semibold text-lg mt-8">{{ t('home.concept.p4') }}</p>
+      <p class="text-primary font-semibold text-lg mt-8 mb-8">{{ t('home.concept.p4') }}</p>
+      <div class="flex flex-wrap gap-4 justify-center">
+        <RouterLink to="/regles"
+          class="px-8 py-3 bg-primary text-cream rounded-full font-semibold hover:scale-105 transition-transform">
+          {{ t('home.hero.cta_rules') }}
+        </RouterLink>
+        <RouterLink to="/jouer"
+          class="px-8 py-3 border-2 border-brown text-brown rounded-full font-semibold hover:bg-brown hover:text-cream transition-colors">
+          {{ t('home.hero.cta_play') }}
+        </RouterLink>
+      </div>
     </div>
   </section>
 
   <!-- LES RÈGLES DU JEU -->
-  <section class="py-16 px-6 bg-cream">
+  <section class="py-16 px-6 bg-white">
     <div class="max-w-4xl mx-auto">
       <h2 class="text-brown text-center mb-3">{{ t('home.how.title') }}</h2>
       <p class="text-brown/55 text-center text-sm leading-relaxed mb-12 max-w-xl mx-auto">{{ t('home.how.desc') }}</p>
 
       <div class="flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-2 mb-12">
         <template v-for="(step, i) in howSteps" :key="step.n">
-          <div class="bg-cream-dark rounded-3xl flex flex-col items-center justify-between gap-4 px-6 pt-8 pb-6 w-48 h-64 relative shrink-0 overflow-visible">
+          <div class="bg-cream rounded-3xl flex flex-col items-center justify-between gap-4 px-6 pt-8 pb-6 w-48 h-64 relative shrink-0 overflow-visible">
             <span
               class="absolute -top-5 -left-5 w-11 h-11 rounded-full flex items-center justify-center text-white font-bold text-base shadow-md z-10"
               :class="step.badge"
@@ -126,7 +139,7 @@ function onPointerUp(e: PointerEvent) {
   </section>
 
   <!-- PRÊT À JOUER ? — encadré centré + doodles de chaque côté -->
-  <section class="py-16 px-4 bg-cream">
+  <section class="py-16 px-4 bg-white">
     <div class="max-w-5xl mx-auto flex items-center justify-center">
 
       <!-- Scarecrow gauche — slot de largeur fixe pour garder la carte centrée -->
@@ -167,8 +180,7 @@ function onPointerUp(e: PointerEvent) {
   </section>
 
   <!-- NOS CARTES -->
-  <WaveEdge color="var(--color-cream-dark)" position="top" :size="56" />
-  <section class="py-16 px-6 bg-cream-dark overflow-hidden">
+  <section class="py-16 px-6 bg-white overflow-hidden">
     <div class="max-w-5xl mx-auto">
       <div class="flex items-center justify-between mb-10">
         <h2 class="text-brown">{{ t('home.slider.title') }}</h2>
@@ -215,10 +227,9 @@ function onPointerUp(e: PointerEvent) {
       </div>
     </div>
   </section>
-  <WaveEdge color="var(--color-cream-dark)" :size="56" />
 
   <!-- PÉDAGOGIE -->
-  <section class="py-16 px-6 bg-cream">
+  <section class="py-16 px-6 bg-white">
     <div class="max-w-2xl mx-auto">
       <h2 class="text-brown mb-3">{{ t('home.pedagogy.title') }}</h2>
       <p class="text-brown/55 text-sm italic mb-8">{{ t('home.pedagogy.intro') }}</p>
@@ -266,20 +277,41 @@ function onPointerUp(e: PointerEvent) {
   </section>
 
   <!-- NEWSLETTER -->
-  <section class="py-12 px-6 bg-cream">
-    <div class="max-w-sm mx-auto">
-      <h3 class="text-brown font-semibold text-lg mb-5">{{ t('home.newsletter.title') }}</h3>
-      <div class="flex gap-2 mb-3">
-        <input type="email" :placeholder="t('home.newsletter.placeholder')"
-          class="flex-1 min-w-0 px-4 py-3 rounded-xl border-2 border-brown/20 bg-cream text-brown placeholder:text-brown/35 focus:outline-none focus:border-primary text-sm transition-colors" />
-        <button class="px-5 py-3 bg-primary text-cream rounded-xl font-bold hover:scale-105 transition-transform cursor-pointer shrink-0">
-          {{ t('home.newsletter.submit') }}
-        </button>
+  <section class="py-12 px-6 bg-white">
+    <div class="max-w-2xl mx-auto">
+      <div class="bg-cream rounded-3xl p-8 sm:p-10 relative overflow-hidden">
+
+        <!-- Bee doodle coin haut-droit -->
+        <img :src="beeImg" aria-hidden="true"
+          class="absolute top-3 right-3 w-20 sm:w-28 pointer-events-none select-none rotate-[-20deg]" />
+
+        <h3 class="font-game text-brown text-3xl mb-8">{{ t('home.newsletter.title') }}</h3>
+
+        <p class="text-brown font-semibold text-sm mb-1">
+          Email <span class="text-red">*</span>
+        </p>
+        <div class="flex gap-3 mb-6">
+          <input type="email" :placeholder="t('home.newsletter.placeholder')"
+            class="flex-1 min-w-0 px-4 py-3 rounded-xl border border-brown/20 bg-white text-brown placeholder:text-brown/35 focus:outline-none focus:border-primary text-sm transition-colors" />
+          <button class="px-6 py-3 bg-brown text-white rounded-xl font-bold hover:bg-brown/90 transition-colors cursor-pointer shrink-0 text-sm">
+            {{ t('home.newsletter.submit') }}
+          </button>
+        </div>
+
+        <!-- Toggle switch -->
+        <label class="flex items-center gap-3 cursor-pointer w-fit">
+          <div class="relative w-11 h-6 flex-shrink-0" @click="newsletterTerms = !newsletterTerms">
+            <div class="w-11 h-6 rounded-full transition-colors"
+              :class="newsletterTerms ? 'bg-primary' : 'bg-brown/20'" />
+            <div class="absolute top-0.5 left-0.5 w-5 h-5 bg-white rounded-full shadow-sm transition-transform"
+              :class="newsletterTerms ? 'translate-x-5' : 'translate-x-0'" />
+          </div>
+          <span class="text-brown/60 text-sm">
+            {{ t('home.newsletter.terms') }} <span class="text-red text-xs">*</span>
+          </span>
+        </label>
+
       </div>
-      <label class="flex items-center gap-2 cursor-pointer">
-        <input type="checkbox" class="w-4 h-4 accent-primary shrink-0" />
-        <span class="text-brown/55 text-xs">{{ t('home.newsletter.terms') }}</span>
-      </label>
     </div>
   </section>
 
