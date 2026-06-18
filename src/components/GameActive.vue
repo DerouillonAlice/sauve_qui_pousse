@@ -2,7 +2,7 @@
 import { ref, computed } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { useGame } from '@/composables/useGame'
-import { ChevronRight, Award, Leaf, LogOut, Loader2 } from 'lucide-vue-next'
+import { ChevronRight, Award, Leaf, LogOut, Loader2, Trophy } from 'lucide-vue-next'
 import type { SpinResult } from '@/composables/useGame'
 import deckImg   from '@/assets/img/deck_of_cards.svg'
 import medalImg  from '@/assets/img/medal.svg'
