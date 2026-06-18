@@ -4,6 +4,9 @@ import { useI18n } from 'vue-i18n'
 import { useGame } from '@/composables/useGame'
 import { useAuth } from '@/composables/useAuth'
 import { Copy, Check, UserPlus, Play, ArrowLeft, Loader2, Crown, AlertCircle } from 'lucide-vue-next'
+import branchLadybug from '@/assets/img/branch_ladybug_1.svg'
+import branchBee     from '@/assets/img/branch_bee_2.svg'
+import wormImg       from '@/assets/img/worm.svg'
 
 const { t } = useI18n()
 const { state: auth } = useAuth()
@@ -73,6 +76,14 @@ const emptySlots = computed(() => Math.max(0, MAX_PLAYERS - participants.value.l
 </script>
 
 <template>
+  <div class="relative">
+    <img :src="branchLadybug" aria-hidden="true"
+      class="hidden lg:block absolute left-0 top-16 w-40 xl:w-52 pointer-events-none select-none opacity-80 -translate-x-8" />
+    <img :src="branchBee" aria-hidden="true"
+      class="hidden lg:block absolute right-0 top-32 w-36 xl:w-48 pointer-events-none select-none opacity-80 translate-x-8 scale-x-[-1]" />
+    <img :src="wormImg" aria-hidden="true"
+      class="hidden lg:block absolute right-8 bottom-8 w-20 pointer-events-none select-none opacity-40 rotate-12" />
+
   <div class="max-w-lg mx-auto px-4 py-6 flex flex-col gap-5">
 
     <!-- Header -->
@@ -204,5 +215,6 @@ const emptySlots = computed(() => Math.max(0, MAX_PLAYERS - participants.value.l
       <p class="text-sm">{{ t('game.lobby.waiting_host') }}</p>
     </div>
 
+  </div>
   </div>
 </template>
