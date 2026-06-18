@@ -131,7 +131,7 @@ function onPointerUp(e: PointerEvent) {
 
       <!-- Scarecrow gauche -->
       <img :src="scarecrowImg" aria-hidden="true"
-        class="hidden md:block h-64 lg:h-72 shrink-0 pointer-events-none select-none -mr-4 z-10" />
+        class="hidden md:block h-64 lg:h-72 shrink-0 pointer-events-none select-none mr-6 z-10" />
 
       <!-- Carte brune -->
       <div class="bg-brown rounded-3xl px-10 py-12 text-center flex-1 max-w-lg z-20 shadow-xl">
@@ -157,7 +157,7 @@ function onPointerUp(e: PointerEvent) {
 
       <!-- Pesticide droite -->
       <img :src="pesticideImg" aria-hidden="true"
-        class="hidden md:block h-56 lg:h-64 shrink-0 pointer-events-none select-none -ml-4 z-10" />
+        class="hidden md:block h-56 lg:h-64 shrink-0 pointer-events-none select-none ml-6 z-10" />
 
     </div>
   </section>
