@@ -6,6 +6,7 @@ import { ChevronRight, Award, Leaf, LogOut, Loader2, Trophy } from 'lucide-vue-n
 import type { SpinResult } from '@/composables/useGame'
 import deckImg   from '@/assets/img/deck_of_cards.svg'
 import medalImg  from '@/assets/img/medal.svg'
+import logoSauveImg from '@/assets/logo_sauve.png'
 
 const { t } = useI18n()
 const {
@@ -113,8 +114,8 @@ onUnmounted(() => { document.body.style.overflow = '' })
         <span class="font-game text-cream text-lg">{{ t('game.active.round', { n: roundNumber }) }}</span>
       </div>
       <button @click="showWinModal = true" :disabled="isFinished"
-        class="flex items-center gap-2 px-4 py-2 bg-primary text-cream rounded-full font-bold text-sm cursor-pointer hover:scale-105 active:scale-95 transition-transform disabled:opacity-40 disabled:cursor-not-allowed">
-        <Award :stroke-width="2" class="w-4 h-4" />
+        class="flex items-center gap-2 px-6 py-2.5 bg-primary text-cream rounded-full font-bold text-base cursor-pointer hover:scale-105 active:scale-95 transition-transform disabled:opacity-40 disabled:cursor-not-allowed shadow-lg shadow-primary/30 ring-2 ring-primary/30">
+        <Award :stroke-width="2.5" class="w-5 h-5" />
         {{ t('game.active.sauve') }}
       </button>
     </div>
@@ -127,8 +128,29 @@ onUnmounted(() => { document.body.style.overflow = '' })
         {{ game.error }}
       </div>
 
+      <!-- ── SCORES ── -->
+      <div class="w-full">
+        <p class="text-brown/40 text-xs uppercase tracking-wider mb-2 text-center">{{ t('game.active.scores') }}</p>
+        <div class="grid grid-cols-2 gap-2 sm:grid-cols-4">
+          <div v-for="(p, i) in participants" :key="p.id"
+            :class="p.id === currentParticipant?.id ? 'ring-2 ring-primary bg-primary/5' : 'ring-1 ring-brown/10 bg-cream-dark'"
+            class="rounded-2xl py-3 px-3 flex flex-col items-center gap-1 shadow-sm">
+            <div class="w-9 h-9 rounded-full flex items-center justify-center text-white text-sm font-bold shadow-sm"
+              :class="avatarColors[i % 4]">
+              {{ p.displayName.charAt(0).toUpperCase() }}
+            </div>
+            <p class="text-brown text-xs font-semibold truncate w-full text-center">{{ p.displayName }}</p>
+            <div class="flex gap-0.5">
+              <span v-for="n in totalRounds" :key="n"
+                :class="n <= p.roundsWon ? 'bg-primary' : 'bg-brown/15'"
+                class="w-2 h-2 rounded-full" />
+            </div>
+          </div>
+        </div>
+      </div>
+
       <!-- Current player -->
-      <div class="text-center">
+      <div class="text-center mt-2">
         <p class="text-brown/45 text-xs uppercase tracking-widest mb-2">{{ t('game.active.turn') }}</p>
         <div class="flex items-center justify-center gap-3">
           <div class="w-11 h-11 rounded-full flex items-center justify-center text-white text-lg font-bold"
@@ -174,11 +196,9 @@ onUnmounted(() => { document.body.style.overflow = '' })
             <text x="150" y="95" text-anchor="middle" font-size="11" fill="white" font-weight="bold" font-family="sans-serif">Pioche</text>
             <text x="150" y="108" text-anchor="middle" font-size="9" fill="white" font-family="sans-serif">une carte</text>
 
-            <text x="63" y="132" text-anchor="middle" font-size="11" fill="#623435" font-weight="bold" font-family="sans-serif">BONUS</text>
-            <text x="63" y="68"  text-anchor="middle" font-size="11" fill="white"   font-weight="bold" font-family="sans-serif">MALUS</text>
-
-            <!-- Centre pivot -->
-            <circle cx="100" cy="100" r="14" fill="white" stroke="#623435" stroke-width="2.5" />
+            <!-- Centre pivot avec logo -->
+            <circle cx="100" cy="100" r="18" fill="white" stroke="#623435" stroke-width="2.5" />
+            <image :href="logoSauveImg" x="87" y="87" width="26" height="26" />
           </svg>
         </div>
       </div>
@@ -228,26 +248,40 @@ onUnmounted(() => { document.body.style.overflow = '' })
             </button>
           </div>
 
-          <!-- BONUS (extra_spin) — à implémenter avec la DB -->
-          <div v-else-if="spinResult.resultType === 'extra_spin'" class="bg-yellow/40 rounded-3xl p-6 text-center">
-            <div class="text-4xl mb-2">⭐</div>
-            <h3 class="text-brown font-game text-2xl mb-2">BONUS</h3>
-            <p class="text-brown/55 text-sm mb-6">Appliquez l'effet bonus.</p>
+          <!-- BONUS (extra_spin) -->
+          <div v-else-if="spinResult.resultType === 'extra_spin'" class="bg-yellow/20 border-2 border-yellow/60 rounded-3xl p-5 shadow-md">
+            <div class="flex items-center gap-3 mb-4">
+              <div class="w-12 h-12 rounded-full bg-yellow/50 flex items-center justify-center text-2xl shrink-0">⭐</div>
+              <div>
+                <h3 class="text-brown font-game text-xl leading-tight">{{ spinResult.card?.title ?? 'Bonus !' }}</h3>
+              </div>
+            </div>
+            <p v-if="spinResult.card?.description" class="text-brown/70 text-sm leading-relaxed bg-yellow/30 rounded-2xl px-4 py-3 mb-5">
+              {{ spinResult.card.description }}
+            </p>
+            <p v-else class="text-brown/55 text-sm mb-5">Appliquez l'effet bonus.</p>
             <button @click="handleContinue" :disabled="isEndingTurn"
-              class="px-8 py-3 bg-brown text-cream rounded-full font-bold cursor-pointer hover:scale-105 active:scale-95 transition-transform disabled:opacity-50 flex items-center gap-2 mx-auto">
+              class="w-full py-3 bg-brown text-cream rounded-full font-bold cursor-pointer hover:scale-105 active:scale-95 transition-transform disabled:opacity-50 flex items-center justify-center gap-2">
               <Loader2 v-if="isEndingTurn" :stroke-width="2" class="w-5 h-5 animate-spin" />
               <ChevronRight v-else :stroke-width="2" class="w-5 h-5" />
               {{ t('game.active.end_turn') }}
             </button>
           </div>
 
-          <!-- MALUS (skip) — à implémenter avec la DB -->
-          <div v-else class="bg-red/10 rounded-3xl p-6 text-center">
-            <div class="text-4xl mb-2">💀</div>
-            <h3 class="text-red font-game text-2xl mb-2">MALUS</h3>
-            <p class="text-red/55 text-sm mb-6">Appliquez l'effet malus.</p>
+          <!-- MALUS (skip) -->
+          <div v-else class="bg-red/8 border-2 border-red/25 rounded-3xl p-5 shadow-md">
+            <div class="flex items-center gap-3 mb-4">
+              <div class="w-12 h-12 rounded-full bg-red/15 flex items-center justify-center text-2xl shrink-0">💀</div>
+              <div>
+                <h3 class="text-brown font-game text-xl leading-tight">{{ spinResult.card?.title ?? 'Malus !' }}</h3>
+              </div>
+            </div>
+            <p v-if="spinResult.card?.description" class="text-brown/70 text-sm leading-relaxed bg-red/10 rounded-2xl px-4 py-3 mb-5">
+              {{ spinResult.card.description }}
+            </p>
+            <p v-else class="text-red/55 text-sm mb-5">Appliquez l'effet malus.</p>
             <button @click="handleContinue" :disabled="isEndingTurn"
-              class="px-8 py-3 bg-red text-white rounded-full font-bold cursor-pointer hover:scale-105 active:scale-95 transition-transform disabled:opacity-50 flex items-center gap-2 mx-auto">
+              class="w-full py-3 bg-red text-white rounded-full font-bold cursor-pointer hover:scale-105 active:scale-95 transition-transform disabled:opacity-50 flex items-center justify-center gap-2">
               <Loader2 v-if="isEndingTurn" :stroke-width="2" class="w-5 h-5 animate-spin" />
               <ChevronRight v-else :stroke-width="2" class="w-5 h-5" />
               {{ t('game.active.end_turn') }}
@@ -257,33 +291,14 @@ onUnmounted(() => { document.body.style.overflow = '' })
         </div>
       </Transition>
 
-      <!-- ── SCORES ── -->
-      <div class="w-full">
-        <p class="text-brown/40 text-xs uppercase tracking-wider mb-2 text-center">{{ t('game.active.scores') }}</p>
-        <div class="grid grid-cols-2 gap-2 sm:grid-cols-4">
-          <div v-for="(p, i) in participants" :key="p.id"
-            :class="p.id === currentParticipant?.id ? 'ring-2 ring-primary' : 'ring-1 ring-brown/10'"
-            class="bg-cream-dark rounded-2xl py-3 px-3 flex flex-col items-center gap-1">
-            <div class="w-9 h-9 rounded-full flex items-center justify-center text-white text-sm font-bold"
-              :class="avatarColors[i % 4]">
-              {{ p.displayName.charAt(0).toUpperCase() }}
-            </div>
-            <p class="text-brown text-xs font-semibold truncate w-full text-center">{{ p.displayName }}</p>
-            <div class="flex gap-0.5">
-              <span v-for="n in totalRounds" :key="n"
-                :class="n <= p.roundsWon ? 'bg-primary' : 'bg-brown/15'"
-                class="w-2 h-2 rounded-full" />
-            </div>
-          </div>
-        </div>
-      </div>
+      <!-- Scores moved to the top -->
 
     </div>
 
     <!-- ═══ LEAVE ═══ -->
-    <div class="flex justify-center pb-8">
+    <div class="flex justify-center pb-24 lg:pb-8 pt-2">
       <button @click="leaveGame"
-        class="flex items-center gap-2 text-xs text-brown/30 hover:text-red transition-colors cursor-pointer">
+        class="flex items-center gap-2 px-6 py-3 rounded-full border-2 border-red/30 text-red/60 hover:bg-red/8 hover:border-red/60 hover:text-red font-semibold text-sm transition-all cursor-pointer">
         <LogOut :stroke-width="1.5" class="w-4 h-4" />
         {{ t('game.active.leave') }}
       </button>

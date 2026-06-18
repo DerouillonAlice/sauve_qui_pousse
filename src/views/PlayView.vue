@@ -6,6 +6,7 @@ import { useGame } from '@/composables/useGame'
 import GameLobby from '@/components/GameLobby.vue'
 import GameActive from '@/components/GameActive.vue'
 import { LogOut, Gamepad2, Users, Loader2, AlertCircle, CheckCircle2 } from 'lucide-vue-next'
+import WaveEdge from '@/components/WaveEdge.vue'
 
 const { t, tm } = useI18n()
 const { state: auth, isAuthenticated, login, register, logout, clearError } = useAuth()
@@ -94,17 +95,22 @@ onUnmounted(() => stopPolling())
   <!-- Full-screen game view — bypasses hero+grid entirely -->
   <GameActive v-if="isAuthenticated && isInGame && (isActive || isFinished)" />
 
-  <div v-else class="bg-cream min-h-screen">
+  <div v-else class="min-h-screen">
 
     <!-- HERO -->
     <section class="py-16 px-6 text-center bg-cream-dark">
-      <div class="max-w-xl mx-auto">
+        <div class="max-w-xl mx-auto">
         <h1 class="text-brown mb-3">{{ t('play.hero.title') }}</h1>
         <p class="text-brown/70 text-lg">{{ t('play.hero.subtitle') }}</p>
       </div>
     </section>
 
-    <div class="max-w-4xl mx-auto px-6 py-16 grid gap-12 lg:grid-cols-2">
+    <!-- Vagues crème -->
+    <WaveEdge color="var(--color-cream-dark)" :size="48" />
+
+
+
+    <div class="max-w-4xl mx-auto px-6 py-10 gap-12">
 
       <!-- IN-GAME: LOBBY -->
       <div v-if="isAuthenticated && isInGame" class="lg:col-span-2">
@@ -313,7 +319,7 @@ onUnmounted(() => stopPolling())
           </form>
         </div>
 
-        <!-- FEATURES + DEMO -->
+        <!-- FEATURES + DEMO
         <div class="flex flex-col gap-8">
           <div class="bg-primary/10 rounded-3xl p-8">
             <p class="font-semibold text-brown mb-4">{{ t('play.features.title') }}</p>
@@ -326,7 +332,7 @@ onUnmounted(() => stopPolling())
             </ul>
           </div>
 
-        </div>
+        </div> -->
       </template>
 
     </div>
