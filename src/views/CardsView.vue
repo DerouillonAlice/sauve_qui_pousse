@@ -80,10 +80,10 @@ const roleMeta: Record<Role, { color: string; dot: string }> = {
 
 type Filter = 'Toutes' | Group
 const filters: { key: Filter; label: string }[] = [
-  { key: 'Toutes',     label: t('cards.filter.all')       },
-  { key: 'Bénéfique',  label: t('cards.filter.insects')   },
-  { key: 'Nuisible',   label: t('cards.filter.events')    },
-  { key: 'Neutre',     label: t('cards.filter.actions')   },
+  { key: 'Toutes',    label: t('cards.filter.all')        },
+  { key: 'Bénéfique', label: t('cards.filter.beneficial') },
+  { key: 'Nuisible',  label: t('cards.filter.harmful')    },
+  { key: 'Neutre',    label: t('cards.filter.neutral')    },
 ]
 
 const activeFilter = ref<Filter>('Toutes')

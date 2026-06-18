@@ -148,9 +148,9 @@
     "wip": "Bonus and malus cards coming soon!",
     "filter": {
       "all": "All",
-      "insects": "Insects",
-      "events": "Events",
-      "actions": "Actions",
+      "beneficial": "Beneficial",
+      "harmful": "Harmful",
+      "neutral": "Neutral",
       "count": "cards total"
     },
     "detail": {

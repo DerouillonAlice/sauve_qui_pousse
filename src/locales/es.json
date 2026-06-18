@@ -148,9 +148,9 @@
     "wip": "¡Las cartas bonus y malus llegan pronto!",
     "filter": {
       "all": "Todas",
-      "insects": "Insectos",
-      "events": "Eventos",
-      "actions": "Acciones",
+      "beneficial": "Beneficiosas",
+      "harmful": "Dañinas",
+      "neutral": "Neutrales",
       "count": "cartas en total"
     },
     "detail": {
