@@ -1,0 +1,274 @@
+{
+  "nav": {
+    "home": "Inicio",
+    "play": "Jugar",
+    "cards": "Cartas",
+    "rules": "Reglas",
+    "login": "Iniciar sesión",
+    "logout": "Cerrar sesión",
+    "account": "Mi cuenta"
+  },
+  "home": {
+    "hero": {
+      "title": "¿Y si salvar el planeta estuviera en tus manos?",
+      "subtitle": "Sauve qui Pousse es el juego donde tu jardín se convierte en el campo de batalla de la biodiversidad. Seis cartas, una misión: tener el jardín más limpio.",
+      "tagline": "Sauve qui Pousse, el juego que hace bien al jardín.",
+      "cta_rules": "Descubrir las reglas",
+      "cta_play": "Jugar en línea"
+    },
+    "concept": {
+      "title": "Alrededor de la mesa, cada uno cultiva su jardín.",
+      "p1": "Una abeja que poliniza, una mariquita que vigila, un gusano de tierra que remueve el suelo: cada pequeño ser hace subir tu puntuación. Pero la naturaleza es frágil, y la rueda en el centro de la mesa lo decide.",
+      "p2": "En cada turno, gira y sella tu destino. Plantas un seto, excavas un estanque, atraes a los polinizadores... o pasa el cortacésped, el hielo golpea, el gato del vecino siembra el caos.",
+      "p3": "Proteges tus insectos. Saboteas los de los demás. Le pasas tus pesticidas al vecino con una gran sonrisa.",
+      "p4": "Eso es Sauve qui Pousse."
+    },
+    "how": {
+      "title": "Las reglas del juego",
+      "desc": "Saca, bonus o malus: en cada turno, la rueda decide. Construye tu jardín, protégelo y cuando creas tener el mejor ecosistema de la mesa, ¡grita 'Sauve qui pousse!'",
+      "steps": ["Gira la rueda", "Saca una carta", "¡Gana!!!"],
+      "cta": "Saber más →"
+    },
+    "cta": {
+      "title": "¿Listo para jugar?",
+      "subtitle": "Únete o lanza una partida con tus amigos en segundos.",
+      "chips": ["2 - 4 jugadores", "~15 min", "Desde 7 años"],
+      "create": "Lanzar una partida →",
+      "join": "Unirse a una partida →"
+    },
+    "newsletter": {
+      "title": "Newsletter",
+      "placeholder": "Ej: alice{'@'}dominio.com",
+      "submit": "OK",
+      "terms": "Acepto los términos *"
+    },
+    "pedagogy": {
+      "title": "Un juego que divierte y enseña.",
+      "intro": "Cada carta esconde una información. No es una clase, es un hecho, simple e impactante.",
+      "facts": [
+        "Las abejas polinizan el 80% de las plantas con flores. Sin ellas, no hay frutos ni verduras.",
+        "El cortacésped destruye los insectos y sus hábitats. Dejar crecer el pasto protege la biodiversidad.",
+        "El barbecho es dejar un campo descansar. Permite que los insectos se reinstalen naturalmente."
+      ],
+      "conclusion": "Los insectos son esenciales: abejas, mariquitas, gusanos dan vida a nuestros ecosistemas. Defender el medio ambiente no tiene edad. Es una lucha que atraviesa generaciones."
+    },
+    "audience": {
+      "title": "De 7 a 77 años.",
+      "desc": "En familia, con amigos o en clase: Sauve qui Pousse se adapta a todos los jardines y jardineros.",
+      "cta_cards": "Descubrir las cartas",
+      "cta_play": "Jugar en línea"
+    },
+    "slider": {
+      "title": "Nuestras cartas",
+      "see_all": "Ver todas las cartas →",
+      "cards": [
+        { "name": "Abejas", "desc": "Polinizadoras esenciales, ¡visitan hasta 2.000 flores por día!" },
+        { "name": "Lombrices", "desc": "Ingenieras del suelo, airean la tierra y la fertilizan." },
+        { "name": "Mariquitas", "desc": "Depredadoras naturales, devoran hasta 100 pulgones al día." },
+        { "name": "Avispones", "desc": "Depredadores temibles, regulan las poblaciones de insectos." },
+        { "name": "Pesticidas", "desc": "Amenaza silenciosa, contaminan los suelos y las aguas subterráneas." },
+        { "name": "Agricultura", "desc": "La agricultura intensiva debilita los ecosistemas y la biodiversidad." },
+        { "name": "Espantapájaros", "desc": "Guardián del jardín, protege los cultivos de los pájaros hambrientos." }
+      ]
+    }
+  },
+  "rules": {
+    "hero": {
+      "title": "¡Sauve qui pousse!",
+      "subtitle": "El juego que hace bien al jardín.",
+      "intro": "Cada jugador gestiona un jardín de 6 cartas. Cuantos más insectos tenga tu jardín, mejor. ¡Limpia tu mano de cartas de pesticidas, sabotea a tus rivales y sé el primero en terminar!"
+    },
+    "principle": {
+      "title": "Principio",
+      "desc": "En cada turno, saca una nueva carta e intercámbiala con una de tu mano para tener un jardín limpio."
+    },
+    "wheel": {
+      "title": "La rueda digital",
+      "desc": "La rueda solo se usa para sacar cartas. Ofrece casillas infinitas:",
+      "neutral": { "label": "Casillas neutras", "desc": "Sacas y juegas normalmente." },
+      "bonus": { "label": "Casillas bonus", "desc": "Acciones positivas: protección, deshacerse de malas cartas..." },
+      "trap": { "label": "Casillas trampa", "desc": "Acciones negativas: tu mano es saboteada." }
+    },
+    "cards": {
+      "title": "Las cartas",
+      "positive": {
+        "title": "Cartas positivas",
+        "items": [
+          { "name": "Polinizadores — Abejas", "points": "+3 pts" },
+          { "name": "Depredadores naturales — Mariquitas", "points": "+2 pts" },
+          { "name": "Descomponedores — Lombrices", "points": "+1 pt" }
+        ]
+      },
+      "neutral": {
+        "title": "Cartas neutras",
+        "items": [
+          { "name": "Agricultores", "points": "0 pt" }
+        ]
+      },
+      "negative": {
+        "title": "Cartas negativas",
+        "items": [
+          { "name": "Insecticidas de contacto", "points": "-3 pts" },
+          { "name": "Sistémicos y herbicidas", "points": "-2 pts" },
+          { "name": "Catástrofes y destrucciones", "points": "-1 pt" }
+        ]
+      }
+    },
+    "bonusmalus": {
+      "title": "Bonus & Malus",
+      "bonus": { "label": "Cartas bonus", "desc": "Acciones humanas para ayudar a la biodiversidad." },
+      "malus": { "label": "Cartas malus", "desc": "Acciones nocivas, mal tiempo, insectos invasores..." }
+    },
+    "win": {
+      "title": "Cómo ganar",
+      "steps": [
+        "Un jugador grita '¡Sauve qui pousse!' cuando el total de su mano es positivo.",
+        "El turno actual termina: todos los jugadores completan su turno.",
+        "Se revelan todas las manos y se suman los puntos de cada jugador.",
+        "El jugador con la puntuación más alta gana la ronda."
+      ],
+      "tiebreak_label": "Empate",
+      "tiebreak": "Gana el que tiene más cartas de insectos."
+    },
+    "cta_home": "Volver al inicio",
+    "cta_cards": "Descubrir las cartas",
+    "cta_play": "Jugar en línea"
+  },
+  "cards": {
+    "hero": {
+      "title": "Cada carta tiene una historia.",
+      "subtitle": "Detrás de cada ilustración hay un insecto, un gesto o un peligro del jardín, y siempre un pequeño dato que dice mucho sobre la biodiversidad."
+    },
+    "families": {
+      "title": "Tres familias de cartas",
+      "main": { "label": "Mazo principal", "desc": "Insectos y pesticidas" },
+      "bonus": { "label": "Cartas bonus", "desc": "Aliados para tu jardín" },
+      "malus": { "label": "Cartas malus", "desc": "Los azares de la naturaleza" }
+    },
+    "wip": "¡Las cartas bonus y malus llegan pronto!",
+    "filter": {
+      "all": "Todas",
+      "insects": "Insectos",
+      "events": "Eventos",
+      "actions": "Acciones",
+      "count": "cartas en total"
+    },
+    "detail": {
+      "prev": "← Anterior",
+      "next": "Siguiente →",
+      "flip_hint": "Haz clic en la ilustración para voltear la carta",
+      "close": "Cerrar"
+    }
+  },
+  "play": {
+    "hero": {
+      "title": "Tu jardín te espera.",
+      "subtitle": "Crea una cuenta o inicia sesión para unirte a una partida en línea."
+    },
+    "login": {
+      "title": "¡Inicia sesión!",
+      "email": "Correo electrónico",
+      "password": "Contraseña",
+      "submit": "Iniciar sesión",
+      "forgot": "¿Olvidaste tu contraseña?",
+      "switch_register": "¿No tienes cuenta?",
+      "switch_register_link": "Regístrate"
+    },
+    "register": {
+      "title": "¡Regístrate!",
+      "subtitle": "Crea tu cuenta en segundos para empezar a jugar.",
+      "firstname": "Nombre",
+      "lastname": "Apellido",
+      "email": "Correo electrónico",
+      "password": "Contraseña",
+      "password_hint": "Mínimo 8 caracteres",
+      "confirm_password": "Confirmar contraseña",
+      "submit": "Crear mi cuenta",
+      "legal": "Al crear una cuenta, aceptas nuestras condiciones de uso.",
+      "success": "¡Cuenta creada! Iniciando sesión…",
+      "switch_login": "¿Ya tienes cuenta?",
+      "switch_login_link": "Iniciar sesión"
+    },
+    "logged": {
+      "welcome": "Bienvenido/a,",
+      "subtitle": "Tu jardín está listo. ¡Crea o únete a una partida!",
+      "create_game": "Crear una partida",
+      "join_game": "Unirse a una partida",
+      "join_code_placeholder": "Código de partida",
+      "logout": "Cerrar sesión"
+    },
+    "features": {
+      "title": "Una vez conectado:",
+      "items": [
+        "Crea una partida e invita a tus amigos con un simple código",
+        "Gira la rueda directamente desde la pantalla, como en la tableta física",
+        "Sigue tu jardín y el de los demás jugadores en tiempo real"
+      ]
+    },
+    "demo": {
+      "title": "¿Solo quieres probar?",
+      "desc": "Descubre una partida de demostración sin crear cuenta. Perfecto para hacerse una idea antes de lanzarse de verdad.",
+      "cta": "Lanzar demo"
+    }
+  },
+  "auth": {
+    "error": {
+      "invalid_credentials": "Correo o contraseña incorrectos.",
+      "already_exists": "Ya existe una cuenta con este correo.",
+      "missing_fields": "Todos los campos son obligatorios.",
+      "server": "Ocurrió un error. Inténtalo de nuevo en unos instantes.",
+      "passwords_mismatch": "Las contraseñas no coinciden."
+    }
+  },
+  "game": {
+    "active": {
+      "title": "¡Partida en curso!",
+      "desc": "La partida ha comenzado.",
+      "leave": "Abandonar la partida",
+      "round": "Ronda {n}",
+      "sauve": "¡Sauve qui pousse!",
+      "turn": "Es el turno de",
+      "spin": "Girar",
+      "extra_spin_title": "¡Giro extra!",
+      "extra_spin_desc": "Puedes girar la rueda una vez más.",
+      "spin_again": "Girar de nuevo",
+      "skip_title": "Turno saltado",
+      "skip_desc": "Sin carta esta vez. Pasa el turno.",
+      "end_turn": "Fin del turno",
+      "scores": "Puntuaciones",
+      "winner_prompt": "¿Quién ganó la ronda?",
+      "cancel": "Cancelar",
+      "confirm_win": "Confirmar",
+      "game_over": "¡Partida terminada!",
+      "finish": "Terminar la partida"
+    },
+    "lobby": {
+      "title": "Sala de espera",
+      "code_label": "Código",
+      "code_hint": "Comparte este código con los demás jugadores",
+      "copy": "Copiar código",
+      "players": "jugadores",
+      "guest": "Invitado",
+      "host": "Anfitrión",
+      "guest_name_placeholder": "Nombre del jugador…",
+      "add_players_title": "¿Quién juega en la mesa?",
+      "add_players_hint": "Escribe un nombre y pulsa Enter para añadir cada jugador.",
+      "add_btn": "Añadir",
+      "empty_slot": "Lugar disponible",
+      "start": "Iniciar partida",
+      "need_players": "Se necesitan al menos 2 jugadores para empezar.",
+      "waiting_host": "Esperando que el anfitrión inicie la partida…"
+    },
+    "error": {
+      "pseudo_taken": "Este nombre ya está en uso en esta partida.",
+      "invalid_code": "Código inválido o expirado.",
+      "session_started": "Esta partida ya ha comenzado o terminado."
+    },
+    "join": {
+      "title": "Unirse a una partida",
+      "placeholder": "CÓDIGO",
+      "cancel": "Cancelar",
+      "submit": "Unirse"
+    }
+  }
+}
