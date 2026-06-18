@@ -1,14 +1,16 @@
 <script setup lang="ts">
-import { ref, onMounted, computed } from 'vue'
+import { ref, onMounted, computed, watch } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { useRouter } from 'vue-router'
 import { useAuth } from '@/composables/useAuth'
+import { useGame } from '@/composables/useGame'
 import { apiFetch } from '@/services/api'
 import { Loader2, Trophy, Target, RotateCcw, Gamepad2, LogOut, Calendar } from 'lucide-vue-next'
 
 const { t } = useI18n()
 const router = useRouter()
 const { state: auth, isAuthenticated, logout } = useAuth()
+const { leaveGame } = useGame()
 
 interface ProfileData {
   id: number
@@ -37,11 +39,17 @@ const profile = ref<ProfileData | null>(null)
 const loading = ref(true)
 const error   = ref<string | null>(null)
 
+// Rediriger si déconnecté (pendant la visite ou au chargement)
+watch(isAuthenticated, (val) => { if (!val) router.push('/') }, { immediate: true })
+
+function handleLogout() {
+  leaveGame()
+  logout()
+  router.push('/')
+}
+
 onMounted(async () => {
-  if (!isAuthenticated.value) {
-    router.push('/jouer')
-    return
-  }
+  if (!isAuthenticated.value) return
   try {
     profile.value = await apiFetch<ProfileData>('/me')
   } catch {
@@ -193,7 +201,7 @@ const avatarLetter = computed(() => (auth.user?.pseudo ?? 'U').charAt(0).toUpper
 
       <!-- Déconnexion -->
       <section class="max-w-3xl mx-auto px-6 pb-10">
-        <button @click="logout"
+        <button @click="handleLogout"
           class="flex items-center gap-2 text-sm text-brown/40 hover:text-red transition-colors cursor-pointer">
           <LogOut :stroke-width="1.5" class="w-4 h-4" />
           Se déconnecter
