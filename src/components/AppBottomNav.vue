@@ -23,7 +23,9 @@ const activeIndex = computed(() => {
 </script>
 
 <template>
-  <nav class="lg:hidden fixed bottom-0 inset-x-0 z-50">
+  <nav class="md:hidden fixed bottom-0 inset-x-0 z-50">
+
+    <!-- Barre -->
     <div class="bg-primary rounded-t-3xl shadow-[0_-4px_24px_rgba(0,0,0,0.12)] h-16 flex items-center justify-around px-4">
       <RouterLink
         v-for="(item, i) in navItems"

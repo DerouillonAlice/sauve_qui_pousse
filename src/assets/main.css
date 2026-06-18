@@ -8,9 +8,10 @@
   --color-yellow: #fadd83;
   --color-lime: #dbf000;
   --color-cream: #f8f4eb;
-  --color-cream-dark: #ede5d0;
+  --color-cream-dark: #ffeeb9;
 
   --font-sans: 'Lato', 'Segoe UI', Roboto, sans-serif;
+  --font-nunito: 'Nunito', sans-serif;
   --font-serif: 'Playfair Display', 'Georgia', serif;
   --font-game: 'MagicalNeverland', serif;
 }

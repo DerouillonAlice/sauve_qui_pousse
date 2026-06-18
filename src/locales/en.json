@@ -43,7 +43,7 @@
       "terms": "I accept the terms *"
     },
     "pedagogy": {
-      "title": "A game that entertains and teaches.",
+      "title": "A game that's fun and educational",
       "intro": "Every card hides a fact. Not a lecture — a simple, striking truth.",
       "facts": [
         "Bees pollinate 80% of flowering plants. Without them, no fruit, no vegetables.",
@@ -62,11 +62,20 @@
       "title": "Our cards",
       "see_all": "See all cards →",
       "cards": [
-        { "name": "Bees", "desc": "Essential pollinators, they visit up to 2,000 flowers per day!" },
-        { "name": "Earthworms", "desc": "Soil engineers, they aerate the ground and make it fertile." },
+        {
+          "name": "Bees",
+          "desc": "Essential pollinators, they visit up to 2,000 flowers per day!"
+        },
+        {
+          "name": "Earthworms",
+          "desc": "Soil engineers, they aerate the ground and make it fertile."
+        },
         { "name": "Ladybugs", "desc": "Natural predators, they devour up to 100 aphids per day." },
         { "name": "Hornets", "desc": "Fearsome predators, they regulate insect populations." },
-        { "name": "Pesticides", "desc": "A silent threat, they contaminate soils and groundwater." },
+        {
+          "name": "Pesticides",
+          "desc": "A silent threat, they contaminate soils and groundwater."
+        },
         { "name": "Agriculture", "desc": "Intensive farming weakens ecosystems and biodiversity." },
         { "name": "Scarecrow", "desc": "Garden guardian, it protects crops from hungry birds." }
       ]
@@ -86,7 +95,10 @@
       "title": "The digital wheel",
       "desc": "The wheel is only used to draw. It offers infinite spaces:",
       "neutral": { "label": "Neutral spaces", "desc": "You draw and play normally." },
-      "bonus": { "label": "Bonus spaces", "desc": "Positive actions: protection, getting rid of bad cards..." },
+      "bonus": {
+        "label": "Bonus spaces",
+        "desc": "Positive actions: protection, getting rid of bad cards..."
+      },
       "trap": { "label": "Trap spaces", "desc": "Negative actions: your hand gets sabotaged." }
     },
     "cards": {
@@ -101,9 +113,7 @@
       },
       "neutral": {
         "title": "Neutral cards",
-        "items": [
-          { "name": "Farmers", "points": "0 pt" }
-        ]
+        "items": [{ "name": "Farmers", "points": "0 pt" }]
       },
       "negative": {
         "title": "Negative cards",
@@ -117,7 +127,10 @@
     "bonusmalus": {
       "title": "Bonus & Malus",
       "bonus": { "label": "Bonus cards", "desc": "Human actions to help biodiversity." },
-      "malus": { "label": "Malus cards", "desc": "Harmful actions, bad weather, invasive insects..." }
+      "malus": {
+        "label": "Malus cards",
+        "desc": "Harmful actions, bad weather, invasive insects..."
+      }
     },
     "win": {
       "title": "How to win",

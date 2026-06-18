@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { RouterLink } from 'vue-router'
+import footerImg from '@/assets/img/footer.svg'
 
 const menuLinks = [
   { label: 'Accueil', to: '/' },
@@ -16,7 +17,7 @@ const legalLinks = [
 </script>
 
 <template>
-  <footer class="bg-primary pt-10 pb-12">
+  <footer class="bg-primary py-12" style="font-family: 'Nunito', sans-serif">
     <div class="max-w-4xl mx-auto px-8 grid grid-cols-1 sm:grid-cols-3 gap-10 text-center">
 
       <div>
@@ -24,7 +25,7 @@ const legalLinks = [
         <ul class="space-y-3">
           <li v-for="link in menuLinks" :key="link.to">
             <RouterLink :to="link.to"
-              class="text-white text-sm hover:font-bold transition-all">
+              class="text-white text-sm hover:font-bold transition-all" style="font-family: 'Nunito', sans-serif; font-weight: 600">
               {{ link.label }}
             </RouterLink>
           </li>
@@ -36,7 +37,7 @@ const legalLinks = [
         <ul class="space-y-3">
           <li v-for="link in legalLinks" :key="link.to">
             <RouterLink :to="link.to"
-              class="text-white text-sm hover:font-bold transition-all leading-snug block">
+              class="text-white text-sm hover:font-bold transition-all leading-snug block" style="font-family: 'Nunito', sans-serif; font-weight: 600">
               {{ link.label }}
             </RouterLink>
           </li>
@@ -45,7 +46,7 @@ const legalLinks = [
 
       <div>
         <p class="font-game text-white text-2xl mb-6">Contact</p>
-        <ul class="space-y-3 text-white text-sm">
+        <ul class="space-y-3 text-white text-sm" style="font-family: 'Nunito', sans-serif; font-weight: 600">
           <li>
             <a href="mailto:contact@sauvequipousse.fr"
               class="hover:font-bold transition-all">

@@ -16,36 +16,41 @@ const basicLinks = [
 
 <template>
   <header class="flex items-center justify-between px-8 py-4 bg-primary">
-    <RouterLink to="/">
+    <!-- Logo visible uniquement sur mobile (desktop : caché car intégré dans hero_desktop.svg) -->
+    <RouterLink to="/" class="md:hidden">
       <img :src="logoBlanc" alt="Sauve qui pousse" class="h-12 w-auto" />
     </RouterLink>
-    <nav class="flex gap-6 items-center">
+    <!-- Nav liens à gauche sur desktop -->
+    <nav class="hidden md:flex gap-8 items-center">
       <RouterLink v-for="link in basicLinks" :key="link.to" :to="link.to"
-        class="hidden lg:block text-cream no-underline hover:underline"
+        class="text-cream no-underline hover:underline font-medium text-lg"
+        style="font-family: 'Nunito', sans-serif; font-weight: 700"
         active-class="font-bold underline">
         {{ t(link.i18nKey) }}
       </RouterLink>
 
       <template v-if="!isAuthenticated">
         <RouterLink to="/jouer"
-          class="hidden lg:block text-cream no-underline hover:underline"
+          class="text-cream no-underline hover:underline font-medium text-lg"
+          style="font-family: 'Nunito', sans-serif; font-weight: 700"
           active-class="font-bold underline">
           {{ t('nav.play') }}
         </RouterLink>
         <RouterLink to="/compte"
-          class="hidden lg:block bg-brown text-cream px-5 py-2.5 rounded-full font-bold hover:scale-105 active:scale-95 transition-transform shadow-md">
+          class="bg-brown text-cream px-5 py-2.5 rounded-full font-bold hover:scale-105 active:scale-95 transition-transform shadow-md">
           Connexion / Inscription
         </RouterLink>
       </template>
 
       <template v-else>
         <RouterLink to="/compte"
-          class="hidden lg:block text-cream no-underline hover:underline"
+          class="text-cream no-underline hover:underline font-medium text-lg"
+          style="font-family: 'Nunito', sans-serif; font-weight: 700"
           active-class="font-bold underline">
           {{ t('nav.account') }}
         </RouterLink>
         <RouterLink to="/jouer"
-          class="hidden lg:block bg-brown text-cream px-5 py-2.5 rounded-full font-bold hover:scale-105 active:scale-95 transition-transform shadow-md flex items-center gap-2">
+          class="bg-brown text-cream px-5 py-2.5 rounded-full font-bold hover:scale-105 active:scale-95 transition-transform shadow-md flex items-center gap-2">
           {{ t('nav.play') }}
         </RouterLink>
       </template>
