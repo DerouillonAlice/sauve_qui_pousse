@@ -6,12 +6,6 @@ import WaveEdge from '@/components/WaveEdge.vue'
 import { ChevronLeft, ChevronRight, ArrowRight } from 'lucide-vue-next'
 
 import heroImg from '@/assets/img/hero.svg'
-import beeLadybugImg from '@/assets/img/bee_ladybug.svg'
-import hornet1Img from '@/assets/img/hornet_1.svg'
-import branchBee1Img from '@/assets/img/branch_bee_1.svg'
-import branchBee2Img from '@/assets/img/branch_bee_2.svg'
-import branchLadybug2Img from '@/assets/img/branch_ladybug_2.svg'
-import leafsImg from '@/assets/img/leafs.svg'
 import scarecrowImg from '@/assets/img/scarecrow.svg'
 import pesticideImg from '@/assets/img/pesticide.svg'
 import wheelImg from '@/assets/img/spinning_wheel.svg'
@@ -80,23 +74,11 @@ function onPointerUp(e: PointerEvent) {
 <template>
 
   <!-- ═══════════════════════════════════════════════
-       HERO
+       HERO — le SVG est sa propre composition complète
   ═══════════════════════════════════════════════ -->
-  <section class="relative overflow-hidden bg-primary">
-    <!-- Doodles positionnés -->
-    <img :src="beeLadybugImg"   aria-hidden="true" class="absolute top-0 left-0 w-28 sm:w-36 pointer-events-none select-none" />
-    <img :src="hornet1Img"      aria-hidden="true" class="absolute top-4 right-0 w-24 sm:w-32 pointer-events-none select-none" />
-    <img :src="branchBee1Img"   aria-hidden="true" class="absolute bottom-0 left-0 w-32 sm:w-48 pointer-events-none select-none" />
-    <img :src="branchBee2Img"   aria-hidden="true" class="absolute top-0 right-24 w-20 sm:w-28 pointer-events-none select-none hidden sm:block" />
-    <img :src="branchLadybug2Img" aria-hidden="true" class="absolute bottom-0 right-0 w-32 sm:w-44 pointer-events-none select-none" />
-    <img :src="leafsImg"        aria-hidden="true" class="absolute top-1/2 -translate-y-1/2 right-0 w-16 pointer-events-none select-none hidden lg:block" />
-
-    <!-- Titre principal -->
-    <div class="relative z-10 flex justify-center py-10 px-6">
-      <img :src="heroImg" alt="Sauve qui Pousse!" class="w-full max-w-xs sm:max-w-md md:max-w-xl" />
-    </div>
+  <section>
+    <img :src="heroImg" alt="Sauve qui Pousse!" class="w-full block" />
   </section>
-  <WaveEdge color="var(--color-primary)" :size="56" />
 
   <!-- ═══════════════════════════════════════════════
        CONCEPT
@@ -193,7 +175,7 @@ function onPointerUp(e: PointerEvent) {
 
       <div class="relative">
         <div
-          class="flex items-center justify-center h-[340px] relative select-none touch-pan-y"
+          class="flex items-center justify-center h-85 relative select-none touch-pan-y"
           @pointerdown="onPointerDown"
           @pointerup="onPointerUp"
           @pointercancel="onPointerUp"

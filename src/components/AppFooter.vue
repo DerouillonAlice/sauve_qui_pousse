@@ -24,11 +24,11 @@ const legalLinks = [
     <img :src="footerImg" aria-hidden="true"
       class="w-full pointer-events-none select-none" />
 
-    <!-- Flower decorations -->
+    <!-- Flower decorations — positionnées dans la zone des colonnes, pas sur la vague -->
     <img :src="pinkFlowerImg" aria-hidden="true"
-      class="absolute top-8 left-4 w-16 pointer-events-none select-none hidden sm:block" />
+      class="absolute bottom-16 left-4 w-14 pointer-events-none select-none hidden lg:block opacity-70" />
     <img :src="yellowFlowerImg" aria-hidden="true"
-      class="absolute top-4 right-8 w-12 pointer-events-none select-none hidden sm:block" />
+      class="absolute bottom-12 right-6 w-10 pointer-events-none select-none hidden lg:block opacity-70" />
 
     <!-- Columns -->
     <div class="max-w-4xl mx-auto px-6 py-10 grid grid-cols-2 sm:grid-cols-3 gap-8">
