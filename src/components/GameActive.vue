@@ -2,9 +2,10 @@
 import { ref, computed } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { useGame } from '@/composables/useGame'
-import { ChevronRight, Award, Leaf, LogOut, Trophy, Loader2 } from 'lucide-vue-next'
+import { ChevronRight, Award, Leaf, LogOut, Loader2 } from 'lucide-vue-next'
 import type { SpinResult } from '@/composables/useGame'
-import deckImg from '@/assets/img/deck_of_cards.svg'
+import deckImg   from '@/assets/img/deck_of_cards.svg'
+import medalImg  from '@/assets/img/medal.svg'
 
 const { t } = useI18n()
 const {
@@ -85,11 +86,14 @@ async function handleWinRound() {
 }
 
 /* ── misc ── */
-const roundNumber     = computed(() => currentRound.value?.roundNumber ?? 1)
+const roundNumber      = computed(() => currentRound.value?.roundNumber ?? 1)
 const totalRoundsToWin = 3
+const avatarColors     = ['bg-primary', 'bg-amber-400', 'bg-sky-400', 'bg-pink-400']
 
-// Solid avatar colors (no gradients)
-const avatarColors = ['bg-primary', 'bg-amber-400', 'bg-sky-400', 'bg-pink-400']
+const sortedParticipants = computed(() =>
+  [...participants.value].sort((a, b) => b.roundsWon - a.roundsWon)
+)
+const winner = computed(() => sortedParticipants.value[0] ?? null)
 
 </script>
 
@@ -315,29 +319,58 @@ const avatarColors = ['bg-primary', 'bg-amber-400', 'bg-sky-400', 'bg-pink-400']
       </div>
     </Transition>
 
-    <!-- ═══ FIN DE PARTIE ═══ -->
-    <Transition enter-active-class="transition-all duration-500 ease-out" enter-from-class="opacity-0 scale-90" enter-to-class="opacity-100 scale-100">
-      <div v-if="isFinished" class="fixed inset-0 z-50 flex items-center justify-center p-6 bg-brown/80 backdrop-blur-sm">
-        <div class="bg-cream rounded-3xl p-8 w-full max-w-sm text-center shadow-2xl">
-          <div class="text-5xl mb-4">🏆</div>
-          <h2 class="text-brown font-game mb-2">{{ t('game.active.game_over') }}</h2>
-          <div class="flex flex-col gap-2 my-6">
-            <div v-for="(p, i) in [...participants].sort((a, b) => b.roundsWon - a.roundsWon)" :key="p.id"
-              :class="i === 0 ? 'bg-primary/15 ring-2 ring-primary' : 'bg-cream-dark'"
-              class="flex items-center gap-3 px-4 py-3 rounded-2xl">
-              <span class="text-lg">{{ i === 0 ? '🥇' : i === 1 ? '🥈' : '🥉' }}</span>
-              <div class="w-8 h-8 rounded-full flex items-center justify-center text-white text-sm font-bold"
-                :class="avatarColors[participants.indexOf(p) % 4]">
+    <!-- ═══ PAGE GAGNANT (plein écran) ═══ -->
+    <Transition
+      enter-active-class="transition-all duration-700 ease-out"
+      enter-from-class="opacity-0 scale-95"
+      enter-to-class="opacity-100 scale-100"
+    >
+      <div v-if="isFinished" class="fixed inset-0 z-50 bg-brown overflow-y-auto">
+        <div class="min-h-full flex flex-col items-center justify-center px-6 py-12 gap-8">
+
+          <!-- Médaille -->
+          <img :src="medalImg" alt="Médaille" class="w-36 sm:w-48 drop-shadow-2xl" />
+
+          <!-- Titre -->
+          <div class="text-center">
+            <p class="text-primary font-semibold text-sm uppercase tracking-widest mb-2">Partie terminée</p>
+            <h1 class="font-game text-cream text-5xl sm:text-7xl leading-tight">
+              {{ winner?.displayName }}
+            </h1>
+            <p class="text-cream/60 mt-2 text-lg">a remporté la partie ! 🎉</p>
+          </div>
+
+          <!-- Podium -->
+          <div class="w-full max-w-sm flex flex-col gap-2">
+            <div
+              v-for="(p, i) in sortedParticipants" :key="p.id"
+              class="flex items-center gap-4 px-5 py-4 rounded-2xl"
+              :class="i === 0 ? 'bg-primary text-cream' : 'bg-white/10 text-cream/80'"
+            >
+              <span class="text-2xl w-8 text-center shrink-0">
+                {{ i === 0 ? '🥇' : i === 1 ? '🥈' : '🥉' }}
+              </span>
+              <div
+                class="w-10 h-10 rounded-full flex items-center justify-center text-white font-bold shrink-0"
+                :class="avatarColors[participants.indexOf(p) % 4]"
+              >
                 {{ p.displayName.charAt(0).toUpperCase() }}
               </div>
-              <span class="text-brown font-semibold flex-1 text-left">{{ p.displayName }}</span>
-              <span class="text-primary font-bold text-sm">{{ p.roundsWon }} manche{{ p.roundsWon > 1 ? 's' : '' }}</span>
+              <span class="font-semibold flex-1">{{ p.displayName }}</span>
+              <span class="font-bold text-sm">
+                {{ p.roundsWon }} manche{{ p.roundsWon > 1 ? 's' : '' }}
+              </span>
             </div>
           </div>
-          <button @click="leaveGame"
-            class="w-full py-4 bg-brown text-cream rounded-full font-bold text-lg cursor-pointer hover:scale-[1.02] active:scale-[0.98] transition-transform">
-            {{ t('game.active.finish') }}
+
+          <!-- Bouton -->
+          <button
+            @click="leaveGame"
+            class="px-12 py-4 bg-primary text-cream rounded-full font-bold text-lg cursor-pointer hover:scale-105 active:scale-95 transition-transform shadow-xl shadow-primary/30"
+          >
+            Terminer la partie
           </button>
+
         </div>
       </div>
     </Transition>
