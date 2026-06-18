@@ -4,9 +4,7 @@ import { useI18n } from 'vue-i18n'
 import { useGame } from '@/composables/useGame'
 import { useAuth } from '@/composables/useAuth'
 import { Copy, Check, UserPlus, Play, ArrowLeft, Loader2, Crown, AlertCircle } from 'lucide-vue-next'
-import ladybugImg    from '@/assets/img/ladybug.svg'
-import beeImg        from '@/assets/img/bee.svg'
-import wormImg       from '@/assets/img/worm.svg'
+import ladybugImg from '@/assets/img/ladybug.svg'
 
 const { t } = useI18n()
 const { state: auth } = useAuth()
@@ -78,11 +76,7 @@ const emptySlots = computed(() => Math.max(0, MAX_PLAYERS - participants.value.l
 <template>
   <div class="relative">
     <img :src="ladybugImg" aria-hidden="true"
-      class="hidden lg:block absolute left-6 top-20 w-16 pointer-events-none select-none opacity-70 -rotate-12" />
-    <img :src="beeImg" aria-hidden="true"
-      class="hidden lg:block absolute right-6 top-12 w-14 pointer-events-none select-none opacity-70 rotate-6" />
-    <img :src="wormImg" aria-hidden="true"
-      class="hidden lg:block absolute left-10 bottom-12 w-12 pointer-events-none select-none opacity-50 rotate-12" />
+      class="hidden lg:block absolute bottom-8 right-8 w-36 pointer-events-none select-none opacity-60 rotate-12" />
 
   <div class="max-w-lg mx-auto px-4 py-6 flex flex-col gap-5">
 
