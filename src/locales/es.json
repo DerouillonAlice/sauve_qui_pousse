@@ -84,10 +84,11 @@
     },
     "wheel": {
       "title": "La rueda digital",
-      "desc": "La rueda solo se usa para sacar cartas. Ofrece casillas infinitas:",
-      "neutral": { "label": "Casillas neutras", "desc": "Sacas y juegas normalmente." },
-      "bonus": { "label": "Casillas bonus", "desc": "Acciones positivas: protección, deshacerse de malas cartas..." },
-      "trap": { "label": "Casillas trampa", "desc": "Acciones negativas: tu mano es saboteada." }
+      "desc": "Cada turno, la rueda determina lo que sucede. Tiene 4 resultados posibles:",
+      "draw": { "label": "Saca una carta", "desc": "Sacas y juegas normalmente.", "pct": "60%" },
+      "skip": { "label": "Pasa tu turno", "desc": "Sin carta esta vez. Pasa.", "pct": "20%" },
+      "bonus": { "label": "Carta bonus", "desc": "Un efecto positivo se aplica a ti.", "pct": "10%" },
+      "trap": { "label": "Carta malus", "desc": "Un efecto negativo se aplica a ti.", "pct": "10%" }
     },
     "cards": {
       "title": "Las cartas",

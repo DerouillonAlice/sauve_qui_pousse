@@ -76,27 +76,42 @@ const winSteps = computed(() => tm('rules.win.steps') as string[])
       <div class="max-w-2xl mx-auto">
         <h2 class="text-brown mb-2">{{ t('rules.wheel.title') }}</h2>
         <p class="text-brown/60 mb-6">{{ t('rules.wheel.desc') }}</p>
-        <div class="flex flex-col gap-3">
-          <div class="flex items-start gap-4 rounded-2xl px-5 py-4 bg-cream border border-brown/20">
-            <img :src="scarecrowImg" aria-hidden="true" class="w-10 h-10 shrink-0 object-contain" />
-            <div>
-              <p class="font-semibold text-brown mb-0.5">{{ t('rules.wheel.neutral.label') }}</p>
-              <p class="text-brown/60 text-sm leading-relaxed">{{ t('rules.wheel.neutral.desc') }}</p>
+        <div class="grid grid-cols-2 gap-3">
+          <!-- Pioche 60% -->
+          <div class="rounded-2xl px-5 py-5 bg-cream border border-brown/20 flex flex-col gap-2">
+            <div class="flex items-center justify-between">
+              <img :src="scarecrowImg" aria-hidden="true" class="w-9 h-9 object-contain" />
+              <span class="font-game text-brown text-3xl">60%</span>
             </div>
+            <p class="font-semibold text-brown text-sm">{{ t('rules.wheel.draw.label') }}</p>
+            <p class="text-brown/60 text-xs leading-relaxed">{{ t('rules.wheel.draw.desc') }}</p>
           </div>
-          <div class="flex items-start gap-4 rounded-2xl px-5 py-4 bg-primary/10 border border-primary/30">
-            <img :src="ladybugImg" aria-hidden="true" class="w-10 h-10 shrink-0 object-contain" />
-            <div>
-              <p class="font-semibold text-brown mb-0.5">{{ t('rules.wheel.bonus.label') }}</p>
-              <p class="text-brown/60 text-sm leading-relaxed">{{ t('rules.wheel.bonus.desc') }}</p>
+          <!-- Passe ton tour 20% -->
+          <div class="rounded-2xl px-5 py-5 bg-cream border border-brown/20 flex flex-col gap-2">
+            <div class="flex items-center justify-between">
+              <img :src="wheelImg" aria-hidden="true" class="w-9 h-9 object-contain" />
+              <span class="font-game text-brown/50 text-3xl">20%</span>
             </div>
+            <p class="font-semibold text-brown text-sm">{{ t('rules.wheel.skip.label') }}</p>
+            <p class="text-brown/60 text-xs leading-relaxed">{{ t('rules.wheel.skip.desc') }}</p>
           </div>
-          <div class="flex items-start gap-4 rounded-2xl px-5 py-4 bg-red/10 border border-red/30">
-            <img :src="pesticideImg" aria-hidden="true" class="w-10 h-10 shrink-0 object-contain" />
-            <div>
-              <p class="font-semibold text-brown mb-0.5">{{ t('rules.wheel.trap.label') }}</p>
-              <p class="text-brown/60 text-sm leading-relaxed">{{ t('rules.wheel.trap.desc') }}</p>
+          <!-- Bonus 10% -->
+          <div class="rounded-2xl px-5 py-5 bg-primary/10 border border-primary/30 flex flex-col gap-2">
+            <div class="flex items-center justify-between">
+              <img :src="ladybugImg" aria-hidden="true" class="w-9 h-9 object-contain" />
+              <span class="font-game text-primary text-3xl">10%</span>
             </div>
+            <p class="font-semibold text-brown text-sm">{{ t('rules.wheel.bonus.label') }}</p>
+            <p class="text-brown/60 text-xs leading-relaxed">{{ t('rules.wheel.bonus.desc') }}</p>
+          </div>
+          <!-- Malus 10% -->
+          <div class="rounded-2xl px-5 py-5 bg-red/10 border border-red/30 flex flex-col gap-2">
+            <div class="flex items-center justify-between">
+              <img :src="pesticideImg" aria-hidden="true" class="w-9 h-9 object-contain" />
+              <span class="font-game text-red text-3xl">10%</span>
+            </div>
+            <p class="font-semibold text-brown text-sm">{{ t('rules.wheel.trap.label') }}</p>
+            <p class="text-brown/60 text-xs leading-relaxed">{{ t('rules.wheel.trap.desc') }}</p>
           </div>
         </div>
       </div>

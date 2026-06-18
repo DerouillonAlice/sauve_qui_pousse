@@ -84,10 +84,11 @@
     },
     "wheel": {
       "title": "La roue numérique",
-      "desc": "La roue sert uniquement à piocher. Elle offre des cases infinies :",
-      "neutral": { "label": "Cases neutres", "desc": "Tu pioches et joues normalement." },
-      "bonus": { "label": "Cases bonus", "desc": "Actions positives : protection, débarras de mauvaises cartes..." },
-      "trap": { "label": "Cases piégées", "desc": "Actions négatives : ton jeu est saboté." }
+      "desc": "À chaque tour, la roue détermine ce qui se passe. Elle a 4 résultats possibles :",
+      "draw": { "label": "Pioche une carte", "desc": "Tu pioches et joues normalement.", "pct": "60%" },
+      "skip": { "label": "Passe ton tour", "desc": "Pas de carte cette fois. La main passe.", "pct": "20%" },
+      "bonus": { "label": "Carte bonus", "desc": "Un effet positif s'applique à toi.", "pct": "10%" },
+      "trap": { "label": "Carte malus", "desc": "Un effet négatif s'applique à toi.", "pct": "10%" }
     },
     "cards": {
       "title": "Les cartes",

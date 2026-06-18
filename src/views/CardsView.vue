@@ -190,19 +190,17 @@ function nextCard() {
     </div>
 
     <!-- SHOP CTA -->
-    <section class="bg-brown mt-4 py-14 px-6 text-center relative overflow-hidden">
-      <img :src="ladybugImg" aria-hidden="true"
-        class="absolute left-4 bottom-0 w-24 opacity-30 pointer-events-none select-none -rotate-12 hidden sm:block" />
-      <img :src="beeImg" aria-hidden="true"
-        class="absolute right-6 top-4 w-16 opacity-30 pointer-events-none select-none rotate-6 hidden sm:block" />
-      <div class="relative z-10 max-w-lg mx-auto">
-        <p class="font-game text-primary text-3xl sm:text-4xl mb-3">Tu veux le jeu physique ?</p>
-        <p class="text-cream/70 mb-8 leading-relaxed">
-          Les cartes, la roue, la boîte — tout est dispo sur notre boutique.
-        </p>
+    <section class="py-16 px-6">
+      <div class="max-w-2xl mx-auto bg-brown rounded-3xl px-8 sm:px-12 py-10 flex flex-col sm:flex-row items-center gap-6 relative overflow-hidden">
+        <img :src="ladybugImg" aria-hidden="true"
+          class="absolute right-0 bottom-0 w-36 pointer-events-none select-none rotate-6 hidden sm:block" />
+        <div class="relative z-10 flex-1">
+          <p class="font-game text-primary text-2xl sm:text-3xl mb-2">Tu veux le jeu physique ?</p>
+          <p class="text-cream/70 text-sm leading-relaxed">Les cartes, la roue, la boîte — tout est sur notre boutique.</p>
+        </div>
         <a href="https://shop.sauvequipousse.fr" target="_blank" rel="noopener"
-          class="inline-flex items-center gap-2 px-8 py-4 bg-primary text-cream rounded-full font-bold text-lg hover:scale-105 transition-transform shadow-lg shadow-primary/30">
-          🛒 Acheter le jeu
+          class="relative z-10 shrink-0 px-7 py-3 bg-primary text-cream rounded-full font-bold hover:scale-105 transition-transform shadow-lg shadow-primary/30 whitespace-nowrap">
+          Acheter le jeu
         </a>
       </div>
     </section>
