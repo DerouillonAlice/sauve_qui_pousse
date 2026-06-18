@@ -1,12 +1,14 @@
 <script setup lang="ts">
 import { ref, onMounted, computed } from 'vue'
 import { useI18n } from 'vue-i18n'
+import { useRouter } from 'vue-router'
 import { useAuth } from '@/composables/useAuth'
 import { apiFetch } from '@/services/api'
 import { Loader2, Trophy, Target, RotateCcw, Gamepad2, LogOut, Calendar } from 'lucide-vue-next'
 
 const { t } = useI18n()
-const { state: auth, logout } = useAuth()
+const router = useRouter()
+const { state: auth, isAuthenticated, logout } = useAuth()
 
 interface ProfileData {
   id: number
@@ -26,6 +28,8 @@ interface ProfileData {
     finishedAt: string | null
     roundsWon: number
     playerCount: number
+    players: string[]
+    isHost: boolean
   }[]
 }
 
@@ -34,6 +38,10 @@ const loading = ref(true)
 const error   = ref<string | null>(null)
 
 onMounted(async () => {
+  if (!isAuthenticated.value) {
+    router.push('/jouer')
+    return
+  }
   try {
     profile.value = await apiFetch<ProfileData>('/me')
   } catch {
@@ -153,22 +161,29 @@ const avatarLetter = computed(() => (auth.user?.pseudo ?? 'U').charAt(0).toUpper
 
             <!-- Infos -->
             <div class="flex-1 min-w-0">
-              <div class="flex items-center gap-2 mb-0.5">
+              <div class="flex items-center gap-2 mb-1">
                 <span class="text-brown font-semibold text-sm">Partie #{{ game.sessionId }}</span>
+                <span v-if="game.isHost" class="text-xs bg-primary/15 text-primary px-2 py-0.5 rounded-full font-medium">Hôte</span>
                 <span class="text-brown/40 font-mono text-xs">{{ game.roomCode }}</span>
               </div>
-              <div class="flex items-center gap-3 text-xs text-brown/50">
+              <div class="flex items-center gap-3 text-xs text-brown/50 mb-1">
                 <span class="flex items-center gap-1">
                   <Calendar :stroke-width="1.5" class="w-3.5 h-3.5" />
                   {{ formatDate(game.createdAt) }}
                 </span>
-                <span>{{ game.playerCount }} joueur{{ game.playerCount > 1 ? 's' : '' }}</span>
                 <span>{{ game.roundsWon }} manche{{ game.roundsWon > 1 ? 's' : '' }} gagnée{{ game.roundsWon > 1 ? 's' : '' }}</span>
+              </div>
+              <!-- Joueurs -->
+              <div class="flex flex-wrap gap-1">
+                <span v-for="player in game.players" :key="player"
+                  class="text-xs bg-brown/8 text-brown/60 px-2 py-0.5 rounded-full">
+                  {{ player }}
+                </span>
               </div>
             </div>
 
             <!-- Badge statut -->
-            <span class="text-xs font-semibold px-2.5 py-1 rounded-full shrink-0"
+            <span class="text-xs font-semibold px-2.5 py-1 rounded-full shrink-0 self-start mt-1"
               :class="statusClass(game.status)">
               {{ statusLabel(game.status) }}
             </span>
