@@ -188,6 +188,20 @@ export function useGame() {
     }
   }
 
+  async function removeGuestPlayer(participantId: number): Promise<boolean> {
+    if (!state.session) return false
+    state.error = null
+    try {
+      await apiFetch(`/participant/${participantId}`, { method: 'DELETE' })
+      if (state.session) await refreshSession(state.session.id)
+      return true
+    } catch (err) {
+      const apiErr = err as ApiError
+      state.error = mapError(apiErr.message)
+      return false
+    }
+  }
+
   /**
    * Lancer la partie (owner uniquement)
    */
@@ -327,6 +341,7 @@ export function useGame() {
     createGame,
     joinGame,
     addGuestPlayer,
+    removeGuestPlayer,
     startGame,
     spin,
     endTurn,

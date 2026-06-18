@@ -3,7 +3,7 @@ import { ref, computed, nextTick } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { useGame } from '@/composables/useGame'
 import { useAuth } from '@/composables/useAuth'
-import { Copy, Check, UserPlus, Play, ArrowLeft, Loader2, Crown, AlertCircle } from 'lucide-vue-next'
+import { Copy, Check, UserPlus, Play, ArrowLeft, Loader2, Crown, AlertCircle, X } from 'lucide-vue-next'
 import ladybugImg from '@/assets/img/ladybug.svg'
 
 const { t } = useI18n()
@@ -13,6 +13,7 @@ const {
   isLobby,
   participants,
   addGuestPlayer,
+  removeGuestPlayer,
   startGame,
   leaveGame,
   clearError,
@@ -171,6 +172,11 @@ const emptySlots = computed(() => Math.max(0, MAX_PLAYERS - participants.value.l
           <p v-if="player.isGuest" class="text-primary text-xs font-medium">{{ t('game.lobby.guest') }}</p>
           <p v-else class="text-brown/40 text-xs">{{ t('game.lobby.host') }}</p>
         </div>
+        <button v-if="isOwner && player.isGuest"
+          @click="removeGuestPlayer(player.id)"
+          class="shrink-0 w-7 h-7 flex items-center justify-center rounded-full hover:bg-red/15 text-brown/30 hover:text-red transition-colors cursor-pointer">
+          <X :stroke-width="2" class="w-4 h-4" />
+        </button>
       </div>
 
       <!-- Slots vides -->
