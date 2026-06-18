@@ -27,7 +27,7 @@ interface AuthState {
 
 function isTokenExpired(token: string): boolean {
   try {
-    const base64 = token.split('.')[1].replace(/-/g, '+').replace(/_/g, '/')
+    const base64 = (token.split('.')[1] ?? '').replace(/-/g, '+').replace(/_/g, '/')
     const payload = JSON.parse(atob(base64)) as { exp?: number }
     return !payload.exp || Date.now() / 1000 > payload.exp
   } catch {
