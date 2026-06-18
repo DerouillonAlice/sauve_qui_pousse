@@ -144,7 +144,7 @@ onUnmounted(() => { document.body.style.overflow = '' })
         <span class="font-game text-cream text-lg">{{ t('game.active.round', { n: roundNumber }) }}</span>
       </div>
       <button @click="showWinModal = true" :disabled="isFinished"
-        class="flex items-center gap-2 px-5 py-2.5 bg-primary text-cream rounded-full font-bold text-sm cursor-pointer hover:scale-105 active:scale-95 transition-transform shadow-lg shadow-primary/40 disabled:opacity-40 disabled:cursor-not-allowed ring-2 ring-primary/30">
+        class="flex items-center gap-2 px-5 py-2.5 bg-primary text-cream rounded-full font-bold text-sm cursor-pointer hover:scale-105 active:scale-95 transition-transform disabled:opacity-40 disabled:cursor-not-allowed">
         <Award :stroke-width="2.5" class="w-4 h-4" />
         {{ t('game.active.sauve') }}
       </button>
@@ -222,8 +222,8 @@ onUnmounted(() => { document.body.style.overflow = '' })
       </div>
 
       <!-- Current player -->
-      <div class="text-center mt-2">
-        <p class="text-brown/45 text-xs uppercase tracking-widest mb-2">{{ t('game.active.turn') }}</p>
+      <div class="text-center mt-0">
+        <p class="text-brown/45 text-xs uppercase tracking-widest mb-1">{{ t('game.active.turn') }}</p>
         <div class="flex items-center justify-center gap-3">
           <div class="w-11 h-11 rounded-full flex items-center justify-center text-white text-lg font-bold"
             :class="avatarColors[(currentParticipant ? participants.indexOf(currentParticipant) : 0) % 4]">
@@ -234,7 +234,7 @@ onUnmounted(() => { document.body.style.overflow = '' })
       </div>
 
       <!-- ── ZONE JEU (Roue + Bouton) ── -->
-      <div class="flex flex-col items-center justify-center gap-6 w-full mt-2 md:mt-6">
+      <div class="flex flex-col items-center justify-center gap-6 w-full mt-0">
         
         <!-- ── ROUE ── -->
         <div class="relative w-80 h-80 sm:w-96 sm:h-96 select-none drop-shadow-xl">
