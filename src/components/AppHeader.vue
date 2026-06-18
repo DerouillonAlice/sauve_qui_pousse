@@ -19,7 +19,8 @@ const links = [
       <img :src="logoBlanc" alt="Sauve qui pousse" class="h-12 w-auto" />
     </RouterLink>
     <nav class="flex gap-6 items-center">
-      <RouterLink v-for="link in links" :key="link.to" :to="link.to" class="text-cream no-underline hover:underline"
+      <RouterLink v-for="link in links" :key="link.to" :to="link.to"
+        class="hidden lg:block text-cream no-underline hover:underline"
         active-class="font-bold underline">
         {{ t(link.i18nKey) }}
       </RouterLink>
