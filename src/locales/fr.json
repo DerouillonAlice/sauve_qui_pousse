@@ -60,7 +60,7 @@
     },
     "slider": {
       "title": "Nos cartes",
-      "see_all": "Voir toutes →",
+      "see_all": "Voir toutes les cartes →",
       "cards": [
         { "name": "Abeilles", "desc": "Pollinisatrices essentielles, elles visitent jusqu'à 2 000 fleurs par jour !" },
         { "name": "Vers de Terre", "desc": "Ingénieurs du sol, ils aèrent la terre et la rendent fertile." },

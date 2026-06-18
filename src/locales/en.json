@@ -60,7 +60,7 @@
     },
     "slider": {
       "title": "Our cards",
-      "see_all": "See all →",
+      "see_all": "See all cards →",
       "cards": [
         { "name": "Bees", "desc": "Essential pollinators, they visit up to 2,000 flowers per day!" },
         { "name": "Earthworms", "desc": "Soil engineers, they aerate the ground and make it fertile." },
