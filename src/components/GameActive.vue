@@ -109,6 +109,20 @@ async function handleContinue() {
 const showWinModal     = ref(false)
 const selectedWinnerId = ref<number | null>(null)
 const isDeclaringWin   = ref(false)
+const showAnnounceToast = ref(false)
+let announceToastTimer: ReturnType<typeof setTimeout> | null = null
+
+function handleSauveClick() {
+  if (isHost.value) {
+    showWinModal.value = true
+    return
+  }
+  // Seul l'hôte valide réellement le gagnant (il vérifie les cartes physiques) :
+  // les autres joueurs ne font que signaler leur annonce.
+  showAnnounceToast.value = true
+  if (announceToastTimer) clearTimeout(announceToastTimer)
+  announceToastTimer = setTimeout(() => { showAnnounceToast.value = false }, 3000)
+}
 
 async function handleWinRound() {
   if (!selectedWinnerId.value) return
@@ -122,7 +136,7 @@ async function handleWinRound() {
 
 /* ── misc ── */
 const roundNumber  = computed(() => currentRound.value?.roundNumber ?? 1)
-const totalRounds  = 3  // la partie se finit après 3 manches jouées
+const totalRounds  = 3  // best of 3 : la partie se termine dès qu'un joueur gagne 2 manches
 const avatarColors     = ['bg-primary', 'bg-amber-400', 'bg-sky-400', 'bg-pink-400']
 
 const sortedParticipants = computed(() =>
@@ -135,7 +149,10 @@ watch(isFinished, (val) => {
   document.body.style.overflow = val ? 'hidden' : ''
 }, { immediate: true })
 
-onUnmounted(() => { document.body.style.overflow = '' })
+onUnmounted(() => {
+  document.body.style.overflow = ''
+  if (announceToastTimer) clearTimeout(announceToastTimer)
+})
 </script>
 
 <template>
@@ -147,7 +164,7 @@ onUnmounted(() => { document.body.style.overflow = '' })
         <Leaf :stroke-width="1.5" class="w-5 h-5 text-primary" />
         <span class="font-game text-cream text-lg">{{ t('game.active.round', { n: roundNumber }) }}</span>
       </div>
-      <button @click="showWinModal = true" :disabled="isFinished"
+      <button @click="handleSauveClick" :disabled="isFinished"
         class="flex items-center gap-2 px-5 py-2.5 bg-primary text-cream rounded-full font-bold text-sm cursor-pointer hover:scale-105 active:scale-95 transition-transform disabled:opacity-40 disabled:cursor-not-allowed">
         <img :src="ladybugImg" class="w-5 h-5 object-contain" aria-hidden="true" />
         {{ t('game.active.sauve') }}
@@ -159,6 +176,13 @@ onUnmounted(() => { document.body.style.overflow = '' })
         </button>
       </div>
     </div>
+
+    <!-- ═══ TOAST ANNONCE (non-hôte) ═══ -->
+    <Transition enter-active-class="transition-all duration-300 ease-out" enter-from-class="opacity-0 -translate-y-2" enter-to-class="opacity-100 translate-y-0" leave-active-class="transition-all duration-200 ease-in" leave-from-class="opacity-100" leave-to-class="opacity-0">
+      <div v-if="showAnnounceToast" class="fixed top-20 left-1/2 -translate-x-1/2 z-50 px-5 py-3 bg-brown text-cream rounded-full shadow-xl text-sm font-semibold text-center max-w-xs">
+        {{ t('game.active.announce_sent') }}
+      </div>
+    </Transition>
 
     <!-- ═══ CONTENT ═══ -->
     <div class="flex-1 flex flex-col items-center px-4 py-3 gap-3 max-w-5xl mx-auto w-full">
