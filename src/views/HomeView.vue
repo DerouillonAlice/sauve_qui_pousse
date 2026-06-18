@@ -22,9 +22,9 @@ const { t, tm } = useI18n()
 const pedagogyFacts = computed(() => tm('home.pedagogy.facts') as string[])
 const ctaChips = computed(() => tm('home.cta.chips') as string[])
 const howSteps = computed(() => [
-  { label: (tm('home.how.steps') as string[])[0], n: '1', img: wheelImg, badge: 'bg-primary' },
-  { label: (tm('home.how.steps') as string[])[1], n: '2', img: deckImg,  badge: 'bg-amber-400' },
-  { label: (tm('home.how.steps') as string[])[2], n: '3', img: medalImg, badge: 'bg-red' },
+  { label: (tm('home.how.steps') as string[])[0], n: '1', img: wheelImg, badge: 'bg-primary',   imgClass: 'w-32 h-32' },
+  { label: (tm('home.how.steps') as string[])[1], n: '2', img: deckImg,  badge: 'bg-amber-400', imgClass: 'w-36 h-36' },
+  { label: (tm('home.how.steps') as string[])[2], n: '3', img: medalImg, badge: 'bg-red',        imgClass: 'w-32 h-32' },
 ])
 
 /* ── Card slider ── */
@@ -92,12 +92,12 @@ function onPointerUp(e: PointerEvent) {
 
       <div class="flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-2 mb-12">
         <template v-for="(step, i) in howSteps" :key="step.n">
-          <div class="bg-cream-dark rounded-3xl flex flex-col items-center justify-between gap-4 px-6 pt-8 pb-6 w-48 h-64 relative shrink-0">
+          <div class="bg-cream-dark rounded-3xl flex flex-col items-center justify-between gap-4 px-6 pt-8 pb-6 w-48 h-64 relative shrink-0 overflow-visible">
             <span
-              class="absolute -top-4 -left-4 w-10 h-10 rounded-full flex items-center justify-center text-white font-bold text-base shadow-md"
+              class="absolute -top-5 -left-5 w-11 h-11 rounded-full flex items-center justify-center text-white font-bold text-base shadow-md z-10"
               :class="step.badge"
             >{{ step.n }}</span>
-            <img :src="step.img" :alt="step.label" class="w-32 h-32 object-contain" />
+            <img :src="step.img" :alt="step.label" :class="step.imgClass" class="object-contain" />
             <p class="text-brown font-bold text-sm text-center leading-snug">{{ step.label }}</p>
           </div>
           <ArrowRight v-if="i < 2" :stroke-width="1.5" class="w-7 h-7 text-brown/25 shrink-0 rotate-90 sm:rotate-0" />
