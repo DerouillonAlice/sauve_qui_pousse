@@ -61,16 +61,22 @@ async function handleSpin() {
   await new Promise<void>(r => setTimeout(r, 3300))
 
   wheelMoving.value = false
-  spinResult.value  = result
-  phase.value       = result ? 'result' : 'idle'
+
+  if (result?.resultType === 'card') {
+    // Affiche le panneau pioche
+    spinResult.value = result
+    phase.value      = 'result'
+  } else {
+    // skip / extra_spin → fin de tour directe, pas de panneau
+    spinResult.value  = null
+    phase.value       = 'idle'
+    isEndingTurn.value = true
+    await endTurn()
+    isEndingTurn.value = false
+  }
 }
 
 async function handleContinue() {
-  if (spinResult.value?.resultType === 'extra_spin') {
-    spinResult.value = null
-    phase.value      = 'idle'
-    return
-  }
   spinResult.value  = null
   phase.value       = 'idle'
   isEndingTurn.value = true
@@ -203,32 +209,8 @@ const avatarColors = ['bg-primary', 'bg-amber-400', 'bg-sky-400', 'bg-pink-400']
       >
         <div v-if="phase === 'result' && spinResult" class="w-full">
 
-          <!-- BONUS (extra_spin) -->
-          <div v-if="spinResult.resultType === 'extra_spin'" class="bg-yellow rounded-3xl p-6 text-center">
-            <div class="text-4xl mb-2">⭐</div>
-            <h3 class="text-brown font-game text-xl mb-1">{{ t('game.active.extra_spin_title') }}</h3>
-            <p class="text-brown/60 text-sm mb-5">{{ t('game.active.extra_spin_desc') }}</p>
-            <button @click="handleContinue"
-              class="px-8 py-3 bg-brown text-cream rounded-full font-bold cursor-pointer hover:scale-105 active:scale-95 transition-transform">
-              {{ t('game.active.spin_again') }}
-            </button>
-          </div>
-
-          <!-- MALUS (skip) -->
-          <div v-else-if="spinResult.resultType === 'skip'" class="bg-red/10 rounded-3xl p-6 text-center">
-            <div class="text-4xl mb-2">💀</div>
-            <h3 class="text-red font-game text-xl mb-1">{{ t('game.active.skip_title') }}</h3>
-            <p class="text-red/60 text-sm mb-5">{{ t('game.active.skip_desc') }}</p>
-            <button @click="handleContinue" :disabled="isEndingTurn"
-              class="px-8 py-3 bg-red text-white rounded-full font-bold cursor-pointer hover:scale-105 active:scale-95 transition-transform disabled:opacity-50 flex items-center gap-2 mx-auto">
-              <Loader2 v-if="isEndingTurn" :stroke-width="2" class="w-5 h-5 animate-spin" />
-              <ChevronRight v-else :stroke-width="2" class="w-5 h-5" />
-              {{ t('game.active.end_turn') }}
-            </button>
-          </div>
-
           <!-- PIOCHE (card) — piocher dans la pioche physique -->
-          <div v-else-if="spinResult.resultType === 'card'" class="bg-cream-dark rounded-3xl p-6 text-center shadow-md">
+          <div v-if="spinResult.resultType === 'card'" class="bg-cream-dark rounded-3xl p-6 text-center shadow-md">
             <img :src="deckImg" alt="Pioche" class="w-32 h-32 mx-auto mb-4 object-contain" />
             <h3 class="text-brown font-game text-2xl mb-2">Piochez une carte !</h3>
             <p class="text-brown/55 text-sm mb-6 leading-relaxed">Prenez la première carte de la pioche physique et appliquez son effet.</p>
