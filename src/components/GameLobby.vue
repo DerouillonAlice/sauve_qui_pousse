@@ -3,7 +3,7 @@ import { ref, computed, nextTick } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { useGame } from '@/composables/useGame'
 import { useAuth } from '@/composables/useAuth'
-import { Copy, Check, UserPlus, Play, ArrowLeft, Loader2, Crown, AlertCircle, X } from 'lucide-vue-next'
+import { Copy, Check, UserPlus, Play, ArrowLeft, Loader2, Crown, AlertCircle } from 'lucide-vue-next'
 
 const { t } = useI18n()
 const { state: auth } = useAuth()

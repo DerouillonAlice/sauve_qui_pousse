@@ -1,14 +1,12 @@
 <script setup lang="ts">
 import { ref, onMounted, computed, watch } from 'vue'
 import { useI18n } from 'vue-i18n'
-import { useRouter } from 'vue-router'
 import { useAuth } from '@/composables/useAuth'
 import { apiFetch } from '@/services/api'
 import { Loader2, Trophy, Target, RotateCcw, Gamepad2, LogOut, Calendar, AlertCircle, CheckCircle2 } from 'lucide-vue-next'
 import WaveEdge from '@/components/WaveEdge.vue'
 
 const { t } = useI18n()
-const router = useRouter()
 const { state: auth, isAuthenticated, login, register, logout, clearError } = useAuth()
 
 /* ── Form state ── */

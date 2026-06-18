@@ -1,19 +1,17 @@
 <script setup lang="ts">
-import { ref, computed, onUnmounted, watchEffect } from 'vue'
+import { ref, onUnmounted, watchEffect } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { useAuth } from '@/composables/useAuth'
 import { useGame } from '@/composables/useGame'
 import GameLobby from '@/components/GameLobby.vue'
 import GameActive from '@/components/GameActive.vue'
-import { LogOut, Gamepad2, Users, Loader2, AlertCircle, CheckCircle2 } from 'lucide-vue-next'
+import { LogOut, Gamepad2, Users, Loader2, AlertCircle } from 'lucide-vue-next'
 import { useRouter } from 'vue-router'
 
-const { t, tm } = useI18n()
+const { t } = useI18n()
 const router = useRouter()
-const { state: auth, isAuthenticated, logout } = useAuth()
+const { isAuthenticated, logout } = useAuth()
 const { state: game, isInGame, isActive, isFinished, createGame, joinGame, leaveGame, stopPolling } = useGame()
-
-const featureItems = computed(() => tm('play.features.items') as string[])
 
 watchEffect(() => {
   if (!isAuthenticated.value) {
