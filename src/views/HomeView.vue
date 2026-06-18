@@ -127,14 +127,16 @@ function onPointerUp(e: PointerEvent) {
 
   <!-- PRÊT À JOUER ? — encadré centré + doodles de chaque côté -->
   <section class="py-16 px-4 bg-cream">
-    <div class="max-w-5xl mx-auto flex items-center justify-center gap-0">
+    <div class="max-w-5xl mx-auto flex items-center justify-center">
 
-      <!-- Scarecrow gauche -->
-      <img :src="scarecrowImg" aria-hidden="true"
-        class="hidden md:block h-64 lg:h-72 shrink-0 pointer-events-none select-none mr-6 z-10" />
+      <!-- Scarecrow gauche — slot de largeur fixe pour garder la carte centrée -->
+      <div class="hidden md:flex justify-end items-end w-52 lg:w-64 shrink-0 pr-6">
+        <img :src="scarecrowImg" aria-hidden="true"
+          class="h-64 lg:h-72 pointer-events-none select-none" />
+      </div>
 
       <!-- Carte brune -->
-      <div class="bg-brown rounded-3xl px-10 py-12 text-center flex-1 max-w-lg z-20 shadow-xl">
+      <div class="bg-brown rounded-3xl px-10 py-12 text-center w-full max-w-lg z-20 shadow-xl">
         <h2 class="text-cream mb-3">{{ t('home.cta.title') }}</h2>
         <p class="text-cream/60 text-sm mb-8 leading-relaxed">{{ t('home.cta.subtitle') }}</p>
         <div class="flex flex-wrap justify-center gap-3 mb-8">
@@ -155,9 +157,11 @@ function onPointerUp(e: PointerEvent) {
         </div>
       </div>
 
-      <!-- Pesticide droite -->
-      <img :src="pesticideImg" aria-hidden="true"
-        class="hidden md:block h-56 lg:h-64 shrink-0 pointer-events-none select-none ml-6 z-10" />
+      <!-- Pesticide droite — même largeur que le slot scarecrow -->
+      <div class="hidden md:flex justify-start items-end w-52 lg:w-64 shrink-0 pl-6">
+        <img :src="pesticideImg" aria-hidden="true"
+          class="h-56 lg:h-64 pointer-events-none select-none" />
+      </div>
 
     </div>
   </section>
