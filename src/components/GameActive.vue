@@ -41,13 +41,13 @@ function getPlayerEffects(participantId: number) {
 const wheelDeg    = ref(0)
 const wheelMoving = ref(false)
 
-// Rotation cible (mod 360) pour que le pointeur TOP (270° SVG) pointe le bon secteur.
-// Centres SVG (0°=right, CW): Pioche=0°, Bonus=135°, Malus=225°
-// Rotation = 270° - centre_secteur  (mod 360)
+// Rotation cible (mod 360) pour que le pointeur TOP pointe le bon secteur.
+// Angle d'atterrissage = 360 - angle_centre_secteur_depuis_le_haut
 const LANDING: Record<string, number> = {
-  card:       270,  // Pioche  (centre 0°)   → 270-0   = 270
-  extra_spin: 135,  // Bonus   (centre 135°) → 270-135 = 135
-  skip:       45,   // Malus   (centre 225°) → 270-225 = 45
+  card:       252,  // Pioche (centre 108°)
+  skip:       108,  // Passe ton tour (centre 252°)
+  malus:      54,   // Malus (centre 306°)
+  extra_spin: 18,   // Bonus (centre 342°)
 }
 
 /* ── spin phase ── */
@@ -121,7 +121,7 @@ onUnmounted(() => { document.body.style.overflow = '' })
 </script>
 
 <template>
-  <div class="min-h-screen bg-cream flex flex-col">
+  <div class="min-h-screen bg-white flex flex-col">
 
     <!-- ═══ TOP BAR ═══ -->
     <div class="flex items-center justify-between px-4 py-3 bg-brown">
@@ -137,7 +137,7 @@ onUnmounted(() => { document.body.style.overflow = '' })
     </div>
 
     <!-- ═══ CONTENT ═══ -->
-    <div class="flex-1 flex flex-col items-center px-4 py-6 gap-6 max-w-lg mx-auto w-full">
+    <div class="flex-1 flex flex-col items-center px-4 py-6 gap-6 max-w-5xl mx-auto w-full">
 
       <!-- Error -->
       <div v-if="game.error" class="w-full px-4 py-3 bg-red/10 text-red rounded-xl text-sm">
@@ -186,10 +186,13 @@ onUnmounted(() => { document.body.style.overflow = '' })
         </div>
       </div>
 
-      <!-- ── ROUE ── -->
-      <div class="relative w-64 h-64 sm:w-72 sm:h-72 select-none">
+      <!-- ── ZONE JEU (Roue + Bouton) ── -->
+      <div class="flex flex-col items-center justify-center gap-6 w-full mt-2 md:mt-6">
+        
+        <!-- ── ROUE ── -->
+        <div class="relative w-64 h-64 sm:w-72 sm:h-72 select-none">
 
-        <!-- Pointeur fixe (haut) -->
+            <!-- Pointeur fixe (haut) -->
         <div class="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1 z-20">
           <svg width="20" height="20" viewBox="0 0 20 20">
             <polygon points="10,18 2,2 18,2" fill="#623435" />
@@ -205,21 +208,36 @@ onUnmounted(() => { document.body.style.overflow = '' })
           }"
         >
           <svg viewBox="0 0 200 200" class="w-full h-full" xmlns="http://www.w3.org/2000/svg">
-            <!-- Piocher (50% — de 12h à 6h par la droite) -->
-            <path d="M 100 100 L 100 10 A 90 90 0 0 1 100 190 Z" fill="#bec059" />
-            <!-- Bonus (25% — de 6h à 9h) -->
-            <path d="M 100 100 L 100 190 A 90 90 0 0 1 10 100 Z" fill="#fadd83" />
-            <!-- Malus (25% — de 9h à 12h) -->
-            <path d="M 100 100 L 10 100 A 90 90 0 0 1 100 10 Z" fill="#e20000" />
+            <!-- Pioche (60% — de 0° à 216°) -->
+            <path d="M 100 100 L 100 10 A 90 90 0 1 1 47.1 172.8 Z" fill="#bec059" />
+            <!-- Passe ton tour (20% — de 216° à 288°) -->
+            <path d="M 100 100 L 47.1 172.8 A 90 90 0 0 1 14.4 72.2 Z" fill="#38bdf8" />
+            <!-- Malus (10% — de 288° à 324°) -->
+            <path d="M 100 100 L 14.4 72.2 A 90 90 0 0 1 47.1 27.2 Z" fill="#e20000" />
+            <!-- Bonus (10% — de 324° à 360°) -->
+            <path d="M 100 100 L 47.1 27.2 A 90 90 0 0 1 100 10 Z" fill="#fadd83" />
 
             <!-- Séparateurs -->
-            <line x1="100" y1="100" x2="100" y2="10"  stroke="white" stroke-width="3" />
-            <line x1="100" y1="100" x2="100" y2="190" stroke="white" stroke-width="3" />
-            <line x1="100" y1="100" x2="10"  y2="100" stroke="white" stroke-width="3" />
+            <line x1="100" y1="100" x2="100" y2="10" stroke="white" stroke-width="3" />
+            <line x1="100" y1="100" x2="47.1" y2="172.8" stroke="white" stroke-width="3" />
+            <line x1="100" y1="100" x2="14.4" y2="72.2" stroke="white" stroke-width="3" />
+            <line x1="100" y1="100" x2="47.1" y2="27.2" stroke="white" stroke-width="3" />
 
             <!-- Labels -->
-            <text x="150" y="95" text-anchor="middle" font-size="11" fill="white" font-weight="bold" font-family="sans-serif">Pioche</text>
-            <text x="150" y="108" text-anchor="middle" font-size="9" fill="white" font-family="sans-serif">une carte</text>
+            <g transform="rotate(108, 100, 100)">
+              <text x="100" y="38" text-anchor="middle" font-size="11" fill="white" font-weight="bold" font-family="sans-serif">Pioche</text>
+              <text x="100" y="52" text-anchor="middle" font-size="9" fill="white" font-family="sans-serif">une carte</text>
+            </g>
+            <g transform="rotate(252, 100, 100)">
+              <text x="100" y="38" text-anchor="middle" font-size="10" fill="white" font-weight="bold" font-family="sans-serif">Passe</text>
+              <text x="100" y="50" text-anchor="middle" font-size="9" fill="white" font-family="sans-serif">ton tour</text>
+            </g>
+            <g transform="rotate(306, 100, 100)">
+              <text x="100" y="45" text-anchor="middle" font-size="11" fill="white" font-weight="bold" font-family="sans-serif">Malus</text>
+            </g>
+            <g transform="rotate(342, 100, 100)">
+              <text x="100" y="45" text-anchor="middle" font-size="11" fill="#623435" font-weight="bold" font-family="sans-serif">Bonus</text>
+            </g>
 
             <!-- Centre pivot avec logo -->
             <circle cx="100" cy="100" r="18" fill="white" stroke="#623435" stroke-width="2.5" />
@@ -237,8 +255,9 @@ onUnmounted(() => { document.body.style.overflow = '' })
         <Loader2 v-if="phase === 'spinning'" :stroke-width="2" class="w-5 h-5 animate-spin" />
         <span>{{ phase === 'spinning' ? '…' : t('game.active.spin') }}</span>
       </button>
+      </div>
 
-      <!-- ── RÉSULTAT ── -->
+      <!-- ── RÉSULTAT (Popup) ── -->
       <Transition
         enter-active-class="transition-all duration-400 ease-out"
         enter-from-class="opacity-0 translate-y-4 scale-95"
@@ -247,7 +266,8 @@ onUnmounted(() => { document.body.style.overflow = '' })
         leave-from-class="opacity-100"
         leave-to-class="opacity-0 scale-95"
       >
-        <div v-if="phase === 'result'" class="w-full">
+        <div v-if="phase === 'result'" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-brown/80 backdrop-blur-sm">
+          <div class="w-full max-w-sm rounded-3xl bg-cream shadow-2xl overflow-hidden">
 
           <!-- ERREUR — l'API a échoué -->
           <div v-if="!spinResult" class="bg-red/10 rounded-3xl p-6 text-center">
@@ -293,7 +313,24 @@ onUnmounted(() => { document.body.style.overflow = '' })
             </button>
           </div>
 
-          <!-- MALUS (skip) -->
+          <!-- PASSE TON TOUR (skip) -->
+          <div v-else-if="spinResult.resultType === 'skip'" class="bg-sky-400/10 border-2 border-sky-400/30 rounded-3xl p-5 shadow-md">
+            <div class="flex items-center gap-3 mb-4">
+              <div class="w-12 h-12 rounded-full bg-sky-400/20 flex items-center justify-center text-2xl shrink-0">⌛</div>
+              <div>
+                <h3 class="text-brown font-game text-xl leading-tight">Passe ton tour</h3>
+              </div>
+            </div>
+            <p class="text-brown/70 text-sm mb-5">Dommage, vous passez votre tour pour cette fois.</p>
+            <button @click="handleContinue" :disabled="isEndingTurn"
+              class="w-full py-3 bg-sky-500 text-white rounded-full font-bold cursor-pointer hover:scale-105 active:scale-95 transition-transform disabled:opacity-50 flex items-center justify-center gap-2">
+              <Loader2 v-if="isEndingTurn" :stroke-width="2" class="w-5 h-5 animate-spin" />
+              <ChevronRight v-else :stroke-width="2" class="w-5 h-5" />
+              {{ t('game.active.end_turn') }}
+            </button>
+          </div>
+
+          <!-- MALUS (malus) -->
           <div v-else class="bg-red/8 border-2 border-red/25 rounded-3xl p-5 shadow-md">
             <div class="flex items-center gap-3 mb-4">
               <div class="w-12 h-12 rounded-full bg-red/15 flex items-center justify-center text-2xl shrink-0">💀</div>
@@ -312,9 +349,9 @@ onUnmounted(() => { document.body.style.overflow = '' })
               {{ t('game.active.end_turn') }}
             </button>
           </div>
-
         </div>
-      </Transition>
+      </div>
+    </Transition>
 
       <!-- Scores moved to the top -->
 

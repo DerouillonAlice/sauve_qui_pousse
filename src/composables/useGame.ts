@@ -68,7 +68,7 @@ export interface GameSession {
 
 export interface SpinResult {
   id: number
-  resultType: 'card' | 'skip' | 'extra_spin'
+  resultType: 'card' | 'skip' | 'extra_spin' | 'malus'
   spunAt: string
   participantId: number
   card: {
