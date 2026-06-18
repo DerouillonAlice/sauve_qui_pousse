@@ -39,46 +39,30 @@ const isEndingTurn = ref(false)
 
 async function handleSpin() {
   if (!currentParticipant.value || phase.value !== 'idle') return
-  phase.value   = 'spinning'
+  phase.value       = 'spinning'
   wheelMoving.value = true
 
-  // Call API immediately
-  const resultPromise = spin(currentParticipant.value.id)
+  // Appel API
+  const result = await spin(currentParticipant.value.id)
 
-  // Wait for result (and at least 400ms so the animation has time to register)
-  const [result] = await Promise.all([
-    resultPromise,
-    new Promise<void>(r => setTimeout(r, 400)),
-  ])
-
-  // Calculate precise landing: 5 full turns + offset so pointer hits sector center
+  // Calcul de l'angle d'atterrissage selon le résultat
   const landing    = LANDING[result?.resultType ?? 'card'] ?? 90
   const currentMod = wheelDeg.value % 360
   const diff       = (landing - currentMod + 360) % 360
   wheelDeg.value   = wheelDeg.value + 5 * 360 + diff
 
-  // Let the 3.2s CSS transition finish
+  // Attendre la fin de la transition CSS (3.2s)
   await new Promise<void>(r => setTimeout(r, 3300))
-
   wheelMoving.value = false
 
-  if (result?.resultType === 'card') {
-    // Affiche le panneau pioche
-    spinResult.value = result
-    phase.value      = 'result'
-  } else {
-    // skip / extra_spin → fin de tour directe, pas de panneau
-    spinResult.value  = null
-    phase.value       = 'idle'
-    isEndingTurn.value = true
-    await endTurn()
-    isEndingTurn.value = false
-  }
+  // Toujours afficher un panneau résultat — jamais d'auto end-turn
+  spinResult.value = result
+  phase.value      = 'result'
 }
 
 async function handleContinue() {
-  spinResult.value  = null
-  phase.value       = 'idle'
+  spinResult.value   = null
+  phase.value        = 'idle'
   isEndingTurn.value = true
   await endTurn()
   isEndingTurn.value = false
@@ -207,15 +191,52 @@ const avatarColors = ['bg-primary', 'bg-amber-400', 'bg-sky-400', 'bg-pink-400']
         leave-from-class="opacity-100"
         leave-to-class="opacity-0 scale-95"
       >
-        <div v-if="phase === 'result' && spinResult" class="w-full">
+        <div v-if="phase === 'result'" class="w-full">
+
+          <!-- ERREUR — l'API a échoué -->
+          <div v-if="!spinResult" class="bg-red/10 rounded-3xl p-6 text-center">
+            <p class="text-red text-sm mb-4">{{ game.error ?? 'Une erreur est survenue lors du spin.' }}</p>
+            <button @click="handleContinue" :disabled="isEndingTurn"
+              class="px-8 py-3 bg-brown text-cream rounded-full font-bold cursor-pointer hover:scale-105 active:scale-95 transition-transform disabled:opacity-50 flex items-center gap-2 mx-auto">
+              <Loader2 v-if="isEndingTurn" :stroke-width="2" class="w-5 h-5 animate-spin" />
+              <ChevronRight v-else :stroke-width="2" class="w-5 h-5" />
+              {{ t('game.active.end_turn') }}
+            </button>
+          </div>
 
           <!-- PIOCHE (card) — piocher dans la pioche physique -->
-          <div v-if="spinResult.resultType === 'card'" class="bg-cream-dark rounded-3xl p-6 text-center shadow-md">
+          <div v-else-if="spinResult.resultType === 'card'" class="bg-cream-dark rounded-3xl p-6 text-center shadow-md">
             <img :src="deckImg" alt="Pioche" class="w-32 h-32 mx-auto mb-4 object-contain" />
             <h3 class="text-brown font-game text-2xl mb-2">Piochez une carte !</h3>
             <p class="text-brown/55 text-sm mb-6 leading-relaxed">Prenez la première carte de la pioche physique et appliquez son effet.</p>
             <button @click="handleContinue" :disabled="isEndingTurn"
               class="px-8 py-3 bg-brown text-cream rounded-full font-bold cursor-pointer hover:scale-105 active:scale-95 transition-transform disabled:opacity-50 flex items-center gap-2 mx-auto">
+              <Loader2 v-if="isEndingTurn" :stroke-width="2" class="w-5 h-5 animate-spin" />
+              <ChevronRight v-else :stroke-width="2" class="w-5 h-5" />
+              {{ t('game.active.end_turn') }}
+            </button>
+          </div>
+
+          <!-- BONUS (extra_spin) — à implémenter avec la DB -->
+          <div v-else-if="spinResult.resultType === 'extra_spin'" class="bg-yellow/40 rounded-3xl p-6 text-center">
+            <div class="text-4xl mb-2">⭐</div>
+            <h3 class="text-brown font-game text-2xl mb-2">BONUS</h3>
+            <p class="text-brown/55 text-sm mb-6">Appliquez l'effet bonus.</p>
+            <button @click="handleContinue" :disabled="isEndingTurn"
+              class="px-8 py-3 bg-brown text-cream rounded-full font-bold cursor-pointer hover:scale-105 active:scale-95 transition-transform disabled:opacity-50 flex items-center gap-2 mx-auto">
+              <Loader2 v-if="isEndingTurn" :stroke-width="2" class="w-5 h-5 animate-spin" />
+              <ChevronRight v-else :stroke-width="2" class="w-5 h-5" />
+              {{ t('game.active.end_turn') }}
+            </button>
+          </div>
+
+          <!-- MALUS (skip) — à implémenter avec la DB -->
+          <div v-else class="bg-red/10 rounded-3xl p-6 text-center">
+            <div class="text-4xl mb-2">💀</div>
+            <h3 class="text-red font-game text-2xl mb-2">MALUS</h3>
+            <p class="text-red/55 text-sm mb-6">Appliquez l'effet malus.</p>
+            <button @click="handleContinue" :disabled="isEndingTurn"
+              class="px-8 py-3 bg-red text-white rounded-full font-bold cursor-pointer hover:scale-105 active:scale-95 transition-transform disabled:opacity-50 flex items-center gap-2 mx-auto">
               <Loader2 v-if="isEndingTurn" :stroke-width="2" class="w-5 h-5 animate-spin" />
               <ChevronRight v-else :stroke-width="2" class="w-5 h-5" />
               {{ t('game.active.end_turn') }}
