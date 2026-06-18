@@ -38,7 +38,7 @@
     },
     "newsletter": {
       "title": "Newsletter",
-      "placeholder": "Ex : alice@nomdedomaine.com",
+      "placeholder": "Ex : alice{'@'}nomdedomaine.com",
       "submit": "OK",
       "terms": "J'accepte les termes *"
     },
