@@ -21,7 +21,7 @@ const activeIndex = computed(() => {
 // preserveAspectRatio="none" → s'étire à la largeur écran
 // Les positions flex justify-around coïncident exactement avec le SVG
 const barPath = computed(() => {
-  const cx = [50, 150, 250, 350][activeIndex.value]
+  const cx = ([50, 150, 250, 350] as const)[activeIndex.value] ?? 50
   const nr = 36  // demi-largeur du creux
   const nd = 22  // profondeur du creux
   return (

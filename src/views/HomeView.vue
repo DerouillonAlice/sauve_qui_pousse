@@ -224,8 +224,8 @@ function onPointerUp(e: PointerEvent) {
       </div>
 
       <div class="text-center mt-6 h-20">
-        <h3 class="text-brown mb-1">{{ currentCard.name }}</h3>
-        <p class="text-brown/50 text-sm max-w-xs mx-auto line-clamp-2 leading-relaxed">{{ currentCard.desc }}</p>
+        <h3 class="text-brown mb-1">{{ currentCard?.name }}</h3>
+        <p class="text-brown/50 text-sm max-w-xs mx-auto line-clamp-2 leading-relaxed">{{ currentCard?.desc }}</p>
       </div>
       <div class="flex justify-center gap-2 mt-4">
         <button
