@@ -218,13 +218,6 @@ onUnmounted(() => { document.body.style.overflow = '' })
         <!-- ── ROUE ── -->
         <div class="relative w-72 h-72 sm:w-80 sm:h-80 select-none drop-shadow-xl">
           <svg viewBox="0 0 566.93 566.93" class="w-full h-full" xmlns="http://www.w3.org/2000/svg">
-            <defs>
-              <style>
-                .wh-cream { fill: #f5debf; font-family: MagicalNeverland-Regular, 'Magical Neverland'; font-size: 12px; }
-                .wh-brown { fill: #623435; font-family: MagicalNeverland-Regular, 'Magical Neverland'; font-size: 12px; }
-              </style>
-            </defs>
-
             <!-- Corps de la roue (tourne) -->
             <g :style="{
               transform: `rotate(${wheelDeg}deg)`,
@@ -267,28 +260,28 @@ onUnmounted(() => { document.body.style.overflow = '' })
               <path fill="#fff" stroke="#1d1d1b" stroke-miterlimit="10" d="M308.96,285.07c0,13.53-10.97,24.5-24.5,24.5s-24.5-10.97-24.5-24.5,10.97-24.5,24.5-24.5,24.5,10.97,24.5,24.5Z"/>
               <image :href="logoSauveImg" x="260" y="260" width="47" height="47" />
               <!-- labels MALUS -->
-              <text class="wh-cream" transform="translate(87.69 271.09) rotate(-80)">MALUS</text>
-              <text class="wh-cream" transform="translate(239.23 92.96) rotate(-10)">MALUS</text>
-              <text class="wh-cream" transform="translate(450.21 181.54) rotate(62)">MALUS</text>
-              <text class="wh-cream" transform="translate(433.75 412.62) rotate(135)">MALUS</text>
-              <text class="wh-cream" transform="translate(208.12 465.82) rotate(-155)">MALUS</text>
+              <text fill="#f5debf" font-family="MagicalNeverland-Regular, 'Magical Neverland'" font-size="12" transform="translate(87.69 271.09) rotate(-80)">MALUS</text>
+              <text fill="#f5debf" font-family="MagicalNeverland-Regular, 'Magical Neverland'" font-size="12" transform="translate(239.23 92.96) rotate(-10)">MALUS</text>
+              <text fill="#f5debf" font-family="MagicalNeverland-Regular, 'Magical Neverland'" font-size="12" transform="translate(450.21 181.54) rotate(62)">MALUS</text>
+              <text fill="#f5debf" font-family="MagicalNeverland-Regular, 'Magical Neverland'" font-size="12" transform="translate(433.75 412.62) rotate(135)">MALUS</text>
+              <text fill="#f5debf" font-family="MagicalNeverland-Regular, 'Magical Neverland'" font-size="12" transform="translate(208.12 465.82) rotate(-155)">MALUS</text>
               <!-- labels PIOCHE -->
-              <text class="wh-brown" transform="translate(297.41 85.64) rotate(10)">PIOCHE</text>
-              <text class="wh-brown" transform="translate(409.24 133.41) rotate(45)">PIOCHE</text>
-              <text class="wh-brown" transform="translate(473.27 236.57) rotate(80)">PIOCHE</text>
-              <text class="wh-brown" transform="translate(465.24 356.86) rotate(115)">PIOCHE</text>
-              <text class="wh-brown" transform="translate(387.38 450.07) rotate(153)">PIOCHE</text>
-              <text class="wh-brown" transform="translate(271.33 479.53) rotate(-170)">PIOCHE</text>
-              <text class="wh-brown" transform="translate(158.93 434.91) rotate(-137)">PIOCHE</text>
-              <text class="wh-brown" transform="translate(93.08 332.44) rotate(-99)">PIOCHE</text>
-              <text class="wh-brown" transform="translate(102.9 211.76) rotate(-64)">PIOCHE</text>
-              <text class="wh-brown" transform="translate(178.35 118.55) rotate(-26)">PIOCHE</text>
+              <text fill="#623435" font-family="MagicalNeverland-Regular, 'Magical Neverland'" font-size="12" transform="translate(297.41 85.64) rotate(10)">PIOCHE</text>
+              <text fill="#623435" font-family="MagicalNeverland-Regular, 'Magical Neverland'" font-size="12" transform="translate(409.24 133.41) rotate(45)">PIOCHE</text>
+              <text fill="#623435" font-family="MagicalNeverland-Regular, 'Magical Neverland'" font-size="12" transform="translate(473.27 236.57) rotate(80)">PIOCHE</text>
+              <text fill="#623435" font-family="MagicalNeverland-Regular, 'Magical Neverland'" font-size="12" transform="translate(465.24 356.86) rotate(115)">PIOCHE</text>
+              <text fill="#623435" font-family="MagicalNeverland-Regular, 'Magical Neverland'" font-size="12" transform="translate(387.38 450.07) rotate(153)">PIOCHE</text>
+              <text fill="#623435" font-family="MagicalNeverland-Regular, 'Magical Neverland'" font-size="12" transform="translate(271.33 479.53) rotate(-170)">PIOCHE</text>
+              <text fill="#623435" font-family="MagicalNeverland-Regular, 'Magical Neverland'" font-size="12" transform="translate(158.93 434.91) rotate(-137)">PIOCHE</text>
+              <text fill="#623435" font-family="MagicalNeverland-Regular, 'Magical Neverland'" font-size="12" transform="translate(93.08 332.44) rotate(-99)">PIOCHE</text>
+              <text fill="#623435" font-family="MagicalNeverland-Regular, 'Magical Neverland'" font-size="12" transform="translate(102.9 211.76) rotate(-64)">PIOCHE</text>
+              <text fill="#623435" font-family="MagicalNeverland-Regular, 'Magical Neverland'" font-size="12" transform="translate(178.35 118.55) rotate(-26)">PIOCHE</text>
               <!-- labels BONUS -->
-              <text class="wh-cream" transform="translate(356.65 101.44) rotate(26)">BONUS</text>
-              <text class="wh-cream" transform="translate(479.7 300.15) rotate(99)">BONUS</text>
-              <text class="wh-cream" transform="translate(330.94 476.26) rotate(170)">BONUS</text>
-              <text class="wh-cream" transform="translate(115.57 389.09) rotate(-116)">BONUS</text>
-              <text class="wh-cream" transform="translate(132.75 157.45) rotate(-46)">BONUS</text>
+              <text fill="#f5debf" font-family="MagicalNeverland-Regular, 'Magical Neverland'" font-size="12" transform="translate(356.65 101.44) rotate(26)">BONUS</text>
+              <text fill="#f5debf" font-family="MagicalNeverland-Regular, 'Magical Neverland'" font-size="12" transform="translate(479.7 300.15) rotate(99)">BONUS</text>
+              <text fill="#f5debf" font-family="MagicalNeverland-Regular, 'Magical Neverland'" font-size="12" transform="translate(330.94 476.26) rotate(170)">BONUS</text>
+              <text fill="#f5debf" font-family="MagicalNeverland-Regular, 'Magical Neverland'" font-size="12" transform="translate(115.57 389.09) rotate(-116)">BONUS</text>
+              <text fill="#f5debf" font-family="MagicalNeverland-Regular, 'Magical Neverland'" font-size="12" transform="translate(132.75 157.45) rotate(-46)">BONUS</text>
             </g>
 
             <!-- Pointeur fixe -->
