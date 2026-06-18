@@ -85,10 +85,10 @@ const emptySlots = computed(() => Math.max(0, MAX_PLAYERS - participants.value.l
     </div>
 
     <!-- Code de partie mis en valeur -->
-    <div class="bg-brown rounded-3xl px-6 py-5 text-center">
+    <div class="bg-brown rounded-3xl px-4 py-5 sm:px-6 text-center">
       <p class="text-cream/50 text-xs uppercase tracking-wider mb-2">{{ t('game.lobby.code_label') }}</p>
-      <div class="flex items-center justify-center gap-3">
-        <span class="text-primary font-game text-5xl tracking-[0.35em]">{{ game.session?.joinCode }}</span>
+      <div class="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4">
+        <span class="text-primary font-game text-4xl sm:text-5xl tracking-[0.2em] sm:tracking-[0.35em]">{{ game.session?.joinCode }}</span>
         <button @click="copyCode"
           class="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-cream/10 hover:bg-cream/20 text-cream/70 hover:text-cream transition-all cursor-pointer text-xs font-semibold">
           <Check v-if="copied" class="w-3.5 h-3.5" />

@@ -192,8 +192,11 @@
     "logged": {
       "welcome": "Bienvenido/a,",
       "subtitle": "Tu jardín está listo. ¡Crea o únete a una partida!",
+      "ready_to_play": "¿Listo para jugar?",
+      "create_or_join": "Crea una nueva partida o únete a tus amigos con un código.",
       "create_game": "Crear una partida",
-      "join_game": "Unirse a una partida",
+      "join_game": "Unirse",
+      "or": "o",
       "join_code_placeholder": "Código de partida",
       "logout": "Cerrar sesión"
     },
@@ -271,5 +274,18 @@
       "cancel": "Cancelar",
       "submit": "Unirse"
     }
+  },
+  "profile": {
+    "stats": "Estadísticas",
+    "games_played": "Partidas jugadas",
+    "games_won": "Partidas ganadas",
+    "rounds_won": "Rondas ganadas",
+    "spins": "Giros de rueda",
+    "win_rate": "Tasa de victoria",
+    "history": "Historial de partidas",
+    "game_number": "Partida #{n}",
+    "host": "Anfitrión",
+    "round_won": "{n} ronda ganada | {n} rondas ganadas",
+    "no_history": "Aún no se han jugado partidas."
   }
 }

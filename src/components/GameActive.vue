@@ -294,21 +294,26 @@ onUnmounted(() => { document.body.style.overflow = '' })
           </div>
 
           <!-- BONUS (extra_spin) -->
-          <div v-else-if="spinResult.resultType === 'extra_spin'" class="bg-yellow/20 border-2 border-yellow/60 rounded-3xl p-5 shadow-md">
-            <div class="flex items-center gap-3 mb-4">
-              <div class="w-12 h-12 rounded-full bg-yellow/50 flex items-center justify-center text-2xl shrink-0">⭐</div>
-              <div>
-                <h3 class="text-brown font-game text-xl leading-tight">{{ spinResult.card?.title ?? 'Bonus !' }}</h3>
-              </div>
+          <div v-else-if="spinResult.resultType === 'extra_spin'" class="bg-yellow/10 border-[3px] border-yellow/50 rounded-3xl p-6 shadow-xl relative overflow-hidden">
+            <!-- Effet visuel de fond -->
+            <div class="absolute -top-10 -right-10 w-40 h-40 bg-yellow/30 rounded-full blur-3xl"></div>
+            
+            <div class="flex flex-col items-center text-center mb-6 relative z-10">
+              <div class="w-20 h-20 rounded-full bg-yellow/30 flex items-center justify-center text-5xl mb-4 shadow-inner ring-4 ring-yellow/20">⭐</div>
+              <h3 class="text-brown font-game text-3xl leading-tight">{{ spinResult.card?.title ?? 'Bonus !' }}</h3>
             </div>
-            <p v-if="spinResult.card?.description" class="text-brown/70 text-sm leading-relaxed bg-yellow/30 rounded-2xl px-4 py-3 mb-5">
-              {{ spinResult.card.description }}
-            </p>
-            <p v-else class="text-brown/55 text-sm mb-5">Appliquez l'effet bonus.</p>
+            
+            <div v-if="spinResult.card?.description" class="relative z-10 bg-yellow/30 border-2 border-yellow/50 rounded-2xl px-5 py-5 mb-6 shadow-inner text-center">
+              <p class="text-brown font-bold text-lg leading-snug">
+                {{ spinResult.card.description }}
+              </p>
+            </div>
+            <p v-else class="relative z-10 text-brown/60 text-sm mb-6 text-center font-medium">Appliquez l'effet bonus.</p>
+            
             <button @click="handleContinue" :disabled="isEndingTurn"
-              class="w-full py-3 bg-brown text-cream rounded-full font-bold cursor-pointer hover:scale-105 active:scale-95 transition-transform disabled:opacity-50 flex items-center justify-center gap-2">
-              <Loader2 v-if="isEndingTurn" :stroke-width="2" class="w-5 h-5 animate-spin" />
-              <ChevronRight v-else :stroke-width="2" class="w-5 h-5" />
+              class="relative z-10 w-full py-4 bg-brown text-cream rounded-full font-bold text-lg cursor-pointer hover:scale-[1.02] active:scale-[0.98] transition-all disabled:opacity-50 flex items-center justify-center gap-2 shadow-md">
+              <Loader2 v-if="isEndingTurn" :stroke-width="2" class="w-6 h-6 animate-spin" />
+              <ChevronRight v-else :stroke-width="2" class="w-6 h-6" />
               {{ t('game.active.end_turn') }}
             </button>
           </div>
@@ -331,21 +336,26 @@ onUnmounted(() => { document.body.style.overflow = '' })
           </div>
 
           <!-- MALUS (malus) -->
-          <div v-else class="bg-red/8 border-2 border-red/25 rounded-3xl p-5 shadow-md">
-            <div class="flex items-center gap-3 mb-4">
-              <div class="w-12 h-12 rounded-full bg-red/15 flex items-center justify-center text-2xl shrink-0">💀</div>
-              <div>
-                <h3 class="text-brown font-game text-xl leading-tight">{{ spinResult.card?.title ?? 'Malus !' }}</h3>
-              </div>
+          <div v-else class="bg-red/5 border-[3px] border-red/30 rounded-3xl p-6 shadow-xl relative overflow-hidden">
+            <!-- Effet visuel de fond -->
+            <div class="absolute -top-10 -right-10 w-40 h-40 bg-red/10 rounded-full blur-3xl"></div>
+            
+            <div class="flex flex-col items-center text-center mb-6 relative z-10">
+              <div class="w-20 h-20 rounded-full bg-red/15 flex items-center justify-center text-5xl mb-4 shadow-inner ring-4 ring-red/10">💀</div>
+              <h3 class="text-brown font-game text-3xl leading-tight">{{ spinResult.card?.title ?? 'Malus !' }}</h3>
             </div>
-            <p v-if="spinResult.card?.description" class="text-brown/70 text-sm leading-relaxed bg-red/10 rounded-2xl px-4 py-3 mb-5">
-              {{ spinResult.card.description }}
-            </p>
-            <p v-else class="text-red/55 text-sm mb-5">Appliquez l'effet malus.</p>
+            
+            <div v-if="spinResult.card?.description" class="relative z-10 bg-red/10 border-2 border-red/20 rounded-2xl px-5 py-5 mb-6 shadow-inner text-center">
+              <p class="text-red font-bold text-lg leading-snug">
+                {{ spinResult.card.description }}
+              </p>
+            </div>
+            <p v-else class="relative z-10 text-red/60 text-sm mb-6 text-center font-medium">Appliquez l'effet malus.</p>
+            
             <button @click="handleContinue" :disabled="isEndingTurn"
-              class="w-full py-3 bg-red text-white rounded-full font-bold cursor-pointer hover:scale-105 active:scale-95 transition-transform disabled:opacity-50 flex items-center justify-center gap-2">
-              <Loader2 v-if="isEndingTurn" :stroke-width="2" class="w-5 h-5 animate-spin" />
-              <ChevronRight v-else :stroke-width="2" class="w-5 h-5" />
+              class="relative z-10 w-full py-4 bg-red text-white rounded-full font-bold text-lg cursor-pointer hover:scale-[1.02] active:scale-[0.98] transition-all disabled:opacity-50 flex items-center justify-center gap-2 shadow-md">
+              <Loader2 v-if="isEndingTurn" :stroke-width="2" class="w-6 h-6 animate-spin" />
+              <ChevronRight v-else :stroke-width="2" class="w-6 h-6" />
               {{ t('game.active.end_turn') }}
             </button>
           </div>

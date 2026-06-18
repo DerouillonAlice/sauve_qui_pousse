@@ -192,8 +192,11 @@
     "logged": {
       "welcome": "Welcome,",
       "subtitle": "Your garden is ready. Create or join a game!",
+      "ready_to_play": "Ready to play?",
+      "create_or_join": "Create a new game or join your friends with a code.",
       "create_game": "Create a game",
-      "join_game": "Join a game",
+      "join_game": "Join",
+      "or": "or",
       "join_code_placeholder": "Game code",
       "logout": "Log out"
     },
@@ -271,5 +274,18 @@
       "cancel": "Cancel",
       "submit": "Join"
     }
+  },
+  "profile": {
+    "stats": "Statistics",
+    "games_played": "Games played",
+    "games_won": "Games won",
+    "rounds_won": "Rounds won",
+    "spins": "Wheel spins",
+    "win_rate": "Win rate",
+    "history": "Game history",
+    "game_number": "Game #{n}",
+    "host": "Host",
+    "round_won": "{n} round won | {n} rounds won",
+    "no_history": "No games played yet."
   }
 }

@@ -150,38 +150,38 @@ const avatarLetter = computed(() => (auth.user?.pseudo ?? 'U').charAt(0).toUpper
 
       <!-- Stats -->
       <section class="max-w-3xl mx-auto px-6 py-10">
-        <h2 class="text-brown mb-6">Statistiques</h2>
+        <h2 class="text-brown mb-6">{{ t('profile.stats') }}</h2>
         <div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
 
           <div class="bg-white rounded-2xl p-5 text-center shadow-sm">
             <Gamepad2 :stroke-width="1.5" class="w-7 h-7 text-primary mx-auto mb-2" />
             <p class="text-brown font-bold text-2xl">{{ profile.stats.gamesPlayed }}</p>
-            <p class="text-brown/50 text-xs mt-1">Parties jouées</p>
+            <p class="text-brown/50 text-xs mt-1">{{ t('profile.games_played') }}</p>
           </div>
 
           <div class="bg-white rounded-2xl p-5 text-center shadow-sm">
             <Trophy :stroke-width="1.5" class="w-7 h-7 text-amber-400 mx-auto mb-2" />
             <p class="text-brown font-bold text-2xl">{{ profile.stats.gamesWon }}</p>
-            <p class="text-brown/50 text-xs mt-1">Parties gagnées</p>
+            <p class="text-brown/50 text-xs mt-1">{{ t('profile.games_won') }}</p>
           </div>
 
           <div class="bg-white rounded-2xl p-5 text-center shadow-sm">
             <Target :stroke-width="1.5" class="w-7 h-7 text-sky-400 mx-auto mb-2" />
             <p class="text-brown font-bold text-2xl">{{ profile.stats.roundsWon }}</p>
-            <p class="text-brown/50 text-xs mt-1">Manches gagnées</p>
+            <p class="text-brown/50 text-xs mt-1">{{ t('profile.rounds_won') }}</p>
           </div>
 
           <div class="bg-white rounded-2xl p-5 text-center shadow-sm">
             <RotateCcw :stroke-width="1.5" class="w-7 h-7 text-pink-400 mx-auto mb-2" />
             <p class="text-brown font-bold text-2xl">{{ profile.stats.totalSpins }}</p>
-            <p class="text-brown/50 text-xs mt-1">Tours de roue</p>
+            <p class="text-brown/50 text-xs mt-1">{{ t('profile.spins') }}</p>
           </div>
         </div>
 
         <!-- Win rate -->
         <div v-if="profile.stats.gamesPlayed > 0" class="mt-4 bg-white rounded-2xl p-5 shadow-sm">
           <div class="flex items-center justify-between mb-2">
-            <span class="text-brown/60 text-sm">Taux de victoire</span>
+            <span class="text-brown/60 text-sm">{{ t('profile.win_rate') }}</span>
             <span class="text-brown font-bold text-sm">{{ winRate }}%</span>
           </div>
           <div class="w-full h-2.5 bg-brown/10 rounded-full overflow-hidden">
@@ -193,11 +193,11 @@ const avatarLetter = computed(() => (auth.user?.pseudo ?? 'U').charAt(0).toUpper
 
       <!-- Historique -->
       <section class="max-w-3xl mx-auto px-6 pb-10">
-        <h2 class="text-brown mb-6">Historique des parties</h2>
+        <h2 class="text-brown mb-6">{{ t('profile.history') }}</h2>
 
         <div v-if="profile.history.length === 0"
           class="bg-white rounded-2xl p-10 text-center text-brown/40 shadow-sm">
-          Aucune partie jouée pour l'instant.
+          {{ t('profile.no_history') }}
         </div>
 
         <div v-else class="flex flex-col gap-3">
@@ -212,8 +212,8 @@ const avatarLetter = computed(() => (auth.user?.pseudo ?? 'U').charAt(0).toUpper
             <!-- Infos -->
             <div class="flex-1 min-w-0">
               <div class="flex items-center gap-2 mb-1">
-                <span class="text-brown font-semibold text-sm">Partie #{{ game.sessionId }}</span>
-                <span v-if="game.isHost" class="text-xs bg-primary/15 text-primary px-2 py-0.5 rounded-full font-medium">Hôte</span>
+                <span class="text-brown font-semibold text-sm">{{ t('profile.game_number', { n: game.sessionId }) }}</span>
+                <span v-if="game.isHost" class="text-xs bg-primary/15 text-primary px-2 py-0.5 rounded-full font-medium">{{ t('profile.host') }}</span>
                 <span class="text-brown/40 font-mono text-xs">{{ game.roomCode }}</span>
               </div>
               <div class="flex items-center gap-3 text-xs text-brown/50 mb-1">
@@ -221,7 +221,7 @@ const avatarLetter = computed(() => (auth.user?.pseudo ?? 'U').charAt(0).toUpper
                   <Calendar :stroke-width="1.5" class="w-3.5 h-3.5" />
                   {{ formatDate(game.createdAt) }}
                 </span>
-                <span>{{ game.roundsWon }} manche{{ game.roundsWon > 1 ? 's' : '' }} gagnée{{ game.roundsWon > 1 ? 's' : '' }}</span>
+                <span>{{ t('profile.round_won', game.roundsWon, { n: game.roundsWon }) }}</span>
               </div>
               <!-- Joueurs -->
               <div class="flex flex-wrap gap-1">
@@ -246,7 +246,7 @@ const avatarLetter = computed(() => (auth.user?.pseudo ?? 'U').charAt(0).toUpper
         <button @click="logout"
           class="flex items-center gap-2 text-sm text-brown/40 hover:text-red transition-colors cursor-pointer">
           <LogOut :stroke-width="1.5" class="w-4 h-4" />
-          Se déconnecter
+          {{ t('nav.logout') }}
         </button>
       </section>
 

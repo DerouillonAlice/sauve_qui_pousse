@@ -54,9 +54,9 @@ onUnmounted(() => stopPolling())
   <!-- Full-screen game view — bypasses hero+grid entirely -->
   <GameActive v-if="isAuthenticated && isInGame && (isActive || isFinished)" />
 
-  <div v-else class="bg-white min-h-screen pt-10 lg:pt-16 pb-24">
+  <div v-else class="bg-white pt-4 lg:pt-8 pb-8">
 
-    <div class="max-w-3xl mx-auto px-6 gap-12">
+    <div class="max-w-3xl mx-auto px-6">
 
       <!-- IN-GAME: LOBBY -->
       <div v-if="isAuthenticated && isInGame" class="lg:col-span-2">
@@ -64,13 +64,13 @@ onUnmounted(() => stopPolling())
       </div>
 
       <!-- LOGGED-IN: CREATE / JOIN -->
-      <div v-else-if="isAuthenticated" class="bg-cream rounded-3xl p-8 sm:p-12 shadow-sm text-center">
+      <div v-else-if="isAuthenticated" class="bg-cream rounded-3xl p-6 sm:p-8 shadow-sm text-center">
         <div class="max-w-md mx-auto">
-          <div class="w-16 h-16 mx-auto mb-6 rounded-full bg-primary/10 flex items-center justify-center text-primary">
-            <Gamepad2 :stroke-width="1.5" class="w-8 h-8" />
+          <div class="w-12 h-12 mx-auto mb-4 rounded-full bg-primary/10 flex items-center justify-center text-primary">
+            <Gamepad2 :stroke-width="1.5" class="w-6 h-6" />
           </div>
-          <h2 class="text-brown font-game text-3xl mb-2">Prêt à jouer ?</h2>
-          <p class="text-brown/60 text-sm mb-10">Créez une nouvelle partie ou rejoignez vos amis avec un code.</p>
+          <h2 class="text-brown font-game text-2xl mb-1">{{ t('play.logged.ready_to_play') }}</h2>
+          <p class="text-brown/60 text-sm mb-6">{{ t('play.logged.create_or_join') }}</p>
 
           <Transition
             enter-active-class="transition-all duration-300 ease-out"
@@ -86,30 +86,24 @@ onUnmounted(() => stopPolling())
             </div>
           </Transition>
 
-          <div class="flex flex-col sm:flex-row gap-4 mb-8">
+          <div class="flex flex-col gap-6 mb-6">
             <button id="btn-create-game" @click="handleCreateGame" :disabled="isCreating"
-              class="flex-1 flex items-center justify-center gap-3 px-6 py-4 bg-primary text-cream rounded-2xl font-semibold text-lg hover:scale-[1.02] active:scale-[0.98] transition-all shadow-md cursor-pointer disabled:opacity-50">
+              class="w-full flex items-center justify-center gap-3 px-4 py-4 bg-primary text-cream rounded-2xl font-semibold text-lg hover:scale-[1.02] active:scale-[0.98] transition-all shadow-md cursor-pointer disabled:opacity-50">
               <Loader2 v-if="isCreating" :stroke-width="2" class="w-6 h-6 animate-spin" />
               <Gamepad2 v-else :stroke-width="1.8" class="w-6 h-6" />
-              Créer une partie
+              {{ t('play.logged.create_game') }}
             </button>
-            <button id="btn-join-game" @click="showJoinModal = true"
-              class="flex-1 flex items-center justify-center gap-3 px-6 py-4 bg-brown text-cream rounded-2xl font-semibold text-lg hover:scale-[1.02] active:scale-[0.98] transition-all shadow-md cursor-pointer">
-              <Users :stroke-width="1.8" class="w-6 h-6" />
-              Rejoindre
-            </button>
-          </div>
 
-          <!-- Join Modal -->
-          <Transition
-            enter-active-class="transition-all duration-300 ease-out"
-            enter-from-class="opacity-0 -translate-y-2"
-            enter-to-class="opacity-100 translate-y-0"
-            leave-active-class="transition-all duration-200 ease-in"
-            leave-from-class="opacity-100 translate-y-0"
-            leave-to-class="opacity-0 -translate-y-2"
-          >
-            <div v-if="showJoinModal" class="bg-brown rounded-2xl p-6 mb-6">
+            <div class="relative">
+              <div class="absolute inset-0 flex items-center" aria-hidden="true">
+                <div class="w-full border-t border-brown/10"></div>
+              </div>
+              <div class="relative flex justify-center">
+                <span class="px-3 bg-cream text-sm text-brown/40 font-semibold uppercase tracking-wider">{{ t('play.logged.or') }}</span>
+              </div>
+            </div>
+
+            <div class="bg-brown rounded-2xl p-6 shadow-inner">
               <form @submit.prevent="handleJoinGame" class="space-y-4">
                 <p class="text-cream font-semibold text-lg">{{ t('game.join.title') }}</p>
                 <input
@@ -118,22 +112,16 @@ onUnmounted(() => stopPolling())
                   :placeholder="t('game.join.placeholder')"
                   class="w-full px-4 py-3 rounded-xl border-2 border-primary bg-cream text-brown placeholder:text-brown/40 focus:outline-none focus:ring-[3px] focus:ring-primary/25 transition-all text-center text-2xl font-game tracking-[0.3em] uppercase"
                   maxlength="6"
-                  autofocus
                 />
-                <div class="flex gap-3">
-                  <button type="button" @click="showJoinModal = false; joinCode = ''"
-                    class="flex-1 py-3 rounded-xl border border-cream/30 text-cream/70 font-semibold hover:bg-cream/10 transition-colors cursor-pointer">
-                    {{ t('game.join.cancel') }}
-                  </button>
-                  <button type="submit" :disabled="!joinCode.trim() || isJoining"
-                    class="flex-1 py-3 rounded-xl bg-primary text-cream font-semibold hover:scale-[1.02] active:scale-[0.98] transition-all cursor-pointer disabled:opacity-50">
-                    <Loader2 v-if="isJoining" :stroke-width="2" class="w-5 h-5 animate-spin inline" />
-                    {{ t('game.join.submit') }}
-                  </button>
-                </div>
+                <button type="submit" :disabled="!joinCode.trim() || isJoining"
+                  class="w-full py-3 rounded-xl bg-primary text-cream font-semibold hover:scale-[1.02] active:scale-[0.98] transition-all cursor-pointer disabled:opacity-50 flex items-center justify-center gap-2">
+                  <Loader2 v-if="isJoining" :stroke-width="2" class="w-5 h-5 animate-spin" />
+                  <Users v-else :stroke-width="1.8" class="w-5 h-5" />
+                  {{ t('game.join.submit') }}
+                </button>
               </form>
             </div>
-          </Transition>
+          </div>
 
           <button id="btn-logout" @click="handleLogout"
             class="inline-flex items-center gap-2 text-sm text-brown/50 hover:text-red transition-colors cursor-pointer">
