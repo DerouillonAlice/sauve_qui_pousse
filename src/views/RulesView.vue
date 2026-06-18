@@ -76,24 +76,15 @@ const winSteps = computed(() => tm('rules.win.steps') as string[])
       <div class="max-w-2xl mx-auto">
         <h2 class="text-brown mb-2">{{ t('rules.wheel.title') }}</h2>
         <p class="text-brown/60 mb-6">{{ t('rules.wheel.desc') }}</p>
-        <div class="grid grid-cols-2 gap-3">
-          <!-- Pioche 60% -->
+        <div class="grid grid-cols-3 gap-3">
+          <!-- Pioche 80% -->
           <div class="rounded-2xl px-5 py-5 bg-cream border border-brown/20 flex flex-col gap-2">
             <div class="flex items-center justify-between">
               <img :src="scarecrowImg" aria-hidden="true" class="w-9 h-9 object-contain" />
-              <span class="font-game text-brown text-3xl">60%</span>
+              <span class="font-game text-brown text-3xl">80%</span>
             </div>
             <p class="font-semibold text-brown text-sm">{{ t('rules.wheel.draw.label') }}</p>
             <p class="text-brown/60 text-xs leading-relaxed">{{ t('rules.wheel.draw.desc') }}</p>
-          </div>
-          <!-- Passe ton tour 20% -->
-          <div class="rounded-2xl px-5 py-5 bg-cream border border-brown/20 flex flex-col gap-2">
-            <div class="flex items-center justify-between">
-              <img :src="wheelImg" aria-hidden="true" class="w-9 h-9 object-contain" />
-              <span class="font-game text-brown/50 text-3xl">20%</span>
-            </div>
-            <p class="font-semibold text-brown text-sm">{{ t('rules.wheel.skip.label') }}</p>
-            <p class="text-brown/60 text-xs leading-relaxed">{{ t('rules.wheel.skip.desc') }}</p>
           </div>
           <!-- Bonus 10% -->
           <div class="rounded-2xl px-5 py-5 bg-primary/10 border border-primary/30 flex flex-col gap-2">
