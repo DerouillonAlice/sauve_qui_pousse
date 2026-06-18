@@ -28,11 +28,6 @@ const basicLinks = [
 
       <template v-if="!isAuthenticated">
         <RouterLink to="/jouer"
-          class="hidden lg:block text-cream no-underline hover:underline"
-          active-class="font-bold underline">
-          {{ t('nav.play') }}
-        </RouterLink>
-        <RouterLink to="/compte"
           class="hidden lg:block bg-brown text-cream px-5 py-2.5 rounded-full font-bold hover:scale-105 active:scale-95 transition-transform shadow-md">
           Connexion / Inscription
         </RouterLink>

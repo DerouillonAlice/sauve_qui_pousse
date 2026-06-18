@@ -1,6 +1,9 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 import { useI18n } from 'vue-i18n'
+import hornet2Img        from '@/assets/img/hornet_2.svg'
+import branchLadybug1Img from '@/assets/img/branch_ladybug_1.svg'
+import wormImg           from '@/assets/img/worm.svg'
 const { t, tm } = useI18n()
 
 type CardItem = { name: string; points: string }
@@ -20,8 +23,11 @@ const winSteps = computed(() => tm('rules.win.steps') as string[])
   <div class="bg-cream min-h-screen">
 
     <!-- HERO -->
-    <section class="py-20 px-6 text-center bg-cream-dark">
-      <div class="max-w-2xl mx-auto">
+    <section class="relative overflow-hidden py-20 px-6 text-center bg-cream-dark">
+      <img :src="hornet2Img" aria-hidden="true" class="absolute top-0 right-0 w-24 sm:w-32 pointer-events-none select-none hidden sm:block" />
+      <img :src="branchLadybug1Img" aria-hidden="true" class="absolute bottom-0 left-0 w-32 sm:w-44 pointer-events-none select-none hidden sm:block" />
+      <img :src="wormImg" aria-hidden="true" class="absolute bottom-2 right-4 w-16 sm:w-24 opacity-50 pointer-events-none select-none hidden sm:block" />
+      <div class="relative z-10 max-w-2xl mx-auto">
         <h1 class="text-brown mb-2">{{ t('rules.hero.title') }}</h1>
         <p class="text-primary font-semibold mb-6">{{ t('rules.hero.subtitle') }}</p>
         <p class="text-brown/70 text-lg leading-relaxed">{{ t('rules.hero.intro') }}</p>
