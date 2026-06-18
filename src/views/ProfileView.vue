@@ -51,6 +51,8 @@ function handleLogout() {
   router.push('/')
 }
 
+const visibleTeammates = computed(() => profile.value?.teammates ?? [])
+
 onMounted(async () => {
   if (!isAuthenticated.value) return
   try {
@@ -152,6 +154,30 @@ const avatarLetter = computed(() => (auth.user?.pseudo ?? 'U').charAt(0).toUpper
         </div>
       </section>
 
+      <!-- Coéquipiers — AU-DESSUS de l'historique -->
+      <section class="max-w-3xl mx-auto px-6 pb-10">
+        <h2 class="text-brown mb-6">Coéquipiers</h2>
+
+        <div v-if="visibleTeammates.length === 0"
+          class="bg-white rounded-2xl p-10 text-center text-brown/40 shadow-sm">
+          Aucun coéquipier pour l'instant. Ajoute des invités dans tes prochaines parties !
+        </div>
+
+        <div v-else class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3">
+          <div v-for="teammate in visibleTeammates" :key="teammate.name"
+            class="bg-white rounded-2xl p-4 text-center shadow-sm flex flex-col items-center gap-2">
+            <!-- Avatar lettre -->
+            <div class="w-12 h-12 rounded-full bg-primary flex items-center justify-center text-white text-lg font-bold font-game">
+              {{ teammate.name.charAt(0).toUpperCase() }}
+            </div>
+            <p class="text-brown font-semibold text-sm truncate w-full text-center">{{ teammate.name }}</p>
+            <p class="text-brown/40 text-xs">
+              {{ teammate.gamesCount }} partie{{ teammate.gamesCount > 1 ? 's' : '' }}
+            </p>
+          </div>
+        </div>
+      </section>
+
       <!-- Historique -->
       <section class="max-w-3xl mx-auto px-6 pb-10">
         <h2 class="text-brown mb-6">Historique des parties</h2>
@@ -164,13 +190,9 @@ const avatarLetter = computed(() => (auth.user?.pseudo ?? 'U').charAt(0).toUpper
         <div v-else class="flex flex-col gap-3">
           <div v-for="game in profile.history" :key="game.sessionId"
             class="bg-white rounded-2xl px-5 py-4 shadow-sm flex items-center gap-4">
-
-            <!-- Icône statut -->
             <div class="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center shrink-0">
               <Gamepad2 :stroke-width="1.5" class="w-5 h-5 text-primary" />
             </div>
-
-            <!-- Infos -->
             <div class="flex-1 min-w-0">
               <div class="flex items-center gap-2 mb-1">
                 <span class="text-brown font-semibold text-sm">Partie #{{ game.sessionId }}</span>
@@ -184,7 +206,6 @@ const avatarLetter = computed(() => (auth.user?.pseudo ?? 'U').charAt(0).toUpper
                 </span>
                 <span>{{ game.roundsWon }} manche{{ game.roundsWon > 1 ? 's' : '' }} gagnée{{ game.roundsWon > 1 ? 's' : '' }}</span>
               </div>
-              <!-- Joueurs -->
               <div class="flex flex-wrap gap-1">
                 <span v-for="player in game.players" :key="player"
                   class="text-xs bg-brown/8 text-brown/60 px-2 py-0.5 rounded-full">
@@ -192,37 +213,10 @@ const avatarLetter = computed(() => (auth.user?.pseudo ?? 'U').charAt(0).toUpper
                 </span>
               </div>
             </div>
-
-            <!-- Badge statut -->
             <span class="text-xs font-semibold px-2.5 py-1 rounded-full shrink-0 self-start mt-1"
               :class="statusClass(game.status)">
               {{ statusLabel(game.status) }}
             </span>
-          </div>
-        </div>
-      </section>
-
-      <!-- Coéquipiers -->
-      <section class="max-w-3xl mx-auto px-6 pb-10">
-        <h2 class="text-brown mb-6">Coéquipiers</h2>
-
-        <div v-if="profile.teammates.length === 0"
-          class="bg-white rounded-2xl p-10 text-center text-brown/40 shadow-sm">
-          Aucun coéquipier pour l'instant. Ajoute des invités dans tes prochaines parties !
-        </div>
-
-        <div v-else class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3">
-          <div v-for="teammate in profile.teammates" :key="teammate.name"
-            class="bg-white rounded-2xl p-4 text-center shadow-sm flex flex-col items-center gap-2">
-            <!-- Avatar lettre -->
-            <div class="w-12 h-12 rounded-full bg-primary flex items-center justify-center text-white text-lg font-bold font-game">
-              {{ teammate.name.charAt(0).toUpperCase() }}
-            </div>
-            <p class="text-brown font-semibold text-sm truncate w-full text-center">{{ teammate.name }}</p>
-            <p class="text-brown/40 text-xs">
-              {{ teammate.gamesCount }} partie{{ teammate.gamesCount > 1 ? 's' : '' }}
-            </p>
-            <p class="text-brown/30 text-xs">{{ formatDate(teammate.lastPlayed) }}</p>
           </div>
         </div>
       </section>
