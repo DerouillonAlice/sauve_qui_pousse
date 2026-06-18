@@ -154,10 +154,10 @@ onUnmounted(() => { document.body.style.overflow = '' })
         <div class="flex flex-wrap justify-center gap-3">
           <div v-for="(p, i) in participants" :key="p.id"
             :class="p.id === currentParticipant?.id ? 'ring-2 ring-primary bg-primary/5' : 'ring-1 ring-brown/10 bg-cream-dark'"
-            class="rounded-2xl py-3 px-3 flex flex-col items-center gap-1 shadow-sm">
+            class="rounded-2xl py-4 px-5 w-28 flex flex-col items-center gap-2 shadow-sm">
 
             <!-- Avatar avec emoji d'effet superposé -->
-            <div class="relative w-10 h-10 rounded-full flex items-center justify-center text-white text-sm font-bold shadow-sm shrink-0"
+            <div class="relative w-14 h-14 rounded-full flex items-center justify-center text-white text-xl font-bold shadow-sm shrink-0"
               :class="avatarColors[i % 4]">
               {{ p.displayName.charAt(0).toUpperCase() }}
               <!-- Premier effet actif affiché EN GRAND sur l'avatar -->
@@ -168,7 +168,7 @@ onUnmounted(() => { document.body.style.overflow = '' })
               </span>
             </div>
 
-            <p class="text-brown text-xs font-semibold truncate w-full text-center">{{ p.displayName }}</p>
+            <p class="text-brown text-sm font-semibold truncate w-full text-center">{{ p.displayName }}</p>
 
             <!-- Libellé de l'effet sous le nom -->
             <p v-if="getPlayerEffects(p.id).length > 0"
