@@ -2,6 +2,7 @@
 import { ref, computed, watch, onUnmounted } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { useGame } from '@/composables/useGame'
+import { useAuth } from '@/composables/useAuth'
 import { ChevronRight, Award, Leaf, LogOut, Loader2, Trophy } from 'lucide-vue-next'
 import WaveEdge from '@/components/WaveEdge.vue'
 import type { SpinResult } from '@/composables/useGame'
@@ -91,9 +92,11 @@ async function handleWinRound() {
 }
 
 /* ── misc ── */
+const { state: auth } = useAuth()
+const isOwner      = computed(() => game.session?.ownerId === auth.user?.id)
 const roundNumber  = computed(() => currentRound.value?.roundNumber ?? 1)
 const totalRounds  = 3  // la partie se finit après 3 manches jouées
-const avatarColors     = ['bg-primary', 'bg-amber-400', 'bg-sky-400', 'bg-pink-400']
+const avatarColors = ['bg-primary', 'bg-amber-400', 'bg-sky-400', 'bg-pink-400']
 
 const sortedParticipants = computed(() =>
   [...participants.value].sort((a, b) => b.roundsWon - a.roundsWon)
@@ -127,8 +130,8 @@ onUnmounted(() => { document.body.style.overflow = '' })
           <span class="font-game text-cream text-lg">{{ t('game.active.round', { n: roundNumber }) }}</span>
         </div>
         <button @click="showWinModal = true" :disabled="isFinished"
-          class="flex items-center gap-2 px-4 py-2 bg-brown text-cream rounded-full font-bold text-sm cursor-pointer hover:scale-105 active:scale-95 transition-transform disabled:opacity-40 disabled:cursor-not-allowed">
-          <Award :stroke-width="2" class="w-4 h-4" />
+          class="flex items-center gap-2 px-5 py-2.5 bg-cream text-primary rounded-full font-bold text-sm cursor-pointer hover:scale-105 active:scale-95 transition-transform disabled:opacity-40 disabled:cursor-not-allowed shadow-lg shadow-black/20 ring-2 ring-cream/30">
+          <Award :stroke-width="2.5" class="w-4 h-4" />
           {{ t('game.active.sauve') }}
         </button>
       </div>
@@ -145,45 +148,57 @@ onUnmounted(() => { document.body.style.overflow = '' })
         </div>
       </div>
 
-      <!-- ── ROUE ── -->
-      <div class="relative z-10 w-56 h-56 sm:w-64 sm:h-64 mx-auto select-none">
-        <!-- Pointeur fixe (haut) -->
-        <div class="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1 z-20">
-          <svg width="20" height="20" viewBox="0 0 20 20">
-            <polygon points="10,18 2,2 18,2" fill="white" />
-          </svg>
+      <!-- ── ROUE (hôte uniquement) ── -->
+      <template v-if="isOwner">
+        <div class="relative z-10 w-56 h-56 sm:w-64 sm:h-64 mx-auto select-none">
+          <div class="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1 z-20">
+            <svg width="20" height="20" viewBox="0 0 20 20">
+              <polygon points="10,18 2,2 18,2" fill="white" />
+            </svg>
+          </div>
+          <div class="w-full h-full rounded-full overflow-hidden shadow-2xl shadow-black/30"
+            :style="{
+              transform: `rotate(${wheelDeg}deg)`,
+              transition: wheelMoving ? 'transform 3.2s cubic-bezier(0.1, 0.85, 0.2, 1)' : 'none'
+            }">
+            <svg viewBox="0 0 200 200" class="w-full h-full" xmlns="http://www.w3.org/2000/svg">
+              <path d="M 100 100 L 100 10 A 90 90 0 0 1 100 190 Z" fill="#bec059" />
+              <path d="M 100 100 L 100 190 A 90 90 0 0 1 10 100 Z" fill="#fadd83" />
+              <path d="M 100 100 L 10 100 A 90 90 0 0 1 100 10 Z" fill="#e20000" />
+              <line x1="100" y1="100" x2="100" y2="10"  stroke="white" stroke-width="3" />
+              <line x1="100" y1="100" x2="100" y2="190" stroke="white" stroke-width="3" />
+              <line x1="100" y1="100" x2="10"  y2="100" stroke="white" stroke-width="3" />
+              <text x="150" y="95"  text-anchor="middle" font-size="11" fill="white" font-weight="bold" font-family="sans-serif">Pioche</text>
+              <text x="150" y="108" text-anchor="middle" font-size="9"  fill="white" font-family="sans-serif">une carte</text>
+              <text x="63"  y="132" text-anchor="middle" font-size="11" fill="#623435" font-weight="bold" font-family="sans-serif">BONUS</text>
+              <text x="63"  y="68"  text-anchor="middle" font-size="11" fill="white"   font-weight="bold" font-family="sans-serif">MALUS</text>
+              <circle cx="100" cy="100" r="14" fill="white" stroke="#623435" stroke-width="2.5" />
+            </svg>
+          </div>
         </div>
-        <!-- Roue SVG rotative -->
-        <div class="w-full h-full rounded-full overflow-hidden shadow-2xl shadow-black/30"
-          :style="{
-            transform: `rotate(${wheelDeg}deg)`,
-            transition: wheelMoving ? 'transform 3.2s cubic-bezier(0.1, 0.85, 0.2, 1)' : 'none'
-          }">
-          <svg viewBox="0 0 200 200" class="w-full h-full" xmlns="http://www.w3.org/2000/svg">
-            <path d="M 100 100 L 100 10 A 90 90 0 0 1 100 190 Z" fill="#bec059" />
-            <path d="M 100 100 L 100 190 A 90 90 0 0 1 10 100 Z" fill="#fadd83" />
-            <path d="M 100 100 L 10 100 A 90 90 0 0 1 100 10 Z" fill="#e20000" />
-            <line x1="100" y1="100" x2="100" y2="10"  stroke="white" stroke-width="3" />
-            <line x1="100" y1="100" x2="100" y2="190" stroke="white" stroke-width="3" />
-            <line x1="100" y1="100" x2="10"  y2="100" stroke="white" stroke-width="3" />
-            <text x="150" y="95"  text-anchor="middle" font-size="11" fill="white" font-weight="bold" font-family="sans-serif">Pioche</text>
-            <text x="150" y="108" text-anchor="middle" font-size="9"  fill="white" font-family="sans-serif">une carte</text>
-            <text x="63"  y="132" text-anchor="middle" font-size="11" fill="#623435" font-weight="bold" font-family="sans-serif">BONUS</text>
-            <text x="63"  y="68"  text-anchor="middle" font-size="11" fill="white"   font-weight="bold" font-family="sans-serif">MALUS</text>
-            <circle cx="100" cy="100" r="14" fill="white" stroke="#623435" stroke-width="2.5" />
-          </svg>
+        <div class="relative z-10 flex justify-center mt-6">
+          <button @click="handleSpin"
+            :disabled="phase !== 'idle' || isFinished || isEndingTurn"
+            class="flex items-center gap-3 px-10 py-4 bg-cream text-brown rounded-full font-bold text-base cursor-pointer hover:scale-105 active:scale-95 transition-transform shadow-lg shadow-black/20 disabled:opacity-40 disabled:cursor-not-allowed disabled:scale-100">
+            <Loader2 v-if="phase === 'spinning'" :stroke-width="2" class="w-5 h-5 animate-spin" />
+            <span>{{ phase === 'spinning' ? '…' : t('game.active.spin') }}</span>
+          </button>
         </div>
-      </div>
+      </template>
 
-      <!-- Bouton TOURNER -->
-      <div class="relative z-10 flex justify-center mt-6">
-        <button @click="handleSpin"
-          :disabled="phase !== 'idle' || isFinished || isEndingTurn"
-          class="flex items-center gap-3 px-10 py-4 bg-cream text-brown rounded-full font-bold text-base cursor-pointer hover:scale-105 active:scale-95 transition-transform shadow-lg shadow-black/20 disabled:opacity-40 disabled:cursor-not-allowed disabled:scale-100">
-          <Loader2 v-if="phase === 'spinning'" :stroke-width="2" class="w-5 h-5 animate-spin" />
-          <span>{{ phase === 'spinning' ? '…' : t('game.active.spin') }}</span>
-        </button>
-      </div>
+      <!-- Vue non-hôte : juste "Sauve qui pousse!" -->
+      <template v-else>
+        <div class="relative z-10 flex flex-col items-center gap-4 mt-4 px-6">
+          <p class="text-cream/60 text-sm text-center leading-relaxed">
+            La partie est en cours sur la tablette de l'hôte.
+          </p>
+          <button @click="showWinModal = true" :disabled="isFinished"
+            class="px-10 py-5 bg-cream text-brown rounded-full font-bold text-xl cursor-pointer hover:scale-105 active:scale-95 transition-transform shadow-xl shadow-black/25 disabled:opacity-40 disabled:cursor-not-allowed flex items-center gap-3">
+            <Award :stroke-width="2" class="w-6 h-6" />
+            {{ t('game.active.sauve') }}
+          </button>
+        </div>
+      </template>
 
     </section>
 
@@ -233,26 +248,42 @@ onUnmounted(() => { document.body.style.overflow = '' })
             </button>
           </div>
 
-          <!-- BONUS (extra_spin) — à implémenter avec la DB -->
-          <div v-else-if="spinResult.resultType === 'extra_spin'" class="bg-yellow/40 rounded-3xl p-6 text-center">
-            <div class="text-4xl mb-2">⭐</div>
-            <h3 class="text-brown font-game text-2xl mb-2">BONUS</h3>
-            <p class="text-brown/55 text-sm mb-6">Appliquez l'effet bonus.</p>
+          <!-- BONUS (extra_spin) -->
+          <div v-else-if="spinResult.resultType === 'extra_spin'" class="bg-yellow/20 border-2 border-yellow/60 rounded-3xl p-5 shadow-md">
+            <div class="flex items-center gap-3 mb-4">
+              <div class="w-12 h-12 rounded-full bg-yellow/50 flex items-center justify-center text-2xl shrink-0">⭐</div>
+              <div>
+                <p class="text-xs text-brown/40 uppercase tracking-wider font-semibold">Bonus</p>
+                <h3 class="text-brown font-game text-xl leading-tight">{{ spinResult.card?.title ?? 'Bonus !' }}</h3>
+              </div>
+            </div>
+            <p v-if="spinResult.card?.description" class="text-brown/70 text-sm leading-relaxed bg-yellow/30 rounded-2xl px-4 py-3 mb-5">
+              {{ spinResult.card.description }}
+            </p>
+            <p v-else class="text-brown/55 text-sm mb-5">Appliquez l'effet bonus.</p>
             <button @click="handleContinue" :disabled="isEndingTurn"
-              class="px-8 py-3 bg-brown text-cream rounded-full font-bold cursor-pointer hover:scale-105 active:scale-95 transition-transform disabled:opacity-50 flex items-center gap-2 mx-auto">
+              class="w-full py-3 bg-brown text-cream rounded-full font-bold cursor-pointer hover:scale-105 active:scale-95 transition-transform disabled:opacity-50 flex items-center justify-center gap-2">
               <Loader2 v-if="isEndingTurn" :stroke-width="2" class="w-5 h-5 animate-spin" />
               <ChevronRight v-else :stroke-width="2" class="w-5 h-5" />
               {{ t('game.active.end_turn') }}
             </button>
           </div>
 
-          <!-- MALUS (skip) — à implémenter avec la DB -->
-          <div v-else class="bg-red/10 rounded-3xl p-6 text-center">
-            <div class="text-4xl mb-2">💀</div>
-            <h3 class="text-red font-game text-2xl mb-2">MALUS</h3>
-            <p class="text-red/55 text-sm mb-6">Appliquez l'effet malus.</p>
+          <!-- MALUS (skip) -->
+          <div v-else class="bg-red/8 border-2 border-red/25 rounded-3xl p-5 shadow-md">
+            <div class="flex items-center gap-3 mb-4">
+              <div class="w-12 h-12 rounded-full bg-red/15 flex items-center justify-center text-2xl shrink-0">💀</div>
+              <div>
+                <p class="text-xs text-red/60 uppercase tracking-wider font-semibold">Malus</p>
+                <h3 class="text-brown font-game text-xl leading-tight">{{ spinResult.card?.title ?? 'Malus !' }}</h3>
+              </div>
+            </div>
+            <p v-if="spinResult.card?.description" class="text-brown/70 text-sm leading-relaxed bg-red/10 rounded-2xl px-4 py-3 mb-5">
+              {{ spinResult.card.description }}
+            </p>
+            <p v-else class="text-red/55 text-sm mb-5">Appliquez l'effet malus.</p>
             <button @click="handleContinue" :disabled="isEndingTurn"
-              class="px-8 py-3 bg-red text-white rounded-full font-bold cursor-pointer hover:scale-105 active:scale-95 transition-transform disabled:opacity-50 flex items-center gap-2 mx-auto">
+              class="w-full py-3 bg-red text-white rounded-full font-bold cursor-pointer hover:scale-105 active:scale-95 transition-transform disabled:opacity-50 flex items-center justify-center gap-2">
               <Loader2 v-if="isEndingTurn" :stroke-width="2" class="w-5 h-5 animate-spin" />
               <ChevronRight v-else :stroke-width="2" class="w-5 h-5" />
               {{ t('game.active.end_turn') }}
@@ -286,9 +317,9 @@ onUnmounted(() => { document.body.style.overflow = '' })
     </div>
 
     <!-- ═══ LEAVE ═══ -->
-    <div class="flex justify-center pb-8">
+    <div class="flex justify-center pb-8 pt-2">
       <button @click="leaveGame"
-        class="flex items-center gap-2 text-xs text-brown/30 hover:text-red transition-colors cursor-pointer">
+        class="flex items-center gap-2 px-6 py-3 rounded-full border-2 border-red/30 text-red/60 hover:bg-red/8 hover:border-red/60 hover:text-red font-semibold text-sm transition-all cursor-pointer">
         <LogOut :stroke-width="1.5" class="w-4 h-4" />
         {{ t('game.active.leave') }}
       </button>

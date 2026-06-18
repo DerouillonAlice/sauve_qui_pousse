@@ -6,6 +6,7 @@ import { useGame } from '@/composables/useGame'
 import GameLobby from '@/components/GameLobby.vue'
 import GameActive from '@/components/GameActive.vue'
 import { LogOut, Gamepad2, Users, Loader2, AlertCircle, CheckCircle2 } from 'lucide-vue-next'
+import WaveEdge from '@/components/WaveEdge.vue'
 
 const { t, tm } = useI18n()
 const { state: auth, isAuthenticated, login, register, logout, clearError } = useAuth()
@@ -94,17 +95,26 @@ onUnmounted(() => stopPolling())
   <!-- Full-screen game view — bypasses hero+grid entirely -->
   <GameActive v-if="isAuthenticated && isInGame && (isActive || isFinished)" />
 
-  <div v-else class="bg-cream min-h-screen">
+  <div v-else class="bg-white min-h-screen">
 
     <!-- HERO -->
-    <section class="py-16 px-6 text-center bg-cream-dark">
+    <section class="py-16 px-6 text-center bg-white">
       <div class="max-w-xl mx-auto">
         <h1 class="text-brown mb-3">{{ t('play.hero.title') }}</h1>
         <p class="text-brown/70 text-lg">{{ t('play.hero.subtitle') }}</p>
       </div>
     </section>
+    <WaveEdge color="var(--color-cream-dark)" position="top" :size="56" />
 
-    <div class="max-w-4xl mx-auto px-6 py-16 grid gap-12 lg:grid-cols-2">
+    <!-- Vagues crème -->
+    <WaveEdge color="var(--color-cream-dark)" :size="48" />
+
+    <!-- Accroche -->
+    <p v-if="!isAuthenticated" class="text-center text-brown/55 text-sm px-6 -mt-2 mb-2">
+      Crée ton compte ou connecte-toi pour rejoindre une partie en ligne.
+    </p>
+
+    <div class="max-w-4xl mx-auto px-6 py-10 grid gap-12 lg:grid-cols-2">
 
       <!-- IN-GAME: LOBBY -->
       <div v-if="isAuthenticated && isInGame" class="lg:col-span-2">
