@@ -23,23 +23,23 @@ const {
   leaveGame,
 } = useGame()
 
-const EFFECT_META: Record<string, { icon: string; label: string; ring: string; badge: string }> = {
-  'protect_malus':           { icon: '🛡️', label: 'Protégé malus',      ring: 'ring-primary ring-offset-2',  badge: 'bg-primary/20 text-primary' },
-  'protect_player':          { icon: '🛡️', label: 'Immunisé',           ring: 'ring-primary ring-offset-2',  badge: 'bg-primary/20 text-primary' },
-  'global_no_malus':         { icon: '🚫', label: 'Aucun malus',         ring: 'ring-primary ring-offset-2',  badge: 'bg-primary/20 text-primary' },
-  'protect_decomposers':     { icon: '🌿', label: 'Décomposeurs OK',     ring: 'ring-primary ring-offset-2',  badge: 'bg-primary/20 text-primary' },
-  'redirect_malus':          { icon: '↩️', label: 'Redirige malus',      ring: 'ring-amber-400 ring-offset-2', badge: 'bg-amber-100 text-amber-700' },
-  'skip_turn':               { icon: '⌛', label: 'Passe son tour',      ring: 'ring-red ring-offset-2',      badge: 'bg-red/15 text-red' },
-  'neighbor_chooses_discard':{ icon: '👉', label: 'Voisin choisit',      ring: 'ring-red ring-offset-2',      badge: 'bg-red/15 text-red' },
-  'hand_visible':            { icon: '👁️', label: 'Main visible',        ring: 'ring-amber-400 ring-offset-2', badge: 'bg-amber-100 text-amber-700' },
-  'cannot_win':              { icon: '🤐', label: 'Bloqué',              ring: 'ring-red ring-offset-2',      badge: 'bg-red/15 text-red' },
+const EFFECT_META: Record<string, { icon: string; label: string; desc: string; ring: string; badge: string }> = {
+  'protect_malus':           { icon: '🛡️', label: 'Protégé malus',      desc: 'Les cartes malus ne s\'appliquent pas à ce joueur pendant cet effet.',            ring: 'ring-primary ring-offset-2',   badge: 'bg-primary/20 text-primary' },
+  'protect_player':          { icon: '🛡️', label: 'Immunisé',           desc: 'Ce joueur est immunisé contre toutes les attaques des autres joueurs.',            ring: 'ring-primary ring-offset-2',   badge: 'bg-primary/20 text-primary' },
+  'global_no_malus':         { icon: '🚫', label: 'Aucun malus',         desc: 'Personne ne peut recevoir de malus tant que cet effet est actif.',                  ring: 'ring-primary ring-offset-2',   badge: 'bg-primary/20 text-primary' },
+  'protect_decomposers':     { icon: '🌿', label: 'Décomposeurs OK',     desc: 'Les cartes décomposeurs de ce joueur sont protégées contre la défausse forcée.',   ring: 'ring-primary ring-offset-2',   badge: 'bg-primary/20 text-primary' },
+  'redirect_malus':          { icon: '↩️', label: 'Redirige malus',      desc: 'Le prochain malus reçu est automatiquement renvoyé vers un adversaire.',           ring: 'ring-amber-400 ring-offset-2', badge: 'bg-amber-100 text-amber-700' },
+  'skip_turn':               { icon: '⌛', label: 'Passe son tour',      desc: 'Ce joueur passe son tour sans pouvoir jouer.',                                      ring: 'ring-red ring-offset-2',       badge: 'bg-red/15 text-red' },
+  'neighbor_chooses_discard':{ icon: '👉', label: 'Voisin choisit',      desc: 'Le voisin de gauche choisit quelle carte ce joueur doit défausser.',               ring: 'ring-red ring-offset-2',       badge: 'bg-red/15 text-red' },
+  'hand_visible':            { icon: '👁️', label: 'Main visible',        desc: 'Toutes les cartes de ce joueur sont visibles par les autres joueurs.',              ring: 'ring-amber-400 ring-offset-2', badge: 'bg-amber-100 text-amber-700' },
+  'cannot_win':              { icon: '🤐', label: 'Bloqué',              desc: 'Ce joueur ne peut pas crier "Sauve qui pousse !" pendant cet effet.',               ring: 'ring-red ring-offset-2',       badge: 'bg-red/15 text-red' },
 }
 
 function getPlayerEffects(participantId: number) {
   return game.session?.activeEffects?.filter(e => e.participantId === participantId) ?? []
 }
 function effectMeta(code: string) {
-  return EFFECT_META[code] ?? { icon: '✨', label: 'Effet actif', ring: 'ring-primary ring-offset-2', badge: 'bg-primary/20 text-primary' }
+  return EFFECT_META[code] ?? { icon: '✨', label: 'Effet actif', desc: '', ring: 'ring-primary ring-offset-2', badge: 'bg-primary/20 text-primary' }
 }
 
 /* ── wheel ── */
@@ -206,15 +206,18 @@ onUnmounted(() => { document.body.style.overflow = '' })
 
             <!-- Tooltip effet au hover -->
             <div v-if="!spinResult && getPlayerEffects(p.id).length > 0"
-              class="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 w-48 rounded-xl px-3 py-2.5 shadow-lg z-30
+              class="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 w-56 rounded-xl px-3 py-3 shadow-xl z-30
                      opacity-0 group-hover:opacity-100 pointer-events-none transition-opacity duration-150"
               :class="effectMeta(getPlayerEffects(p.id)[0]?.effectCode ?? '').badge">
-              <p class="font-bold text-xs mb-0.5">
+              <p class="font-bold text-xs mb-1">
                 {{ effectMeta(getPlayerEffects(p.id)[0]?.effectCode ?? '').icon }}
                 {{ effectMeta(getPlayerEffects(p.id)[0]?.effectCode ?? '').label }}
               </p>
-              <p v-for="e in getPlayerEffects(p.id)" :key="e.effectCode ?? ''" class="text-xs opacity-80">
-                {{ effectMeta(e.effectCode ?? '').label }} — {{ e.turnsRemaining ?? 0 }} tour{{ (e.turnsRemaining ?? 0) > 1 ? 's' : '' }} restant{{ (e.turnsRemaining ?? 0) > 1 ? 's' : '' }}
+              <p class="text-xs leading-snug mb-2">
+                {{ effectMeta(getPlayerEffects(p.id)[0]?.effectCode ?? '').desc }}
+              </p>
+              <p v-for="e in getPlayerEffects(p.id)" :key="e.effectCode ?? ''" class="text-xs font-semibold">
+                {{ e.turnsRemaining ?? 0 }} tour{{ (e.turnsRemaining ?? 0) > 1 ? 's' : '' }} restant{{ (e.turnsRemaining ?? 0) > 1 ? 's' : '' }}
               </p>
             </div>
           </div>
@@ -278,8 +281,8 @@ onUnmounted(() => { document.body.style.overflow = '' })
               <path fill="#aed227" stroke="#1d1d1b" stroke-miterlimit="10" d="M259.22,292.95l-180.49,58.64c-6.8-20.95-10.48-43.31-10.48-66.52h189.72c0,2.75.44,5.4,1.25,7.88Z"/>
               <path fill="#e23a12" stroke="#1d1d1b" stroke-miterlimit="10" d="M259.22,277.2c-.82,2.48-1.25,5.12-1.25,7.87H68.25c0-23.21,3.68-45.57,10.48-66.52l180.49,58.65Z"/>
               <!-- centre blanc + logo -->
-              <path fill="#fff" stroke="#1d1d1b" stroke-miterlimit="10" d="M308.96,285.07c0,13.53-10.97,24.5-24.5,24.5s-24.5-10.97-24.5-24.5,10.97-24.5,24.5-24.5,24.5,10.97,24.5,24.5Z"/>
-              <image :href="logoSauveImg" x="260" y="260" width="47" height="47" />
+              <circle cx="283.46" cy="285.07" r="52" fill="white" stroke="#623435" stroke-width="2.5" stroke-miterlimit="10"/>
+              <image :href="logoSauveImg" x="231" y="233" width="105" height="105" />
               <!-- labels MALUS -->
               <text fill="#f5debf" font-family="MagicalNeverland-Regular, 'Magical Neverland'" font-size="12" transform="translate(87.69 271.09) rotate(-80)">MALUS</text>
               <text fill="#f5debf" font-family="MagicalNeverland-Regular, 'Magical Neverland'" font-size="12" transform="translate(239.23 92.96) rotate(-10)">MALUS</text>
