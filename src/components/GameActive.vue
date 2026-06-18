@@ -23,20 +23,23 @@ const {
   leaveGame,
 } = useGame()
 
-const EFFECT_ICONS: Record<string, { icon: string, tooltip: string }> = {
-  'protect_malus': { icon: '🛡️', tooltip: 'Protégé contre les malus' },
-  'global_no_malus': { icon: '🚫', tooltip: 'Aucun malus pour personne' },
-  'redirect_malus': { icon: '↩️', tooltip: 'Redirige le prochain malus' },
-  'protect_decomposers': { icon: '🐛', tooltip: 'Décomposeurs protégés' },
-  'protect_player': { icon: '🫂', tooltip: 'Immunisé contre les attaques' },
-  'skip_turn': { icon: '⌛', tooltip: 'Passe son tour' },
-  'neighbor_chooses_discard': { icon: '👉', tooltip: 'Le voisin choisit la défausse' },
-  'hand_visible': { icon: '👁️', tooltip: 'Main visible' },
-  'cannot_win': { icon: '🤐', tooltip: 'Ne peut pas gagner ce tour' },
+const EFFECT_META: Record<string, { icon: string; label: string; ring: string; badge: string }> = {
+  'protect_malus':           { icon: '🛡️', label: 'Protégé malus',      ring: 'ring-primary ring-offset-2',  badge: 'bg-primary/20 text-primary' },
+  'protect_player':          { icon: '🛡️', label: 'Immunisé',           ring: 'ring-primary ring-offset-2',  badge: 'bg-primary/20 text-primary' },
+  'global_no_malus':         { icon: '🚫', label: 'Aucun malus',         ring: 'ring-primary ring-offset-2',  badge: 'bg-primary/20 text-primary' },
+  'protect_decomposers':     { icon: '🌿', label: 'Décomposeurs OK',     ring: 'ring-primary ring-offset-2',  badge: 'bg-primary/20 text-primary' },
+  'redirect_malus':          { icon: '↩️', label: 'Redirige malus',      ring: 'ring-amber-400 ring-offset-2', badge: 'bg-amber-100 text-amber-700' },
+  'skip_turn':               { icon: '⌛', label: 'Passe son tour',      ring: 'ring-red ring-offset-2',      badge: 'bg-red/15 text-red' },
+  'neighbor_chooses_discard':{ icon: '👉', label: 'Voisin choisit',      ring: 'ring-red ring-offset-2',      badge: 'bg-red/15 text-red' },
+  'hand_visible':            { icon: '👁️', label: 'Main visible',        ring: 'ring-amber-400 ring-offset-2', badge: 'bg-amber-100 text-amber-700' },
+  'cannot_win':              { icon: '🤐', label: 'Bloqué',              ring: 'ring-red ring-offset-2',      badge: 'bg-red/15 text-red' },
 }
 
 function getPlayerEffects(participantId: number) {
   return game.session?.activeEffects?.filter(e => e.participantId === participantId) ?? []
+}
+function effectMeta(code: string) {
+  return EFFECT_META[code] ?? { icon: '✨', label: 'Effet actif', ring: 'ring-primary ring-offset-2', badge: 'bg-primary/20 text-primary' }
 }
 
 /* ── wheel ── */
@@ -162,27 +165,31 @@ onUnmounted(() => { document.body.style.overflow = '' })
             :class="p.id === currentParticipant?.id ? 'ring-2 ring-primary bg-primary/5' : 'ring-1 ring-brown/10 bg-cream-dark'"
             class="rounded-2xl py-4 px-5 w-28 flex flex-col items-center gap-2 shadow-sm">
 
-            <!-- Avatar avec emoji d'effet superposé -->
-            <div class="relative w-14 h-14 rounded-full flex items-center justify-center text-white text-xl font-bold shadow-sm shrink-0"
-              :class="avatarColors[i % 4]">
-              {{ p.displayName.charAt(0).toUpperCase() }}
-              <!-- Premier effet actif affiché EN GRAND sur l'avatar -->
-              <span v-if="getPlayerEffects(p.id).length > 0"
-                class="absolute inset-0 flex items-center justify-center text-lg rounded-full bg-black/30"
-                :title="EFFECT_ICONS[getPlayerEffects(p.id)[0]?.effectCode ?? '']?.tooltip ?? 'Effet actif'">
-                {{ EFFECT_ICONS[getPlayerEffects(p.id)[0]?.effectCode ?? '']?.icon ?? '✨' }}
+            <!-- Avatar avec anneau coloré si effet actif -->
+            <div class="relative w-14 h-14 shrink-0">
+              <div class="w-full h-full rounded-full flex items-center justify-center text-white text-xl font-bold shadow-sm transition-all"
+                :class="[
+                  avatarColors[i % 4],
+                  !spinResult && getPlayerEffects(p.id).length > 0 ? 'ring-4 ' + effectMeta(getPlayerEffects(p.id)[0]?.effectCode ?? '').ring : ''
+                ]">
+                {{ p.displayName.charAt(0).toUpperCase() }}
+              </div>
+              <!-- Badge coin haut-droite -->
+              <span v-if="!spinResult && getPlayerEffects(p.id).length > 0"
+                class="absolute -top-1 -right-1 w-6 h-6 rounded-full bg-white shadow-md flex items-center justify-center text-sm leading-none">
+                {{ effectMeta(getPlayerEffects(p.id)[0]?.effectCode ?? '').icon }}
               </span>
             </div>
 
             <p class="text-brown text-sm font-semibold truncate w-full text-center">{{ p.displayName }}</p>
 
-            <!-- Libellé de l'effet sous le nom -->
-            <p v-if="getPlayerEffects(p.id).length > 0"
-              class="text-xs text-primary font-medium text-center leading-tight truncate w-full"
-              :title="EFFECT_ICONS[getPlayerEffects(p.id)[0]?.effectCode ?? '']?.tooltip">
-              {{ EFFECT_ICONS[getPlayerEffects(p.id)[0]?.effectCode ?? '']?.tooltip ?? 'Effet actif' }}
-              <span class="text-brown/40">({{ getPlayerEffects(p.id)[0]?.turnsRemaining }}t)</span>
-            </p>
+            <!-- Badge effet visible -->
+            <div v-if="!spinResult && getPlayerEffects(p.id).length > 0"
+              class="rounded-full px-2 py-0.5 text-xs font-bold text-center w-full truncate"
+              :class="effectMeta(getPlayerEffects(p.id)[0]?.effectCode ?? '').badge">
+              {{ effectMeta(getPlayerEffects(p.id)[0]?.effectCode ?? '').label }}
+              <span class="font-normal opacity-60">&nbsp;{{ getPlayerEffects(p.id)[0]?.turnsRemaining }}t</span>
+            </div>
 
             <div class="flex gap-0.5">
               <span v-for="n in totalRounds" :key="n"
