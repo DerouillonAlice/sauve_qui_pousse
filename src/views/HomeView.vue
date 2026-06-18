@@ -125,29 +125,40 @@ function onPointerUp(e: PointerEvent) {
     </div>
   </section>
 
-  <!-- PRÊT À JOUER ? -->
-  <section class="relative py-20 px-6 bg-brown">
-    <img :src="scarecrowImg" aria-hidden="true" class="absolute left-0 bottom-0 h-52 lg:h-64 pointer-events-none select-none hidden md:block" />
-    <img :src="pesticideImg" aria-hidden="true" class="absolute right-0 bottom-0 h-44 lg:h-56 pointer-events-none select-none hidden md:block" />
-    <div class="max-w-lg mx-auto text-center">
-      <h2 class="text-cream mb-3">{{ t('home.cta.title') }}</h2>
-      <p class="text-cream/55 text-sm mb-8 leading-relaxed">{{ t('home.cta.subtitle') }}</p>
-      <div class="flex flex-wrap justify-center gap-3 mb-10">
-        <span v-for="chip in ctaChips" :key="chip"
-          class="px-4 py-1.5 rounded-full border border-cream/25 text-cream/70 text-sm font-medium">
-          {{ chip }}
-        </span>
+  <!-- PRÊT À JOUER ? — encadré centré + doodles de chaque côté -->
+  <section class="py-16 px-4 bg-cream">
+    <div class="max-w-5xl mx-auto flex items-center justify-center gap-0">
+
+      <!-- Scarecrow gauche -->
+      <img :src="scarecrowImg" aria-hidden="true"
+        class="hidden md:block h-64 lg:h-72 shrink-0 pointer-events-none select-none -mr-4 z-10" />
+
+      <!-- Carte brune -->
+      <div class="bg-brown rounded-3xl px-10 py-12 text-center flex-1 max-w-lg z-20 shadow-xl">
+        <h2 class="text-cream mb-3">{{ t('home.cta.title') }}</h2>
+        <p class="text-cream/60 text-sm mb-8 leading-relaxed">{{ t('home.cta.subtitle') }}</p>
+        <div class="flex flex-wrap justify-center gap-3 mb-8">
+          <span v-for="chip in ctaChips" :key="chip"
+            class="px-4 py-1.5 rounded-full border border-cream/25 text-cream/70 text-sm font-medium">
+            {{ chip }}
+          </span>
+        </div>
+        <div class="flex flex-col gap-3">
+          <RouterLink to="/jouer"
+            class="px-8 py-4 bg-primary text-cream rounded-full font-semibold hover:scale-105 transition-transform shadow-lg shadow-primary/20 text-center">
+            {{ t('home.cta.create') }}
+          </RouterLink>
+          <RouterLink to="/jouer"
+            class="px-8 py-4 border-2 border-primary text-primary rounded-full font-semibold hover:bg-primary hover:text-cream transition-colors text-center">
+            {{ t('home.cta.join') }}
+          </RouterLink>
+        </div>
       </div>
-      <div class="flex flex-col sm:flex-row gap-4 justify-center">
-        <RouterLink to="/jouer"
-          class="px-8 py-4 bg-primary text-cream rounded-full font-semibold hover:scale-105 transition-transform shadow-lg shadow-primary/20">
-          {{ t('home.cta.create') }}
-        </RouterLink>
-        <RouterLink to="/jouer"
-          class="px-8 py-4 border-2 border-primary text-primary rounded-full font-semibold hover:bg-primary hover:text-cream transition-colors">
-          {{ t('home.cta.join') }}
-        </RouterLink>
-      </div>
+
+      <!-- Pesticide droite -->
+      <img :src="pesticideImg" aria-hidden="true"
+        class="hidden md:block h-56 lg:h-64 shrink-0 pointer-events-none select-none -ml-4 z-10" />
+
     </div>
   </section>
 
