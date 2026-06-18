@@ -15,16 +15,19 @@ const links = [
 
 <template>
   <header class="flex items-center justify-between px-8 py-4 bg-primary">
-    <RouterLink to="/">
+    <!-- Logo visible uniquement sur mobile (desktop : caché car intégré dans hero_desktop.svg) -->
+    <RouterLink to="/" class="md:hidden">
       <img :src="logoBlanc" alt="Sauve qui pousse" class="h-12 w-auto" />
     </RouterLink>
-    <nav class="flex gap-6 items-center">
+    <!-- Nav liens à gauche sur desktop -->
+    <nav class="hidden md:flex gap-8 items-center">
       <RouterLink v-for="link in links" :key="link.to" :to="link.to"
-        class="hidden lg:block text-cream no-underline hover:underline"
+        class="text-cream no-underline hover:underline font-medium text-lg"
+        style="font-family: 'Nunito', sans-serif; font-weight: 700"
         active-class="font-bold underline">
         {{ t(link.i18nKey) }}
       </RouterLink>
-      <LanguageSelector />
     </nav>
+    <LanguageSelector />
   </header>
 </template>

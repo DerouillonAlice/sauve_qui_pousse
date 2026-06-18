@@ -43,7 +43,7 @@
       "terms": "J'accepte les termes *"
     },
     "pedagogy": {
-      "title": "Un jeu qui s'amuse, et qui apprend.",
+      "title": "Un jeu qui amuse, et qui apprend",
       "intro": "Chaque carte cache une information. Pas un cours, un fait, simple et marquant.",
       "facts": [
         "Les abeilles pollinisent 80 % des plantes à fleurs. Sans elles, pas de fruits, pas de légumes.",
@@ -62,13 +62,34 @@
       "title": "Nos cartes",
       "see_all": "Voir toutes les cartes →",
       "cards": [
-        { "name": "Abeilles", "desc": "Pollinisatrices essentielles, elles visitent jusqu'à 2 000 fleurs par jour !" },
-        { "name": "Vers de Terre", "desc": "Ingénieurs du sol, ils aèrent la terre et la rendent fertile." },
-        { "name": "Coccinelles", "desc": "Prédatrices naturelles, elles dévorent jusqu'à 100 pucerons par jour." },
-        { "name": "Frelons", "desc": "Prédateurs redoutables, ils régulent les populations d'insectes." },
-        { "name": "Pesticides", "desc": "Menace silencieuse, ils contaminent les sols et les nappes phréatiques." },
-        { "name": "Agricole", "desc": "L'agriculture intensive fragilise les écosystèmes et la biodiversité." },
-        { "name": "Épouvantail", "desc": "Gardien du jardin, il protège les cultures des oiseaux gourmands." }
+        {
+          "name": "Abeilles",
+          "desc": "Pollinisatrices essentielles, elles visitent jusqu'à 2 000 fleurs par jour !"
+        },
+        {
+          "name": "Vers de Terre",
+          "desc": "Ingénieurs du sol, ils aèrent la terre et la rendent fertile."
+        },
+        {
+          "name": "Coccinelles",
+          "desc": "Prédatrices naturelles, elles dévorent jusqu'à 100 pucerons par jour."
+        },
+        {
+          "name": "Frelons",
+          "desc": "Prédateurs redoutables, ils régulent les populations d'insectes."
+        },
+        {
+          "name": "Pesticides",
+          "desc": "Menace silencieuse, ils contaminent les sols et les nappes phréatiques."
+        },
+        {
+          "name": "Agricole",
+          "desc": "L'agriculture intensive fragilise les écosystèmes et la biodiversité."
+        },
+        {
+          "name": "Épouvantail",
+          "desc": "Gardien du jardin, il protège les cultures des oiseaux gourmands."
+        }
       ]
     }
   },
@@ -86,7 +107,10 @@
       "title": "La roue numérique",
       "desc": "La roue sert uniquement à piocher. Elle offre des cases infinies :",
       "neutral": { "label": "Cases neutres", "desc": "Tu pioches et joues normalement." },
-      "bonus": { "label": "Cases bonus", "desc": "Actions positives : protection, débarras de mauvaises cartes..." },
+      "bonus": {
+        "label": "Cases bonus",
+        "desc": "Actions positives : protection, débarras de mauvaises cartes..."
+      },
       "trap": { "label": "Cases piégées", "desc": "Actions négatives : ton jeu est saboté." }
     },
     "cards": {
@@ -101,9 +125,7 @@
       },
       "neutral": {
         "title": "Cartes neutres",
-        "items": [
-          { "name": "Agriculteurs", "points": "0 pt" }
-        ]
+        "items": [{ "name": "Agriculteurs", "points": "0 pt" }]
       },
       "negative": {
         "title": "Cartes négatives",
@@ -116,8 +138,14 @@
     },
     "bonusmalus": {
       "title": "Bonus & Malus",
-      "bonus": { "label": "Cartes bonus", "desc": "Actions des humains pour aider la biodiversité." },
-      "malus": { "label": "Cartes malus", "desc": "Actions néfastes, météo défavorable, insectes invasifs..." }
+      "bonus": {
+        "label": "Cartes bonus",
+        "desc": "Actions des humains pour aider la biodiversité."
+      },
+      "malus": {
+        "label": "Cartes malus",
+        "desc": "Actions néfastes, météo défavorable, insectes invasifs..."
+      }
     },
     "win": {
       "title": "Comment gagner",

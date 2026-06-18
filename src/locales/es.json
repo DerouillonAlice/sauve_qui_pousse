@@ -43,7 +43,7 @@
       "terms": "Acepto los términos *"
     },
     "pedagogy": {
-      "title": "Un juego que divierte y enseña.",
+      "title": "Un juego que divierte y enseña",
       "intro": "Cada carta esconde una información. No es una clase, es un hecho, simple e impactante.",
       "facts": [
         "Las abejas polinizan el 80% de las plantas con flores. Sin ellas, no hay frutos ni verduras.",
@@ -62,13 +62,31 @@
       "title": "Nuestras cartas",
       "see_all": "Ver todas las cartas →",
       "cards": [
-        { "name": "Abejas", "desc": "Polinizadoras esenciales, ¡visitan hasta 2.000 flores por día!" },
+        {
+          "name": "Abejas",
+          "desc": "Polinizadoras esenciales, ¡visitan hasta 2.000 flores por día!"
+        },
         { "name": "Lombrices", "desc": "Ingenieras del suelo, airean la tierra y la fertilizan." },
-        { "name": "Mariquitas", "desc": "Depredadoras naturales, devoran hasta 100 pulgones al día." },
-        { "name": "Avispones", "desc": "Depredadores temibles, regulan las poblaciones de insectos." },
-        { "name": "Pesticidas", "desc": "Amenaza silenciosa, contaminan los suelos y las aguas subterráneas." },
-        { "name": "Agricultura", "desc": "La agricultura intensiva debilita los ecosistemas y la biodiversidad." },
-        { "name": "Espantapájaros", "desc": "Guardián del jardín, protege los cultivos de los pájaros hambrientos." }
+        {
+          "name": "Mariquitas",
+          "desc": "Depredadoras naturales, devoran hasta 100 pulgones al día."
+        },
+        {
+          "name": "Avispones",
+          "desc": "Depredadores temibles, regulan las poblaciones de insectos."
+        },
+        {
+          "name": "Pesticidas",
+          "desc": "Amenaza silenciosa, contaminan los suelos y las aguas subterráneas."
+        },
+        {
+          "name": "Agricultura",
+          "desc": "La agricultura intensiva debilita los ecosistemas y la biodiversidad."
+        },
+        {
+          "name": "Espantapájaros",
+          "desc": "Guardián del jardín, protege los cultivos de los pájaros hambrientos."
+        }
       ]
     }
   },
@@ -86,7 +104,10 @@
       "title": "La rueda digital",
       "desc": "La rueda solo se usa para sacar cartas. Ofrece casillas infinitas:",
       "neutral": { "label": "Casillas neutras", "desc": "Sacas y juegas normalmente." },
-      "bonus": { "label": "Casillas bonus", "desc": "Acciones positivas: protección, deshacerse de malas cartas..." },
+      "bonus": {
+        "label": "Casillas bonus",
+        "desc": "Acciones positivas: protección, deshacerse de malas cartas..."
+      },
       "trap": { "label": "Casillas trampa", "desc": "Acciones negativas: tu mano es saboteada." }
     },
     "cards": {
@@ -101,9 +122,7 @@
       },
       "neutral": {
         "title": "Cartas neutras",
-        "items": [
-          { "name": "Agricultores", "points": "0 pt" }
-        ]
+        "items": [{ "name": "Agricultores", "points": "0 pt" }]
       },
       "negative": {
         "title": "Cartas negativas",
@@ -116,8 +135,14 @@
     },
     "bonusmalus": {
       "title": "Bonus & Malus",
-      "bonus": { "label": "Cartas bonus", "desc": "Acciones humanas para ayudar a la biodiversidad." },
-      "malus": { "label": "Cartas malus", "desc": "Acciones nocivas, mal tiempo, insectos invasores..." }
+      "bonus": {
+        "label": "Cartas bonus",
+        "desc": "Acciones humanas para ayudar a la biodiversidad."
+      },
+      "malus": {
+        "label": "Cartas malus",
+        "desc": "Acciones nocivas, mal tiempo, insectos invasores..."
+      }
     },
     "win": {
       "title": "Cómo ganar",
