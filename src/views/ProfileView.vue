@@ -1,14 +1,54 @@
 <script setup lang="ts">
-import { ref, onMounted, computed } from 'vue'
+import { ref, onMounted, computed, watch } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { useRouter } from 'vue-router'
 import { useAuth } from '@/composables/useAuth'
 import { apiFetch } from '@/services/api'
-import { Loader2, Trophy, Target, RotateCcw, Gamepad2, LogOut, Calendar } from 'lucide-vue-next'
+import { Loader2, Trophy, Target, RotateCcw, Gamepad2, LogOut, Calendar, AlertCircle, CheckCircle2 } from 'lucide-vue-next'
+import WaveEdge from '@/components/WaveEdge.vue'
 
 const { t } = useI18n()
 const router = useRouter()
-const { state: auth, isAuthenticated, logout } = useAuth()
+const { state: auth, isAuthenticated, login, register, logout, clearError } = useAuth()
+
+/* ── Form state ── */
+type Mode = 'login' | 'register'
+const mode = ref<Mode>('register')
+const successMessage = ref('')
+
+const loginEmail = ref('')
+const loginPassword = ref('')
+
+const registerFirstname = ref('')
+const registerLastname = ref('')
+const registerEmail = ref('')
+const registerPassword = ref('')
+const registerConfirmPassword = ref('')
+
+function switchMode(m: Mode) {
+  mode.value = m
+  clearError()
+  successMessage.value = ''
+}
+
+async function handleLogin() {
+  clearError()
+  successMessage.value = ''
+  if (!loginEmail.value || !loginPassword.value) return
+  await login(loginEmail.value, loginPassword.value)
+}
+
+async function handleRegister() {
+  clearError()
+  successMessage.value = ''
+  if (!registerFirstname.value || !registerLastname.value || !registerEmail.value || !registerPassword.value || !registerConfirmPassword.value) return
+  if (registerPassword.value !== registerConfirmPassword.value) {
+    ;(auth as { error: string | null }).error = 'auth.error.passwords_mismatch'
+    return
+  }
+  const ok = await register(registerEmail.value, registerPassword.value, registerFirstname.value)
+  if (ok) successMessage.value = t('play.register.success')
+}
 
 interface ProfileData {
   id: number
@@ -34,20 +74,29 @@ interface ProfileData {
 }
 
 const profile = ref<ProfileData | null>(null)
-const loading = ref(true)
+const loading = ref(false)
 const error   = ref<string | null>(null)
 
-onMounted(async () => {
-  if (!isAuthenticated.value) {
-    router.push('/jouer')
-    return
-  }
+async function loadProfile() {
+  loading.value = true
   try {
     profile.value = await apiFetch<ProfileData>('/me')
   } catch {
     error.value = 'Impossible de charger le profil.'
   } finally {
     loading.value = false
+  }
+}
+
+onMounted(() => {
+  if (isAuthenticated.value) {
+    loadProfile()
+  }
+})
+
+watch(isAuthenticated, (val) => {
+  if (val && !profile.value) {
+    loadProfile()
   }
 })
 
@@ -73,10 +122,11 @@ const avatarLetter = computed(() => (auth.user?.pseudo ?? 'U').charAt(0).toUpper
 </script>
 
 <template>
-  <div class="bg-cream min-h-screen pb-20 lg:pb-0">
+  <div class="bg-white min-h-screen pb-20 lg:pb-0">
 
-    <!-- Hero -->
-    <section class="bg-brown py-10 px-6 text-center">
+    <template v-if="isAuthenticated">
+      <!-- Hero -->
+      <section class="bg-brown py-10 px-6 text-center">
       <div class="max-w-xl mx-auto">
         <div class="w-20 h-20 rounded-full bg-primary mx-auto flex items-center justify-center text-white text-3xl font-bold font-game mb-4 shadow-lg">
           {{ avatarLetter }}
@@ -200,6 +250,141 @@ const avatarLetter = computed(() => (auth.user?.pseudo ?? 'U').charAt(0).toUpper
         </button>
       </section>
 
+    </template>
+    </template>
+
+    <template v-else>
+      <!-- HERO (shown when not logged in) -->
+      <section class="py-16 px-6 text-center bg-cream-dark">
+        <div class="max-w-xl mx-auto">
+          <h1 class="text-brown mb-3">{{ t('play.hero.title') }}</h1>
+          <p class="text-brown/70 text-lg">{{ t('play.hero.subtitle') }}</p>
+        </div>
+      </section>
+
+      <!-- Vagues crème -->
+      <WaveEdge color="var(--color-cream-dark)" :size="48" />
+
+      <div class="max-w-xl mx-auto px-6 py-16">
+        <div class="bg-brown rounded-3xl p-8">
+
+          <!-- Error -->
+          <Transition
+            enter-active-class="transition-all duration-300 ease-out"
+            enter-from-class="opacity-0 -translate-y-2"
+            enter-to-class="opacity-100 translate-y-0"
+            leave-active-class="transition-all duration-200 ease-in"
+            leave-from-class="opacity-100 translate-y-0"
+            leave-to-class="opacity-0 -translate-y-2"
+          >
+            <div v-if="auth.error" class="flex items-start gap-3 bg-red/20 text-cream rounded-xl px-4 py-3 mb-4 text-sm">
+              <AlertCircle :stroke-width="1.5" class="w-5 h-5 mt-0.5 shrink-0" />
+              <span>{{ t(auth.error) }}</span>
+            </div>
+          </Transition>
+
+          <!-- Success -->
+          <Transition
+            enter-active-class="transition-all duration-300 ease-out"
+            enter-from-class="opacity-0 -translate-y-2"
+            enter-to-class="opacity-100 translate-y-0"
+            leave-active-class="transition-all duration-200 ease-in"
+            leave-from-class="opacity-100 translate-y-0"
+            leave-to-class="opacity-0 -translate-y-2"
+          >
+            <div v-if="successMessage" class="flex items-start gap-3 bg-primary/30 text-cream rounded-xl px-4 py-3 mb-4 text-sm">
+              <CheckCircle2 :stroke-width="1.5" class="w-5 h-5 mt-0.5 shrink-0" />
+              <span>{{ successMessage }}</span>
+            </div>
+          </Transition>
+
+          <!-- REGISTER -->
+          <form v-if="mode === 'register'" class="space-y-4" @submit.prevent="handleRegister">
+            <h2 class="text-cream font-game text-3xl mb-6">{{ t('play.register.title') }}</h2>
+
+            <div class="flex flex-col gap-1">
+              <label for="register-firstname" class="text-cream font-semibold text-sm">{{ t('play.register.firstname') }}</label>
+              <input id="register-firstname" v-model="registerFirstname" type="text" required autocomplete="given-name"
+                class="w-full px-4 py-3 rounded-xl border-2 border-primary bg-cream text-brown placeholder:text-brown/40 focus:outline-none focus:ring-[3px] focus:ring-primary/25 transition-all" />
+            </div>
+
+            <div class="flex flex-col gap-1">
+              <label for="register-lastname" class="text-cream font-semibold text-sm">{{ t('play.register.lastname') }}</label>
+              <input id="register-lastname" v-model="registerLastname" type="text" required autocomplete="family-name"
+                class="w-full px-4 py-3 rounded-xl border-2 border-primary bg-cream text-brown placeholder:text-brown/40 focus:outline-none focus:ring-[3px] focus:ring-primary/25 transition-all" />
+            </div>
+
+            <div class="flex flex-col gap-1">
+              <label for="register-email" class="text-cream font-semibold text-sm">{{ t('play.register.email') }}</label>
+              <input id="register-email" v-model="registerEmail" type="email" required autocomplete="email"
+                class="w-full px-4 py-3 rounded-xl border-2 border-primary bg-cream text-brown placeholder:text-brown/40 focus:outline-none focus:ring-[3px] focus:ring-primary/25 transition-all" />
+            </div>
+
+            <div class="flex flex-col gap-1">
+              <label for="register-password" class="text-cream font-semibold text-sm">{{ t('play.register.password') }}</label>
+              <input id="register-password" v-model="registerPassword" type="password" required autocomplete="new-password"
+                minlength="8" class="w-full px-4 py-3 rounded-xl border-2 border-primary bg-cream text-brown placeholder:text-brown/40 focus:outline-none focus:ring-[3px] focus:ring-primary/25 transition-all" />
+              <span class="text-cream/50 text-xs mt-1">{{ t('play.register.password_hint') }}</span>
+            </div>
+
+            <div class="flex flex-col gap-1">
+              <label for="register-confirm-password" class="text-cream font-semibold text-sm">{{ t('play.register.confirm_password') }}</label>
+              <input id="register-confirm-password" v-model="registerConfirmPassword" type="password" required
+                autocomplete="new-password"
+                class="w-full px-4 py-3 rounded-xl border-2 border-primary bg-cream text-brown placeholder:text-brown/40 focus:outline-none focus:ring-[3px] focus:ring-primary/25 transition-all" />
+            </div>
+
+            <div class="pt-2">
+              <button id="register-submit" type="submit" :disabled="auth.isLoading"
+                class="mx-auto flex items-center justify-center gap-2 px-10 py-3 bg-primary text-cream rounded-full font-bold cursor-pointer hover:scale-[1.03] active:scale-[0.97] disabled:opacity-50 disabled:cursor-not-allowed transition-transform">
+                <Loader2 v-if="auth.isLoading" :stroke-width="2" class="w-5 h-5 animate-spin" />
+                {{ t('play.register.submit') }}
+              </button>
+            </div>
+
+            <p class="text-xs text-cream/50 text-center leading-relaxed">{{ t('play.register.legal') }}</p>
+
+            <p class="text-center text-sm text-cream/70 pt-2">
+              {{ t('play.register.switch_login') }}
+              <button type="button" @click="switchMode('login')" class="text-primary font-semibold hover:underline cursor-pointer">
+                {{ t('play.register.switch_login_link') }}
+              </button>
+            </p>
+          </form>
+
+          <!-- LOGIN -->
+          <form v-else class="space-y-4" @submit.prevent="handleLogin">
+            <h2 class="text-cream font-game text-3xl mb-6">{{ t('play.login.title') }}</h2>
+
+            <div class="flex flex-col gap-1">
+              <label for="login-email" class="text-cream font-semibold text-sm">{{ t('play.login.email') }}</label>
+              <input id="login-email" v-model="loginEmail" type="email" required autocomplete="email"
+                class="w-full px-4 py-3 rounded-xl border-2 border-primary bg-cream text-brown placeholder:text-brown/40 focus:outline-none focus:ring-[3px] focus:ring-primary/25 transition-all" />
+            </div>
+
+            <div class="flex flex-col gap-1">
+              <label for="login-password" class="text-cream font-semibold text-sm">{{ t('play.login.password') }}</label>
+              <input id="login-password" v-model="loginPassword" type="password" required autocomplete="current-password"
+                class="w-full px-4 py-3 rounded-xl border-2 border-primary bg-cream text-brown placeholder:text-brown/40 focus:outline-none focus:ring-[3px] focus:ring-primary/25 transition-all" />
+            </div>
+
+            <div class="pt-2">
+              <button id="login-submit" type="submit" :disabled="auth.isLoading"
+                class="mx-auto flex items-center justify-center gap-2 px-10 py-3 bg-primary text-cream rounded-full font-bold cursor-pointer hover:scale-[1.03] active:scale-[0.97] disabled:opacity-50 disabled:cursor-not-allowed transition-transform">
+                <Loader2 v-if="auth.isLoading" :stroke-width="2" class="w-5 h-5 animate-spin" />
+                {{ t('play.login.submit') }}
+              </button>
+            </div>
+
+            <p class="text-center text-sm text-cream/70 pt-2">
+              {{ t('play.login.switch_register') }}
+              <button type="button" @click="switchMode('register')" class="text-primary font-semibold hover:underline cursor-pointer">
+                {{ t('play.login.switch_register_link') }}
+              </button>
+            </p>
+          </form>
+        </div>
+      </div>
     </template>
   </div>
 </template>
