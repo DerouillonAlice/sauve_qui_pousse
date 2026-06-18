@@ -22,7 +22,7 @@ const basicLinks = [
     <nav class="flex gap-6 items-center">
       <RouterLink v-for="link in basicLinks" :key="link.to" :to="link.to"
         class="hidden lg:block text-cream no-underline hover:underline"
-        active-class="font-bold underline">
+        active-class="font-bold !text-cream/60">
         {{ t(link.i18nKey) }}
       </RouterLink>
 
@@ -36,7 +36,7 @@ const basicLinks = [
       <template v-else>
         <RouterLink to="/compte"
           class="hidden lg:block text-cream no-underline hover:underline"
-          active-class="font-bold underline">
+          active-class="font-bold !text-cream/60">
           {{ t('nav.account') }}
         </RouterLink>
         <RouterLink to="/jouer"
