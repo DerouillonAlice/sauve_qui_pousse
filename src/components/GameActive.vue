@@ -230,7 +230,7 @@ onUnmounted(() => { document.body.style.overflow = '' })
       <div class="flex flex-col items-center justify-center gap-6 w-full mt-2 md:mt-6">
         
         <!-- ── ROUE ── -->
-        <div class="relative w-72 h-72 sm:w-80 sm:h-80 select-none drop-shadow-xl">
+        <div class="relative w-80 h-80 sm:w-96 sm:h-96 select-none drop-shadow-xl">
           <svg viewBox="0 0 566.93 566.93" class="w-full h-full" xmlns="http://www.w3.org/2000/svg">
             <!-- Corps de la roue (tourne) -->
             <g :style="{
