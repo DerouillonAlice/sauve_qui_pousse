@@ -30,14 +30,33 @@ const {
 const wheelDeg    = ref(0)
 const wheelMoving = ref(false)
 
-// Rotation cible (mod 360) pour que le pointeur TOP (270° SVG) pointe le bon secteur.
-// Centres SVG (0°=right, CW): Pioche=0°, Bonus=135°, Malus=225°
-// Rotation = 270° - centre_secteur  (mod 360)
+// 20 secteurs (18°/secteur). Pattern: P,P,M,P,B répété x4 → 12 Pioche, 4 Malus, 4 Bonus
+// Secteur i centré à SVG (270 + i*18)°. LANDING = (270 - centre + 360) % 360
 const LANDING: Record<string, number> = {
-  card:       270,  // Pioche  (centre 0°)   → 270-0   = 270
-  extra_spin: 135,  // Bonus   (centre 135°) → 270-135 = 135
-  skip:       45,   // Malus   (centre 225°) → 270-225 = 45
+  card:       180,  // Pioche  secteur 10, centre SVG 90°
+  extra_spin: 108,  // Bonus   secteur 14, centre SVG 162°
+  skip:       234,  // Malus   secteur 7,  centre SVG 36°
 }
+
+const WHEEL_PATTERN = ['pioche','pioche','malus','pioche','bonus','pioche','pioche','malus','pioche','bonus','pioche','pioche','malus','pioche','bonus','pioche','pioche','malus','pioche','bonus'] as const
+
+const wheelSectors = computed(() => {
+  const toRad = (d: number) => d * Math.PI / 180
+  const cx = 100, cy = 100, r = 90
+  return WHEEL_PATTERN.map((type, i) => {
+    const centerDeg = (270 + i * 18) % 360
+    const startDeg  = (centerDeg - 9 + 360) % 360
+    const endDeg    = (centerDeg + 9) % 360
+    const x1 = cx + r * Math.cos(toRad(startDeg))
+    const y1 = cy + r * Math.sin(toRad(startDeg))
+    const x2 = cx + r * Math.cos(toRad(endDeg))
+    const y2 = cy + r * Math.sin(toRad(endDeg))
+    const path = `M ${cx} ${cy} L ${x1.toFixed(2)} ${y1.toFixed(2)} A ${r} ${r} 0 0 1 ${x2.toFixed(2)} ${y2.toFixed(2)} Z`
+    const color = type === 'bonus' ? '#4a6020' : type === 'malus' ? '#c73c18' : i % 2 === 0 ? '#bec059' : '#8fa83c'
+    const label = type === 'pioche' ? 'PIOCHE' : type === 'bonus' ? 'BONUS' : 'MALUS'
+    return { i, centerDeg, path, color, label }
+  })
+})
 
 /* ── spin phase ── */
 type Phase = 'idle' | 'spinning' | 'result'
@@ -162,17 +181,16 @@ onUnmounted(() => { document.body.style.overflow = '' })
               transition: wheelMoving ? 'transform 3.2s cubic-bezier(0.1, 0.85, 0.2, 1)' : 'none'
             }">
             <svg viewBox="0 0 200 200" class="w-full h-full" xmlns="http://www.w3.org/2000/svg">
-              <path d="M 100 100 L 100 10 A 90 90 0 0 1 100 190 Z" fill="#bec059" />
-              <path d="M 100 100 L 100 190 A 90 90 0 0 1 10 100 Z" fill="#fadd83" />
-              <path d="M 100 100 L 10 100 A 90 90 0 0 1 100 10 Z" fill="#e20000" />
-              <line x1="100" y1="100" x2="100" y2="10"  stroke="white" stroke-width="3" />
-              <line x1="100" y1="100" x2="100" y2="190" stroke="white" stroke-width="3" />
-              <line x1="100" y1="100" x2="10"  y2="100" stroke="white" stroke-width="3" />
-              <text x="150" y="95"  text-anchor="middle" font-size="11" fill="white" font-weight="bold" font-family="sans-serif">Pioche</text>
-              <text x="150" y="108" text-anchor="middle" font-size="9"  fill="white" font-family="sans-serif">une carte</text>
-              <text x="63"  y="132" text-anchor="middle" font-size="11" fill="#623435" font-weight="bold" font-family="sans-serif">BONUS</text>
-              <text x="63"  y="68"  text-anchor="middle" font-size="11" fill="white"   font-weight="bold" font-family="sans-serif">MALUS</text>
-              <circle cx="100" cy="100" r="14" fill="white" stroke="#623435" stroke-width="2.5" />
+              <path v-for="s in wheelSectors" :key="s.i"
+                :d="s.path" :fill="s.color"
+                stroke="rgba(255,255,255,0.35)" stroke-width="0.6" />
+              <text v-for="s in wheelSectors" :key="'t'+s.i"
+                :transform="`translate(100,100) rotate(${s.centerDeg}) translate(27,0)`"
+                text-anchor="start" dominant-baseline="central"
+                font-size="5.5" font-weight="bold" fill="white" font-family="sans-serif"
+                style="letter-spacing:0.4px">{{ s.label }}</text>
+              <circle cx="100" cy="100" r="15" fill="white" stroke="#623435" stroke-width="2.5" />
+              <path d="M100 109 C100 109 92 102 92 95 C92 88 96 83 100 82 C104 83 108 88 108 95 C108 102 100 109 100 109Z" fill="#4a6020" />
             </svg>
           </div>
         </div>
@@ -317,7 +335,7 @@ onUnmounted(() => { document.body.style.overflow = '' })
     </div>
 
     <!-- ═══ LEAVE ═══ -->
-    <div class="flex justify-center pb-8 pt-2">
+    <div class="flex justify-center pb-24 lg:pb-8 pt-2">
       <button @click="leaveGame"
         class="flex items-center gap-2 px-6 py-3 rounded-full border-2 border-red/30 text-red/60 hover:bg-red/8 hover:border-red/60 hover:text-red font-semibold text-sm transition-all cursor-pointer">
         <LogOut :stroke-width="1.5" class="w-4 h-4" />

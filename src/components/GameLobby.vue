@@ -81,15 +81,20 @@ const emptySlots = computed(() => Math.max(0, MAX_PLAYERS - participants.value.l
         class="w-10 h-10 flex items-center justify-center rounded-full bg-cream-dark text-brown hover:bg-primary hover:text-cream transition-colors cursor-pointer shrink-0">
         <ArrowLeft :stroke-width="2" class="w-5 h-5" />
       </button>
-      <div>
-        <h2 class="text-brown text-2xl font-game leading-tight">{{ t('game.lobby.title') }}</h2>
-        <p class="text-brown/50 text-xs">{{ t('game.lobby.code_label') }} :
-          <span class="font-bold text-primary tracking-widest font-game">{{ game.session?.joinCode }}</span>
-          <button @click="copyCode" class="ml-2 inline-flex items-center gap-1 text-brown/40 hover:text-primary transition-colors cursor-pointer">
-            <Check v-if="copied" class="w-3.5 h-3.5" />
-            <Copy v-else class="w-3.5 h-3.5" />
-          </button>
-        </p>
+      <h2 class="text-brown text-2xl font-game leading-tight">{{ t('game.lobby.title') }}</h2>
+    </div>
+
+    <!-- Code de partie mis en valeur -->
+    <div class="bg-brown rounded-3xl px-6 py-5 text-center">
+      <p class="text-cream/50 text-xs uppercase tracking-wider mb-2">{{ t('game.lobby.code_label') }}</p>
+      <div class="flex items-center justify-center gap-3">
+        <span class="text-primary font-game text-5xl tracking-[0.35em]">{{ game.session?.joinCode }}</span>
+        <button @click="copyCode"
+          class="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-cream/10 hover:bg-cream/20 text-cream/70 hover:text-cream transition-all cursor-pointer text-xs font-semibold">
+          <Check v-if="copied" class="w-3.5 h-3.5" />
+          <Copy v-else class="w-3.5 h-3.5" />
+          {{ copied ? 'Copié !' : 'Copier' }}
+        </button>
       </div>
     </div>
 
