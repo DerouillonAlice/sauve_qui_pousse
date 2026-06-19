@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { RouterLink } from 'vue-router'
-import footerImg from '@/assets/img/footer.svg'
 
 const menuLinks = [
   { label: 'Accueil', to: '/' },

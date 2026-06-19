@@ -1,1 +1,0 @@
-var e=`/assets/ladybug-CwM2mjFA.svg`;export{e as t};

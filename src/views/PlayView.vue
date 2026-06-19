@@ -52,7 +52,7 @@ onUnmounted(() => stopPolling())
   <!-- Full-screen game view — bypasses hero+grid entirely -->
   <GameActive v-if="isAuthenticated && isInGame && (isActive || isFinished)" />
 
-  <div v-else class="bg-white pt-4 lg:pt-8 pb-8">
+  <div v-else class="bg-white pt-8 lg:pt-14 pb-14">
 
     <div class="max-w-3xl mx-auto px-6">
 
