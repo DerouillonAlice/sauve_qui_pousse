@@ -13,6 +13,8 @@ const router = createRouter({
     { path: '/mentions-legales', name: 'mentions', component: () => import('@/views/MentionsLegalesView.vue') },
     { path: '/cgu',              name: 'cgu',      component: () => import('@/views/CGUView.vue') },
     { path: '/cgv',              name: 'cgv',      component: () => import('@/views/CGVView.vue') },
+    { path: '/mot-de-passe-oublie', name: 'forgot-password', component: () => import('@/views/ForgotPasswordView.vue') },
+    { path: '/reinitialiser-mot-de-passe', name: 'reset-password', component: () => import('@/views/ResetPasswordView.vue') },
   ],
 })
 

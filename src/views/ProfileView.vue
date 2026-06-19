@@ -399,6 +399,11 @@ const filteredHistory = computed(() => {
               <label for="login-password" class="text-cream font-semibold text-sm">{{ t('play.login.password') }}</label>
               <input id="login-password" v-model="loginPassword" type="password" required autocomplete="current-password"
                 class="w-full px-4 py-3 rounded-xl border-2 border-primary bg-cream text-brown placeholder:text-brown/40 focus:outline-none focus:ring-[3px] focus:ring-primary/25 transition-all" />
+              <div class="text-right mt-1">
+                <router-link to="/mot-de-passe-oublie" class="text-xs text-cream/70 hover:text-cream hover:underline transition-colors">
+                  {{ t('play.login.forgot') }}
+                </router-link>
+              </div>
             </div>
 
             <div class="pt-2">

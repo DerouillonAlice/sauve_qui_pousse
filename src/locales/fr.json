@@ -200,6 +200,25 @@
       "switch_register": "Pas encore de compte ?",
       "switch_register_link": "S'inscrire"
     },
+    "forgot": {
+      "title": "Mot de passe oublié ?",
+      "subtitle": "Entrez l'adresse email associée à votre compte pour recevoir un lien de réinitialisation.",
+      "email": "E-mail",
+      "submit": "Envoyer le lien",
+      "success": "Si cette adresse email est enregistrée, un lien vous a été envoyé.",
+      "back": "Retour à la connexion"
+    },
+    "reset": {
+      "title": "Nouveau mot de passe",
+      "subtitle": "Veuillez choisir un nouveau mot de passe (8 caractères minimum).",
+      "password": "Nouveau mot de passe",
+      "confirm_password": "Confirmer le mot de passe",
+      "submit": "Réinitialiser",
+      "success": "Mot de passe réinitialisé avec succès ! Vous pouvez vous connecter.",
+      "invalid_token": "Le lien est invalide ou a expiré.",
+      "mismatch": "Les mots de passe ne correspondent pas.",
+      "login_link": "Se connecter"
+    },
     "register": {
       "title": "Inscrivez vous !",
       "subtitle": "Crée ton compte en quelques secondes pour commencer à jouer.",
