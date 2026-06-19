@@ -25,7 +25,7 @@ const basicLinks = [
       <RouterLink v-for="link in basicLinks" :key="link.to" :to="link.to"
         class="text-cream no-underline hover:underline font-medium text-lg"
         style="font-family: 'Nunito', sans-serif; font-weight: 700"
-        active-class="font-bold underline">
+        active-class="font-bold !text-cream/60">
         {{ t(link.i18nKey) }}
       </RouterLink>
 
@@ -33,7 +33,7 @@ const basicLinks = [
         <RouterLink to="/jouer"
           class="text-cream no-underline hover:underline font-medium text-lg"
           style="font-family: 'Nunito', sans-serif; font-weight: 700"
-          active-class="font-bold underline">
+          active-class="font-bold !text-cream/60">
           {{ t('nav.play') }}
         </RouterLink>
         <RouterLink to="/compte"
@@ -46,7 +46,7 @@ const basicLinks = [
         <RouterLink to="/compte"
           class="text-cream no-underline hover:underline font-medium text-lg"
           style="font-family: 'Nunito', sans-serif; font-weight: 700"
-          active-class="font-bold underline">
+          active-class="font-bold !text-cream/60">
           {{ t('nav.account') }}
         </RouterLink>
         <RouterLink to="/jouer"

@@ -1,14 +1,12 @@
 <script setup lang="ts">
 import { ref, onMounted, computed, watch } from 'vue'
 import { useI18n } from 'vue-i18n'
-import { useRouter } from 'vue-router'
 import { useAuth } from '@/composables/useAuth'
 import { apiFetch } from '@/services/api'
 import { Loader2, Trophy, Target, RotateCcw, Gamepad2, LogOut, Calendar, AlertCircle, CheckCircle2 } from 'lucide-vue-next'
 import WaveEdge from '@/components/WaveEdge.vue'
 
 const { t } = useI18n()
-const router = useRouter()
 const { state: auth, isAuthenticated, login, register, logout, clearError } = useAuth()
 
 /* ── Form state ── */
@@ -119,6 +117,25 @@ function statusClass(status: string): string {
 }
 
 const avatarLetter = computed(() => (auth.user?.pseudo ?? 'U').charAt(0).toUpperCase())
+
+type HistoryFilter = 'all' | 'finished' | 'host' | 'won'
+const historyFilter = ref<HistoryFilter>('all')
+
+const historyFilters: { key: HistoryFilter; label: string }[] = [
+  { key: 'all',      label: 'Toutes'    },
+  { key: 'finished', label: 'Terminées' },
+  { key: 'host',     label: 'Hôte'      },
+  { key: 'won',      label: 'Victoires' },
+]
+
+const filteredHistory = computed(() => {
+  if (!profile.value) return []
+  const h = profile.value.history
+  if (historyFilter.value === 'finished') return h.filter(g => g.status === 'finished')
+  if (historyFilter.value === 'host')     return h.filter(g => g.isHost)
+  if (historyFilter.value === 'won')      return h.filter(g => g.roundsWon > 0)
+  return h
+})
 </script>
 
 <template>
@@ -135,6 +152,7 @@ const avatarLetter = computed(() => (auth.user?.pseudo ?? 'U').charAt(0).toUpper
         <p class="text-cream/50 text-sm">{{ auth.user?.email }}</p>
       </div>
     </section>
+    <WaveEdge color="var(--color-brown)" :size="48" />
 
     <!-- Loader -->
     <div v-if="loading" class="flex justify-center py-20">
@@ -150,7 +168,7 @@ const avatarLetter = computed(() => (auth.user?.pseudo ?? 'U').charAt(0).toUpper
 
       <!-- Stats -->
       <section class="max-w-3xl mx-auto px-6 py-10">
-        <h2 class="text-brown mb-6">{{ t('profile.stats') }}</h2>
+        <h2 class="text-brown text-2xl sm:text-3xl mb-5">{{ t('profile.stats') }}</h2>
         <div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
 
           <div class="bg-white rounded-2xl p-5 text-center shadow-sm">
@@ -192,51 +210,66 @@ const avatarLetter = computed(() => (auth.user?.pseudo ?? 'U').charAt(0).toUpper
       </section>
 
       <!-- Historique -->
-      <section class="max-w-3xl mx-auto px-6 pb-10">
-        <h2 class="text-brown mb-6">{{ t('profile.history') }}</h2>
+      <section class="max-w-3xl mx-auto px-4 sm:px-6 pb-10">
+        <div class="flex items-center justify-between gap-3 mb-5 flex-wrap">
+          <h2 class="text-brown text-2xl sm:text-3xl">{{ t('profile.history') }}</h2>
+          <div class="flex gap-2 flex-wrap">
+            <button
+              v-for="f in historyFilters" :key="f.key"
+              @click="historyFilter = f.key"
+              class="px-3 py-1 rounded-full text-xs font-semibold border transition-all"
+              :class="historyFilter === f.key
+                ? 'bg-primary text-cream border-primary'
+                : 'text-brown/60 border-brown/20 hover:border-primary hover:text-primary'">
+              {{ f.label }}
+            </button>
+          </div>
+        </div>
 
-        <div v-if="profile.history.length === 0"
+        <div v-if="filteredHistory.length === 0"
           class="bg-white rounded-2xl p-10 text-center text-brown/40 shadow-sm">
-          {{ t('profile.no_history') }}
+          {{ profile.history.length === 0 ? t('profile.no_history') : 'Aucune partie dans ce filtre.' }}
         </div>
 
         <div v-else class="flex flex-col gap-3">
-          <div v-for="game in profile.history" :key="game.sessionId"
-            class="bg-white rounded-2xl px-5 py-4 shadow-sm flex items-center gap-4">
+          <div v-for="game in filteredHistory" :key="game.sessionId"
+            class="bg-white rounded-2xl px-4 py-4 shadow-sm">
 
-            <!-- Icône statut -->
-            <div class="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center shrink-0">
-              <Gamepad2 :stroke-width="1.5" class="w-5 h-5 text-primary" />
-            </div>
-
-            <!-- Infos -->
-            <div class="flex-1 min-w-0">
-              <div class="flex items-center gap-2 mb-1">
-                <span class="text-brown font-semibold text-sm">{{ t('profile.game_number', { n: game.sessionId }) }}</span>
-                <span v-if="game.isHost" class="text-xs bg-primary/15 text-primary px-2 py-0.5 rounded-full font-medium">{{ t('profile.host') }}</span>
-                <span class="text-brown/40 font-mono text-xs">{{ game.roomCode }}</span>
-              </div>
-              <div class="flex items-center gap-3 text-xs text-brown/50 mb-1">
-                <span class="flex items-center gap-1">
-                  <Calendar :stroke-width="1.5" class="w-3.5 h-3.5" />
-                  {{ formatDate(game.createdAt) }}
-                </span>
-                <span>{{ game.roundsWon }} manche{{ game.roundsWon > 1 ? 's' : '' }} gagnée{{ game.roundsWon > 1 ? 's' : '' }}</span>
-              </div>
-              <!-- Joueurs -->
-              <div class="flex flex-wrap gap-1">
-                <span v-for="player in game.players" :key="player"
-                  class="text-xs bg-brown/8 text-brown/60 px-2 py-0.5 rounded-full">
-                  {{ player }}
+            <!-- Ligne 1 : titre + statut -->
+            <div class="flex items-center justify-between gap-2 mb-2">
+              <div class="flex items-center gap-2 min-w-0">
+                <div class="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center shrink-0">
+                  <Gamepad2 :stroke-width="1.5" class="w-4 h-4 text-primary" />
+                </div>
+                <span class="text-brown font-bold text-sm">#{{ game.sessionId }}</span>
+                <span v-if="game.isHost"
+                  class="text-xs bg-primary/15 text-primary px-2 py-0.5 rounded-full font-medium shrink-0">
+                  {{ t('profile.host') }}
                 </span>
               </div>
+              <span class="text-xs font-semibold px-2.5 py-1 rounded-full shrink-0"
+                :class="statusClass(game.status)">
+                {{ statusLabel(game.status) }}
+              </span>
             </div>
 
-            <!-- Badge statut -->
-            <span class="text-xs font-semibold px-2.5 py-1 rounded-full shrink-0 self-start mt-1"
-              :class="statusClass(game.status)">
-              {{ statusLabel(game.status) }}
-            </span>
+            <!-- Ligne 2 : date + manches -->
+            <div class="flex items-center gap-3 text-xs text-brown/50 mb-2 pl-10">
+              <span class="flex items-center gap-1">
+                <Calendar :stroke-width="1.5" class="w-3.5 h-3.5" />
+                {{ formatDate(game.createdAt) }}
+              </span>
+              <span>· {{ game.roundsWon }} manche{{ game.roundsWon > 1 ? 's' : '' }}</span>
+              <span class="text-brown/30 font-mono">{{ game.roomCode }}</span>
+            </div>
+
+            <!-- Ligne 3 : joueurs -->
+            <div class="flex flex-wrap gap-1 pl-10">
+              <span v-for="player in game.players" :key="player"
+                class="text-xs bg-cream text-brown/60 px-2 py-0.5 rounded-full">
+                {{ player }}
+              </span>
+            </div>
           </div>
         </div>
       </section>

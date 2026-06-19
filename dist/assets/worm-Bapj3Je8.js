@@ -1,0 +1,1 @@
+var e=`/assets/worm-CbfHdqJj.svg`;export{e as t};

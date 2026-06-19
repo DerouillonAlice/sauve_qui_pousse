@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { ref, computed } from 'vue'
 import { useI18n } from 'vue-i18n'
+import { X, ChevronLeft, ChevronRight } from 'lucide-vue-next'
 
 import imgAbeilles    from '@/assets/img/cards/VersoAbeilles.webp'
 import imgCoccinelles from '@/assets/img/cards/VersoCoccinelles.webp'
@@ -9,111 +10,94 @@ import imgAgricole    from '@/assets/img/cards/VersoAgricole.webp'
 import imgFrelons     from '@/assets/img/cards/VersoFrelons.webp'
 import imgPesticides  from '@/assets/img/cards/VersoPesticides.webp'
 import imgEpouvantail from '@/assets/img/cards/VersoEpouvantail.webp'
-import imgVerso       from '@/assets/img/cards/feuille.webp'
+import beeImg         from '@/assets/img/bee.svg'
+import ladybugImg     from '@/assets/img/ladybug.svg'
+import wormImg        from '@/assets/img/worm.svg'
 
 const { t } = useI18n()
 
-type Category = 'Insecte' | 'Événement' | 'Action'
+type Group = 'Bénéfique' | 'Nuisible' | 'Neutre'
+type Role  = 'Pollinisateur' | 'Prédateur' | 'Décomposeur' | 'Cultivateur' | 'Invasif' | 'Polluant' | 'Stratégie'
 
 interface CardData {
   id:         number
   name:       string
-  category:   Category
+  role:       Role
+  group:      Group
   points:     string
   effect:     string
   img:        string
-  frontBg:    string
-  frontText:  string
-  badge:      string
   pointColor: string
 }
 
 const allCards: CardData[] = [
   {
-    id: 1, name: 'Abeilles', category: 'Insecte', points: '+3 pts',
+    id: 1, name: 'Abeilles', role: 'Pollinisateur', group: 'Bénéfique', points: '+3 pts',
     effect: 'Pollinisateurs essentiels. Sans elles, 80 % des plantes à fleurs ne se reproduiraient pas.',
-    img: imgAbeilles,
-    frontBg: 'bg-primary', frontText: 'text-cream', badge: 'bg-lime/40 text-brown', pointColor: 'text-lime',
+    img: imgAbeilles, pointColor: 'text-primary',
   },
   {
-    id: 2, name: 'Coccinelles', category: 'Insecte', points: '+2 pts',
+    id: 2, name: 'Coccinelles', role: 'Prédateur', group: 'Bénéfique', points: '+2 pts',
     effect: 'Prédateurs naturels des pucerons. Elles protègent tes cultures sans chimie.',
-    img: imgCoccinelles,
-    frontBg: 'bg-primary/80', frontText: 'text-cream', badge: 'bg-lime/40 text-brown', pointColor: 'text-lime',
+    img: imgCoccinelles, pointColor: 'text-primary',
   },
   {
-    id: 3, name: 'Vers de terre', category: 'Insecte', points: '+1 pt',
+    id: 3, name: 'Vers de terre', role: 'Décomposeur', group: 'Bénéfique', points: '+1 pt',
     effect: 'Décomposeurs indispensables. Ils aèrent et fertilisent le sol naturellement.',
-    img: imgVers,
-    frontBg: 'bg-primary/60', frontText: 'text-cream', badge: 'bg-lime/40 text-brown', pointColor: 'text-lime',
+    img: imgVers, pointColor: 'text-primary',
   },
   {
-    id: 4, name: 'Agriculteurs', category: 'Action', points: '0 pt',
-    effect: 'Ni bénéfiques ni néfastes. Les agriculteurs maintiennent l\'équilibre du jardin.',
-    img: imgAgricole,
-    frontBg: 'bg-cream-dark', frontText: 'text-brown', badge: 'bg-brown/20 text-brown', pointColor: 'text-brown/50',
+    id: 4, name: 'Agriculteurs', role: 'Cultivateur', group: 'Neutre', points: '0 pt',
+    effect: "Ni bénéfiques ni néfastes. Les agriculteurs maintiennent l'équilibre du jardin.",
+    img: imgAgricole, pointColor: 'text-brown/50',
   },
   {
-    id: 5, name: 'Frelons asiatiques', category: 'Événement', points: '-1 pt voisin',
+    id: 5, name: 'Frelons asiatiques', role: 'Invasif', group: 'Nuisible', points: '-1 pt / voisin',
     effect: 'Espèces invasives. Tous les voisins perdent un insecte de leur main.',
-    img: imgFrelons,
-    frontBg: 'bg-yellow', frontText: 'text-brown', badge: 'bg-brown/20 text-brown', pointColor: 'text-red',
+    img: imgFrelons, pointColor: 'text-red',
   },
   {
-    id: 6, name: 'Pesticides systémiques', category: 'Action', points: '-2 pts',
+    id: 6, name: 'Pesticides systémiques', role: 'Polluant', group: 'Nuisible', points: '-2 pts',
     effect: 'Contaminent les sols et éliminent insectes utiles comme nuisibles.',
-    img: imgPesticides,
-    frontBg: 'bg-red/70', frontText: 'text-cream', badge: 'bg-cream/20 text-cream', pointColor: 'text-yellow',
+    img: imgPesticides, pointColor: 'text-red',
   },
   {
-    id: 7, name: 'Épouvantail', category: 'Action', points: 'Protection',
+    id: 7, name: 'Épouvantail', role: 'Stratégie', group: 'Neutre', points: 'Protection',
     effect: 'Transfère une carte négative de ta main vers un adversaire de ton choix.',
-    img: imgEpouvantail,
-    frontBg: 'bg-brown', frontText: 'text-cream', badge: 'bg-cream/20 text-cream', pointColor: 'text-yellow',
+    img: imgEpouvantail, pointColor: 'text-brown',
   },
 ]
 
-type Filter = 'Toutes' | Category
+const roleMeta: Record<Role, { color: string; dot: string }> = {
+  'Pollinisateur': { color: 'text-primary', dot: 'bg-primary'    },
+  'Prédateur':     { color: 'text-primary', dot: 'bg-primary'    },
+  'Décomposeur':   { color: 'text-primary', dot: 'bg-primary'    },
+  'Cultivateur':   { color: 'text-brown',   dot: 'bg-brown'      },
+  'Invasif':       { color: 'text-red',     dot: 'bg-red'        },
+  'Polluant':      { color: 'text-red',     dot: 'bg-red'        },
+  'Stratégie':     { color: 'text-brown',   dot: 'bg-brown'      },
+}
+
+type Filter = 'Toutes' | Group
 const filters: { key: Filter; label: string }[] = [
-  { key: 'Toutes',    label: t('cards.filter.all') },
-  { key: 'Insecte',   label: t('cards.filter.insects') },
-  { key: 'Événement', label: t('cards.filter.events') },
-  { key: 'Action',    label: t('cards.filter.actions') },
+  { key: 'Toutes',    label: t('cards.filter.all')        },
+  { key: 'Bénéfique', label: t('cards.filter.beneficial') },
+  { key: 'Nuisible',  label: t('cards.filter.harmful')    },
+  { key: 'Neutre',    label: t('cards.filter.neutral')    },
 ]
 
-const activeFilter  = ref<Filter>('Toutes')
-const selectedCard  = ref<CardData | null>(allCards[0] ?? null)
-const flippedCards  = ref<Set<number>>(new Set())
-const detailFlipped = ref(false)
+const activeFilter = ref<Filter>('Toutes')
+const selectedCard = ref<CardData | null>(null)
 
 const filteredCards = computed(() =>
   activeFilter.value === 'Toutes'
     ? allCards
-    : allCards.filter(c => c.category === activeFilter.value)
+    : allCards.filter(c => c.group === activeFilter.value)
 )
-
-function isFlipped(id: number) {
-  return flippedCards.value.has(id)
-}
-
-function handleCardClick(card: CardData) {
-  if (selectedCard.value?.id === card.id) {
-    // Même carte : toggle le flip
-    const next = new Set(flippedCards.value)
-    if (next.has(card.id)) { next.delete(card.id) } else { next.add(card.id) }
-    flippedCards.value = next
-  } else {
-    // Nouvelle carte : remet toutes les autres à l'endroit, retourne seulement celle-ci
-    flippedCards.value = new Set([card.id])
-    selectedCard.value = card
-    detailFlipped.value = false
-  }
-}
 
 function setFilter(f: Filter) {
   activeFilter.value = f
   selectedCard.value = null
-  flippedCards.value = new Set()
 }
 
 const selectedIndex = computed(() =>
@@ -122,11 +106,11 @@ const selectedIndex = computed(() =>
 
 function prevCard() {
   const prev = filteredCards.value[selectedIndex.value - 1]
-  if (prev) { selectedCard.value = prev; detailFlipped.value = false; flippedCards.value = new Set() }
+  if (prev) selectedCard.value = prev
 }
 function nextCard() {
   const next = filteredCards.value[selectedIndex.value + 1]
-  if (next) { selectedCard.value = next; detailFlipped.value = false; flippedCards.value = new Set() }
+  if (next) selectedCard.value = next
 }
 </script>
 
@@ -134,22 +118,27 @@ function nextCard() {
   <div class="bg-cream min-h-screen">
 
     <!-- HERO -->
-    <section class="py-12 px-4 text-center">
-      <div class="max-w-2xl mx-auto">
+    <section class="relative overflow-hidden py-16 px-6 text-center bg-cream-dark">
+      <img :src="beeImg" aria-hidden="true"
+        class="absolute top-3 left-4 w-20 sm:w-28 opacity-60 pointer-events-none select-none rotate-12" />
+      <img :src="ladybugImg" aria-hidden="true"
+        class="absolute top-2 right-6 w-16 sm:w-24 opacity-60 pointer-events-none select-none -rotate-6" />
+      <img :src="wormImg" aria-hidden="true"
+        class="absolute bottom-1 right-16 w-14 sm:w-20 opacity-40 pointer-events-none select-none" />
+      <div class="relative z-10 max-w-xl mx-auto">
         <h1 class="text-brown mb-3">{{ t('cards.hero.title') }}</h1>
         <p class="text-brown/70 text-base leading-relaxed">{{ t('cards.hero.subtitle') }}</p>
       </div>
     </section>
 
-    <!-- STICKY FILTER BAR -->
-    <div class="sticky top-0 z-20 bg-cream/95 backdrop-blur-sm border-b border-brown/10 px-4 py-2.5 shadow-sm">
-      <div class="max-w-6xl mx-auto flex items-center justify-between gap-3 flex-wrap">
+    <!-- FILTER BAR -->
+    <div class="sticky top-0 z-20 bg-cream/95 backdrop-blur-sm border-b border-brown/10 px-4 py-3 shadow-sm">
+      <div class="max-w-5xl mx-auto flex items-center justify-between gap-3 flex-wrap">
         <div class="flex items-center gap-2 flex-wrap">
-          <span class="text-brown/40 text-xs hidden sm:inline">Filtrer :</span>
           <button
             v-for="f in filters" :key="f.key"
             @click="setFilter(f.key)"
-            class="px-3 py-1 rounded-full text-xs font-semibold border transition-all"
+            class="px-4 py-1.5 rounded-full text-sm font-semibold border transition-all"
             :class="activeFilter === f.key
               ? 'bg-primary text-cream border-primary'
               : 'text-brown/60 border-brown/20 hover:border-primary hover:text-primary'"
@@ -161,84 +150,123 @@ function nextCard() {
       </div>
     </div>
 
-    <!-- MAIN CONTENT -->
-    <div class="max-w-6xl mx-auto px-4 py-8 flex flex-col lg:flex-row gap-8 items-start">
-
-      <!-- CARD GRID -->
-      <div class="flex-1 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
-        <div
+    <!-- GRID -->
+    <div class="max-w-5xl mx-auto px-4 py-10">
+      <TransitionGroup
+        tag="div"
+        class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-6"
+        move-class="transition-all duration-300"
+        enter-active-class="transition duration-200"
+        enter-from-class="opacity-0 scale-95"
+        enter-to-class="opacity-100 scale-100"
+        leave-active-class="transition duration-150 absolute"
+        leave-from-class="opacity-100"
+        leave-to-class="opacity-0 scale-95"
+      >
+        <button
           v-for="card in filteredCards" :key="card.id"
-          class="flex flex-col items-center cursor-pointer group"
-          @click="handleCardClick(card)"
+          class="group text-left rounded-2xl overflow-hidden bg-white shadow-sm hover:shadow-xl hover:-translate-y-1.5 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2"
+          @click="selectedCard = card"
         >
-          <!-- Flip wrapper -->
-          <div class="w-full [perspective:900px]">
-            <div
-              class="relative w-full aspect-[8/15] [transform-style:preserve-3d] transition-[transform] duration-500 rounded-xl"
-              :class="isFlipped(card.id) ? '[transform:rotateY(180deg)]' : ''"
-            >
-              <!-- RECTO: illustration -->
-              <div class="absolute inset-0 [backface-visibility:hidden] rounded-xl overflow-hidden group-hover:shadow-md transition-shadow"
-                :class="selectedCard?.id === card.id ? 'ring-2 ring-primary ring-offset-2' : ''"
-              >
-                <img :src="card.img" :alt="card.name" class="w-full h-full object-cover" />
-              </div>
-              <!-- VERSO: dos commun à toutes les cartes -->
-              <div class="absolute inset-0 [backface-visibility:hidden] [transform:rotateY(180deg)] rounded-xl overflow-hidden">
-                <img :src="imgVerso" alt="Verso" class="w-full h-full object-cover" />
-              </div>
-            </div>
+          <!-- Illustration -->
+          <div class="aspect-[3/4] overflow-hidden bg-cream-dark">
+            <img :src="card.img" :alt="card.name"
+              class="w-full h-full object-cover group-hover:scale-[1.04] transition-transform duration-300" />
           </div>
-          <p class="mt-1.5 text-center text-[11px] font-medium text-brown/50 group-hover:text-brown transition-colors leading-tight">
-            {{ card.name }}
-          </p>
+          <!-- Info -->
+          <div class="px-3 pt-2.5 pb-3">
+            <div class="flex items-center gap-1.5 mb-1">
+              <span class="w-1.5 h-1.5 rounded-full shrink-0" :class="roleMeta[card.role].dot" />
+              <span class="text-[10px] font-semibold uppercase tracking-wide"
+                :class="roleMeta[card.role].color">
+                {{ card.role }}
+              </span>
+            </div>
+            <p class="text-brown font-semibold text-sm leading-snug">{{ card.name }}</p>
+            <p class="font-bold text-base mt-0.5" :class="card.pointColor">{{ card.points }}</p>
+          </div>
+        </button>
+      </TransitionGroup>
+    </div>
+
+    <!-- SHOP CTA -->
+    <section class="py-16 px-6">
+      <div class="max-w-2xl mx-auto bg-brown rounded-3xl px-8 sm:px-12 py-10 flex flex-col sm:flex-row items-center gap-6 relative overflow-hidden">
+        <img :src="ladybugImg" aria-hidden="true"
+          class="absolute right-0 bottom-0 w-36 pointer-events-none select-none rotate-6 hidden sm:block" />
+        <div class="relative z-10 flex-1">
+          <p class="font-game text-primary text-2xl sm:text-3xl mb-2">Tu veux le jeu physique ?</p>
+          <p class="text-cream/70 text-sm leading-relaxed">Les cartes, la roue, la boîte — tout est sur notre boutique.</p>
         </div>
+        <a href="https://shop.sauvequipousse.fr" target="_blank" rel="noopener"
+          class="relative z-10 shrink-0 px-7 py-3 bg-primary text-cream rounded-full font-bold hover:scale-105 transition-transform shadow-lg shadow-primary/30 whitespace-nowrap">
+          Acheter le jeu
+        </a>
       </div>
+    </section>
 
-      <!-- DETAIL PANEL -->
-      <div class="w-full lg:w-64 xl:w-72 lg:sticky lg:top-12 shrink-0">
-        <!-- Placeholder -->
-        <div v-if="!selectedCard"
-          class="rounded-2xl border border-dashed border-brown/20 px-6 py-12 text-center flex flex-col items-center gap-3">
-          <span class="text-3xl opacity-40">🃏</span>
-          <p class="text-brown/40 text-sm leading-relaxed">Clique sur une carte pour voir ses détails</p>
-        </div>
+    <!-- MODAL -->
+    <Transition
+      enter-active-class="transition duration-200"
+      enter-from-class="opacity-0"
+      enter-to-class="opacity-100"
+      leave-active-class="transition duration-150"
+      leave-from-class="opacity-100"
+      leave-to-class="opacity-0"
+    >
+      <div v-if="selectedCard"
+        class="fixed inset-0 z-50 flex items-end sm:items-center justify-center sm:p-4 bg-black/50 backdrop-blur-sm"
+        @click.self="selectedCard = null"
+      >
+        <div class="bg-cream w-full sm:w-96 rounded-t-3xl sm:rounded-3xl overflow-hidden shadow-2xl max-h-[90vh] flex flex-col">
 
-        <!-- Card detail -->
-        <div v-else class="flex flex-col gap-5">
-
-          <!-- Miniature statique -->
-          <div class="w-16 h-16 rounded-xl overflow-hidden shadow-sm shrink-0">
+          <!-- Image -->
+          <div class="aspect-[16/9] overflow-hidden shrink-0">
             <img :src="selectedCard.img" :alt="selectedCard.name" class="w-full h-full object-cover" />
           </div>
 
-          <!-- Info -->
-          <div class="bg-white/60 rounded-2xl p-4 flex flex-col gap-2 shadow-sm">
-            <span class="text-xs font-semibold px-2.5 py-1 rounded-full border border-brown/20 text-brown/60 self-start">
-              {{ selectedCard.category }}
-            </span>
-            <h3 class="text-brown">{{ selectedCard.name }}</h3>
-            <p class="font-bold text-lg text-primary">{{ selectedCard.points }}</p>
-            <p class="text-brown/70 text-sm leading-relaxed">{{ selectedCard.effect }}</p>
-          </div>
+          <!-- Body -->
+          <div class="px-6 py-5 overflow-y-auto">
+            <div class="flex items-start justify-between mb-1">
+              <div class="flex items-center gap-2">
+                <span class="w-2 h-2 rounded-full" :class="roleMeta[selectedCard.role].dot" />
+                <span class="text-xs font-semibold uppercase tracking-wide"
+                  :class="roleMeta[selectedCard.role].color">
+                  {{ selectedCard.role }}
+                </span>
+              </div>
+              <button @click="selectedCard = null"
+                class="p-1.5 rounded-full hover:bg-brown/10 transition-colors -mr-1">
+                <X class="w-5 h-5 text-brown/50" />
+              </button>
+            </div>
 
-          <!-- Navigation -->
-          <div class="flex gap-2">
-            <button
-              @click="prevCard"
-              :disabled="selectedIndex === 0"
-              class="flex-1 py-2.5 rounded-xl border-2 border-brown/20 text-brown/60 font-medium text-sm hover:border-brown hover:text-brown transition-colors disabled:opacity-30 disabled:cursor-not-allowed"
-            >{{ t('cards.detail.prev') }}</button>
-            <button
-              @click="nextCard"
-              :disabled="selectedIndex === filteredCards.length - 1"
-              class="flex-1 py-2.5 rounded-xl bg-primary text-cream font-medium text-sm hover:scale-105 transition-transform disabled:opacity-30 disabled:cursor-not-allowed"
-            >{{ t('cards.detail.next') }}</button>
+            <h3 class="text-brown text-2xl mb-1">{{ selectedCard.name }}</h3>
+            <p class="font-bold text-3xl mb-4" :class="selectedCard.pointColor">{{ selectedCard.points }}</p>
+            <p class="text-brown/70 text-sm leading-relaxed">{{ selectedCard.effect }}</p>
+
+            <!-- Nav -->
+            <div class="flex gap-3 mt-6 pb-1">
+              <button
+                @click="prevCard"
+                :disabled="selectedIndex === 0"
+                class="flex-1 flex items-center justify-center gap-1 py-3 rounded-xl border-2 border-brown/20 text-brown/60 font-semibold text-sm hover:border-brown hover:text-brown transition-colors disabled:opacity-25 disabled:cursor-not-allowed"
+              >
+                <ChevronLeft class="w-4 h-4" />{{ t('cards.detail.prev') }}
+              </button>
+              <button
+                @click="nextCard"
+                :disabled="selectedIndex === filteredCards.length - 1"
+                class="flex-1 flex items-center justify-center gap-1 py-3 rounded-xl bg-primary text-cream font-semibold text-sm hover:scale-105 transition-transform disabled:opacity-25 disabled:cursor-not-allowed"
+              >
+                {{ t('cards.detail.next') }}<ChevronRight class="w-4 h-4" />
+              </button>
+            </div>
           </div>
 
         </div>
       </div>
+    </Transition>
 
-    </div>
   </div>
 </template>

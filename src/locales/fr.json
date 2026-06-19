@@ -32,7 +32,7 @@
     "cta": {
       "title": "Prêt à jouer ?",
       "subtitle": "Rejoins ou lance une partie avec tes amis en quelques secondes.",
-      "chips": ["2 - 4 joueurs", "~15 min", "Dès 7 ans"],
+      "chips": ["2 à 5 joueurs", "~15 min", "Dès 7 ans"],
       "create": "Lancer une partie →",
       "join": "Rejoindre une partie →"
     },
@@ -105,13 +105,11 @@
     },
     "wheel": {
       "title": "La roue numérique",
-      "desc": "La roue sert uniquement à piocher. Elle offre des cases infinies :",
-      "neutral": { "label": "Cases neutres", "desc": "Tu pioches et joues normalement." },
-      "bonus": {
-        "label": "Cases bonus",
-        "desc": "Actions positives : protection, débarras de mauvaises cartes..."
-      },
-      "trap": { "label": "Cases piégées", "desc": "Actions négatives : ton jeu est saboté." }
+      "desc": "À chaque tour, la roue détermine ce qui se passe. Elle a 4 résultats possibles :",
+      "draw": { "label": "Pioche une carte", "desc": "Tu pioches et joues normalement.", "pct": "60%" },
+      "skip": { "label": "Passe ton tour", "desc": "Pas de carte cette fois. La main passe.", "pct": "20%" },
+      "bonus": { "label": "Carte bonus", "desc": "Un effet positif s'applique à toi.", "pct": "10%" },
+      "trap": { "label": "Carte malus", "desc": "Un effet négatif s'applique à toi.", "pct": "10%" }
     },
     "cards": {
       "title": "Les cartes",
@@ -176,9 +174,9 @@
     "wip": "Les cartes bonus et malus arrivent bientôt !",
     "filter": {
       "all": "Toutes",
-      "insects": "Insectes",
-      "events": "Événements",
-      "actions": "Actions",
+      "beneficial": "Bénéfiques",
+      "harmful": "Nuisibles",
+      "neutral": "Neutres",
       "count": "cartes au total"
     },
     "detail": {
@@ -265,7 +263,7 @@
       "spin_again": "Retourner",
       "skip_title": "Tour passé",
       "skip_desc": "Aucune carte cette fois. Passe la main.",
-      "end_turn": "Fin du tour",
+      "end_turn": "Suivant",
       "scores": "Scores",
       "winner_prompt": "Qui a remporté la manche ?",
       "cancel": "Annuler",

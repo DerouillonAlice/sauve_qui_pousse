@@ -11,53 +11,64 @@ const menuLinks = [
 
 const legalLinks = [
   { label: 'Mentions Légales', to: '/mentions-legales' },
-  { label: "Conditions Générales d'Utilisation", to: '/cgu' },
-  { label: 'Conditions Générales de Vente', to: '/cgv' },
+  { label: "CGU", to: '/cgu' },
+  { label: 'CGV', to: '/cgv' },
 ]
 </script>
 
 <template>
-  <footer class="bg-primary py-12" style="font-family: 'Nunito', sans-serif">
-    <div class="max-w-4xl mx-auto px-8 grid grid-cols-1 sm:grid-cols-3 gap-10 text-center">
+  <!-- pb-16 lg:pb-0 → marge pour la bottom nav mobile -->
+  <footer class="bg-primary pt-10 pb-20 lg:pb-12" style="font-family: 'Nunito', sans-serif">
+    <div class="max-w-4xl mx-auto px-8 grid grid-cols-2 sm:grid-cols-3 gap-8 text-center">
 
+      <!-- Menu -->
       <div>
-        <p class="font-game text-white text-2xl mb-6">Menu</p>
-        <ul class="space-y-3">
+        <p class="font-game text-white text-xl sm:text-2xl mb-5">Menu</p>
+        <ul class="space-y-2">
           <li v-for="link in menuLinks" :key="link.to">
             <RouterLink :to="link.to"
-              class="text-white text-sm hover:font-bold transition-all" style="font-family: 'Nunito', sans-serif; font-weight: 600">
+              class="text-white text-sm hover:font-bold transition-all" style="font-weight: 600">
               {{ link.label }}
             </RouterLink>
           </li>
         </ul>
       </div>
 
+      <!-- Liens Légaux -->
       <div>
-        <p class="font-game text-white text-2xl mb-6">Liens Légaux</p>
-        <ul class="space-y-3">
+        <p class="font-game text-white text-xl sm:text-2xl mb-5">Légal</p>
+        <ul class="space-y-2">
           <li v-for="link in legalLinks" :key="link.to">
             <RouterLink :to="link.to"
-              class="text-white text-sm hover:font-bold transition-all leading-snug block" style="font-family: 'Nunito', sans-serif; font-weight: 600">
+              class="text-white text-sm hover:font-bold transition-all leading-snug block" style="font-weight: 600">
               {{ link.label }}
             </RouterLink>
           </li>
         </ul>
       </div>
 
-      <div>
-        <p class="font-game text-white text-2xl mb-6">Contact</p>
-        <ul class="space-y-3 text-white text-sm" style="font-family: 'Nunito', sans-serif; font-weight: 600">
+      <!-- Contact + Boutique -->
+      <div class="col-span-2 sm:col-span-1">
+        <p class="font-game text-white text-xl sm:text-2xl mb-5">Contact</p>
+        <ul class="space-y-2 text-white text-sm" style="font-weight: 600">
           <li>
-            <a href="mailto:contact@sauvequipousse.fr"
-              class="hover:font-bold transition-all">
+            <a href="mailto:contact@sauvequipousse.fr" class="hover:underline transition-all">
               contact@sauvequipousse.fr
             </a>
           </li>
-          <li>04 12 34 56 78</li>
-          <li>67 Rue de Poitiers</li>
+          <li class="pt-2">
+            <a href="https://shop.sauvequipousse.fr" target="_blank" rel="noopener"
+              class="inline-flex items-center gap-1.5 px-4 py-2 bg-white/15 hover:bg-white/25 text-white rounded-full text-sm font-semibold transition-colors">
+              🛒 Notre boutique
+            </a>
+          </li>
         </ul>
       </div>
 
+    </div>
+
+    <div class="border-t border-white/10 mt-8 pt-5 text-center">
+      <p class="text-white/90 text-xs">© {{ new Date().getFullYear() }} Sauve qui Pousse · Projet SAE6 BUT3 MMI · IUT Troyes & Castres</p>
     </div>
   </footer>
 </template>

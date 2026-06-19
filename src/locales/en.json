@@ -32,7 +32,7 @@
     "cta": {
       "title": "Ready to play?",
       "subtitle": "Join or start a game with your friends in seconds.",
-      "chips": ["2 - 4 players", "~15 min", "Ages 7+"],
+      "chips": ["2 to 5 players", "~15 min", "Ages 7+"],
       "create": "Start a game →",
       "join": "Join a game →"
     },
@@ -93,13 +93,11 @@
     },
     "wheel": {
       "title": "The digital wheel",
-      "desc": "The wheel is only used to draw. It offers infinite spaces:",
-      "neutral": { "label": "Neutral spaces", "desc": "You draw and play normally." },
-      "bonus": {
-        "label": "Bonus spaces",
-        "desc": "Positive actions: protection, getting rid of bad cards..."
-      },
-      "trap": { "label": "Trap spaces", "desc": "Negative actions: your hand gets sabotaged." }
+      "desc": "Each turn, the wheel determines what happens. It has 4 possible outcomes:",
+      "draw": { "label": "Draw a card", "desc": "You draw and play normally.", "pct": "60%" },
+      "skip": { "label": "Skip your turn", "desc": "No card this time. Pass.", "pct": "20%" },
+      "bonus": { "label": "Bonus card", "desc": "A positive effect applies to you.", "pct": "10%" },
+      "trap": { "label": "Malus card", "desc": "A negative effect applies to you.", "pct": "10%" }
     },
     "cards": {
       "title": "The cards",
@@ -161,9 +159,9 @@
     "wip": "Bonus and malus cards coming soon!",
     "filter": {
       "all": "All",
-      "insects": "Insects",
-      "events": "Events",
-      "actions": "Actions",
+      "beneficial": "Beneficial",
+      "harmful": "Harmful",
+      "neutral": "Neutral",
       "count": "cards total"
     },
     "detail": {
@@ -250,7 +248,7 @@
       "spin_again": "Spin Again",
       "skip_title": "Turn Skipped",
       "skip_desc": "No card this time. Pass it on.",
-      "end_turn": "End Turn",
+      "end_turn": "Next",
       "scores": "Scores",
       "winner_prompt": "Who won the round?",
       "cancel": "Cancel",

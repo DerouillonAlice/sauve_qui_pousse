@@ -4,6 +4,7 @@ import { useI18n } from 'vue-i18n'
 import { useGame } from '@/composables/useGame'
 import { useAuth } from '@/composables/useAuth'
 import { Copy, Check, UserPlus, Play, ArrowLeft, Loader2, Crown, AlertCircle, X } from 'lucide-vue-next'
+import ladybugImg from '@/assets/img/ladybug.svg'
 
 const { t } = useI18n()
 const { state: auth } = useAuth()
@@ -12,12 +13,13 @@ const {
   isLobby,
   participants,
   addGuestPlayer,
+  removeGuestPlayer,
   startGame,
   leaveGame,
   clearError,
 } = useGame()
 
-const MAX_PLAYERS = 4
+const MAX_PLAYERS = 5
 
 /* ── Add guest ── */
 const guestName = ref('')
@@ -73,6 +75,9 @@ const emptySlots = computed(() => Math.max(0, MAX_PLAYERS - participants.value.l
 </script>
 
 <template>
+  <div class="relative">
+    <img :src="ladybugImg" aria-hidden="true"
+      class="hidden sm:block absolute top-4 right-16 w-36 pointer-events-none select-none -rotate-10" />
   <div class="max-w-lg mx-auto px-4 py-6 flex flex-col gap-5">
 
     <!-- Header -->
@@ -165,8 +170,14 @@ const emptySlots = computed(() => Math.max(0, MAX_PLAYERS - participants.value.l
         <div class="flex-1 min-w-0">
           <p class="text-brown font-semibold text-sm truncate">{{ player.displayName }}</p>
           <p v-if="player.isGuest" class="text-primary text-xs font-medium">{{ t('game.lobby.guest') }}</p>
-          <p v-else class="text-brown/40 text-xs">{{ t('game.lobby.host') }}</p>
+          <p v-else-if="player.isOwner" class="text-brown/40 text-xs">{{ t('game.lobby.host') }}</p>
+          <p v-else class="text-brown/40 text-xs">Joueur</p>
         </div>
+        <button v-if="isOwner && player.isGuest"
+          @click="removeGuestPlayer(player.id)"
+          class="shrink-0 w-7 h-7 flex items-center justify-center rounded-full hover:bg-red/15 text-brown/30 hover:text-red transition-colors cursor-pointer">
+          <X :stroke-width="2" class="w-4 h-4" />
+        </button>
       </div>
 
       <!-- Slots vides -->
@@ -204,5 +215,6 @@ const emptySlots = computed(() => Math.max(0, MAX_PLAYERS - participants.value.l
       <p class="text-sm">{{ t('game.lobby.waiting_host') }}</p>
     </div>
 
+  </div>
   </div>
 </template>
