@@ -55,7 +55,7 @@ const basicLinks = [
         </RouterLink>
       </template>
 
-      <LanguageSelector />
+      <LanguageSelector class="ml-auto" />
     </nav>
   </header>
 </template>
