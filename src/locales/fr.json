@@ -266,6 +266,7 @@
       "end_turn": "Suivant",
       "scores": "Scores",
       "winner_prompt": "Qui a remporté la manche ?",
+      "announce_sent": "Annonce envoyée ! Montre tes cartes à l'hôte pour validation.",
       "cancel": "Annuler",
       "confirm_win": "Confirmer",
       "game_over": "Partie terminée !",
@@ -295,7 +296,9 @@
       "not_found": "Aucune partie active trouvée pour ce code.",
       "not_your_turn": "Ce n'est pas ton tour.",
       "not_active": "La partie n'est pas en cours.",
-      "no_round": "Aucune manche active."
+      "no_round": "Aucune manche active.",
+      "cannot_win": "Ce joueur ne peut pas crier \"Sauve qui pousse !\" pour le moment.",
+      "host_only": "Seul l'hôte peut valider le gagnant de la manche."
     },
     "join": {
       "title": "Rejoindre une partie",

@@ -263,6 +263,7 @@
       "end_turn": "Siguiente",
       "scores": "Puntuaciones",
       "winner_prompt": "¿Quién ganó la ronda?",
+      "announce_sent": "¡Anuncio enviado! Muestra tus cartas al anfitrión para validar.",
       "cancel": "Cancelar",
       "confirm_win": "Confirmar",
       "game_over": "¡Partida terminada!",
@@ -289,7 +290,9 @@
       "pseudo_taken": "Este nombre ya está en uso en esta partida.",
       "invalid_code": "Código inválido o expirado.",
       "session_started": "Esta partida ya ha comenzado o terminado.",
-      "not_found": "No se encontró ninguna partida activa para este código."
+      "not_found": "No se encontró ninguna partida activa para este código.",
+      "cannot_win": "Este jugador no puede declarar \"¡Sauve qui pousse!\" en este momento.",
+      "host_only": "Solo el anfitrión puede validar al ganador de la ronda."
     },
     "join": {
       "title": "Unirse a una partida",

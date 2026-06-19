@@ -16,6 +16,8 @@ const ERROR_MAP: Record<string, string> = {
   'It is not this participant\'s turn.': 'game.error.not_your_turn',
   'The game session is not active.': 'game.error.not_active',
   'No active round found for this session.': 'game.error.no_round',
+  'This participant cannot declare "Sauve qui pousse" right now.': 'game.error.cannot_win',
+  'Only the host can validate the round winner.': 'game.error.host_only',
 }
 
 function mapError(msg: string): string {
