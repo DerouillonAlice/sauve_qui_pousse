@@ -31,12 +31,6 @@ const basicLinks = [
 
       <div class="flex items-center gap-8 ml-auto">
         <template v-if="!isAuthenticated">
-          <RouterLink to="/jouer"
-            class="text-cream no-underline hover:underline font-medium text-lg"
-            style="font-family: 'Nunito', sans-serif; font-weight: 700"
-            active-class="font-bold !text-cream/60">
-            {{ t('nav.play') }}
-          </RouterLink>
           <RouterLink to="/compte"
             class="bg-brown text-cream px-5 py-2.5 rounded-full font-bold hover:scale-105 active:scale-95 transition-transform shadow-md">
             Connexion / Inscription
